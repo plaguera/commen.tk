@@ -1,23 +1,10 @@
-import { CommentComponent } from './comment-component';
-import {
-    Issue,
-    IssueComment,
-    loadIssue,
-    loadIssues
-} from './github';
+import { Auth } from './types';
+import { User } from './user'
+import { Repository } from './repository'
 
-const port = process.env.PORT || '3000';
-// /user/repos
-// /repos/ULL-ESIT-GRADOII-TFG/utterances/issues
-// /repos/ULL-ESIT-GRADOII-TFG/utterances/issues/1
-// /repos/ULL-ESIT-GRADOII-TFG/utterances/issues/1/comments
-document.body.textContent = 'HOLAAA';
-console.log(document.title);
-//const popover = document.createElement("div");
+let auth : Auth = { token: '6ed125f6941d18de564195160615f99890e08f87', username: '', password:'' };
+let user = new User(auth, 'plaguera');
+let repository = new Repository(auth, 'plaguera', 'tfm-testing');
 
-loadIssues().then(function (result) {
-    //for (let issue of result) {
-        console.log(result);
-        //document.body.appendChild(new CommentComponent(issue).element);
-    //}
-});
+repository.json('issues').then(i => console.log(i));
+user.json('').then(i => console.log(i));
