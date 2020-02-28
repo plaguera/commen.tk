@@ -1,9 +1,10 @@
 import { Auth } from './types'
 import { User } from './user'
 import { Repository } from './repository'
-import * as secret from '../secret.json'
 
-let auth : Auth = secret;
+require('dotenv').config();
+
+let auth : Auth = { token: process.env.TOKEN || '', username: '', password: '' };
 let user = new User(auth, 'plaguera');
 let repository = new Repository(auth, 'plaguera', 'tfm-testing');
 

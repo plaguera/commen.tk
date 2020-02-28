@@ -30,9 +30,10 @@ export class Repository extends Requestable {
         return await this.fetch('GET', this.get(path));
     }
 
-    async create_issue(title: string, body: string) {
-        return await this.fetch('POST', this.get('issues'), {
-            "title": title
+    create_issue(title: string, body: string) {
+        this.fetch('POST', this.get('issues'), {
+            "title": "Título",
+            "body": "Descripción"
         });
     }
 }
