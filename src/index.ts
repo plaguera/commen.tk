@@ -1,10 +1,12 @@
-import { Auth } from './types';
+import { Auth } from './types'
 import { User } from './user'
 import { Repository } from './repository'
+import * as secret from '../secret.json'
 
-let auth : Auth = { token: '6ed125f6941d18de564195160615f99890e08f87', username: '', password:'' };
+let auth : Auth = secret;
 let user = new User(auth, 'plaguera');
 let repository = new Repository(auth, 'plaguera', 'tfm-testing');
 
-repository.json('issues').then(i => console.log(i));
+repository.create_issue('Issue #3', 'Description #3')
+repository.issues().then(i => console.log(i));
 user.json('').then(i => console.log(i));

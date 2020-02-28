@@ -11,20 +11,21 @@ export abstract class Requestable {
 
     abstract get(path: string): string;
 
-    public async fetch(method: string, path: string): Promise<Object> {
+    public async fetch(method: string, path: string, data?: Object): Promise<Object> {
         let headers = {
-            'Content-Type': 'application/json;charset=UTF-8',
+            'Content-Type': 'application/json',
             'Accept': 'application/vnd.github.v3+json',
             'Authorization': 'token ' + this.auth.token
         };
 
-        const config = {
+        const init = {
             method: method,
             headers: headers,
-            responseType: 'json',
+            data: JSON.stringify(data),
+            //responseType: 'json',
         };
-        const res = await fetch(this.endpoint + path, config);
-        let data = await res.json();
-        return data;
+        const res = await fetch(this.endpoint + path, init);
+        let res_json = await res.json();
+        return res_json;
     }
 }

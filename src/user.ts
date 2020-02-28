@@ -1,6 +1,8 @@
 import { Requestable } from './requestable'
 import { Auth } from "./types";
 
+export type Organization = User;
+
 export class User extends Requestable {
 
     username: string;

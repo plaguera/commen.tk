@@ -22,7 +22,17 @@ export class Repository extends Requestable {
         return await this.fetch('GET', this.get('issues'));
     }
 
+    async comments(issuenumber: number) {
+        return await this.fetch('GET', this.get(`issues/${issuenumber}/comments`));
+    }
+
     async json(path: string) {
         return await this.fetch('GET', this.get(path));
+    }
+
+    async create_issue(title: string, body: string) {
+        return await this.fetch('POST', this.get('issues'), {
+            "title": title
+        });
     }
 }
