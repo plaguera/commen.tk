@@ -7,8 +7,8 @@ export class User extends Requestable {
 
     username: string;
 
-    constructor(auth: Auth, username: string) {
-        super(auth);
+    constructor(username: string) {
+        super();
         this.username = username;
     }
 

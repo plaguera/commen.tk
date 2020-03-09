@@ -1,13 +1,12 @@
 import { Requestable } from './requestable'
-import { Auth } from "./types";
 
 export class Repository extends Requestable {
 
     username: string;
     reponame: string;
 
-    constructor(auth: Auth, username: string, reponame: string) {
-        super(auth);
+    constructor(username: string, reponame: string) {
+        super();
         this.username = username;
         this.reponame = reponame;
     }
@@ -22,6 +21,10 @@ export class Repository extends Requestable {
         return await this.fetch('GET', this.get('issues'));
     }
 
+    async comment(comment_id: number) {
+        return await this.fetch('GET', this.get(`issues/comments/${comment_id}`));
+    }
+
     async comments(issuenumber: number) {
         return await this.fetch('GET', this.get(`issues/${issuenumber}/comments`));
     }
@@ -30,10 +33,11 @@ export class Repository extends Requestable {
         return await this.fetch('GET', this.get(path));
     }
 
-    create_issue(title: string, body: string) {
-        this.fetch('POST', this.get('issues'), {
-            "title": "Título",
-            "body": "Descripción"
-        });
+    async create_issue(data: Object) {
+        return await this.fetch('POST', this.get('issues'), data);
+    }
+
+    async create_comment(issuenumber: number, data: Object) {
+        return await this.fetch('POST', this.get(`issues/${issuenumber}/comments`), data);
     }
 }
