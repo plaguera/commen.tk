@@ -1,0 +1,36 @@
+textarea,
+input,
+select {
+    display: block;
+    width: 20%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+textarea {
+    width: 90%;
+}
+
+textarea#result {
+    height: 600px;
+}
+
+input[type=button]#submitBtn {
+    text-align: center;
+    padding: 10px;
+    width: 10%;
+}
+
+input[type=text]#apiURL {
+    text-align: center;
+    padding: 5px;
+    width: 60%;
+}
+
+h4 {
+    text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: large;
+}

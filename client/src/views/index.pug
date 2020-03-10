@@ -5,16 +5,19 @@ html
         meta(http-equiv='X-UA-Compatible' content='IE=edge')
         meta(name='description' content='Some description')
         meta(name='viewport' content='width=device-width, initial-scale=1')
-        link(rel="stylesheet" type="text/css" href="../public/style.css")
+        link(rel="stylesheet" type="text/css" href="../public/style.scss")
 
-        h1= title
-        div.form
-            label
-                | API URI 
-            input.field-divided(type='text' id='endpoint' placeholder='Endpoint')
-            input.field-divided(type='text' id='route' placeholder='URI')
-            input(type="button" value="Click" id="submitbtn")
-        div.result
+        .form
+            h4 API URI
+            div
+                input#apiURL(type='text')
+            div
+                select#method
+                    option(value="GET") GET
+                    option(value="POST") POST
+            textarea#body(cols="100" rows="20")
+            input#submitBtn(type="button" value="Submit")
+        .result
             h4 Result
-            textarea(id="result" cols="40" rows="5")
+            textarea#result(cols="40" rows="5")
         script(src="../index.ts")

@@ -41,7 +41,6 @@ export class Controller {
             });
         } else if (req.method == 'POST') {
             repo.create_issue(req.body).then(result => {
-                console.log(result);
                 sendReponse(res, httpStatus.OK, result);
             }).catch((error) => {
                 sendReponse(res, httpStatus.NOT_FOUND, null);

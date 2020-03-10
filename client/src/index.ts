@@ -1,27 +1,55 @@
-let endpoint = document.getElementById('endpoint') as HTMLInputElement;
-endpoint.value = 'http://localhost:3040/api/';
-let route = document.getElementById('route') as HTMLInputElement;
-route.value = 'users';
-let btn = document.getElementById("submitbtn") as HTMLInputElement;
-btn.addEventListener("click", (e: Event) => submit());
+class HTMLIndexElement {
+    apiURL: HTMLInputElement;
+    method: HTMLSelectElement;
+    body: HTMLInputElement;
+    submitBtn: HTMLInputElement;
+    result: HTMLInputElement;
 
-export default async function submit() {
-    console.log('PRESSED !!');
-    let endpoint = document.getElementById('endpoint') as HTMLInputElement;
-    let route = document.getElementById('route') as HTMLInputElement;
+    constructor() {
+        this.apiURL = document.getElementById('apiURL') as HTMLInputElement;
+        this.method = document.getElementById('method') as HTMLSelectElement;
+        this.body = document.getElementById('body') as HTMLInputElement;
+        this.submitBtn = document.getElementById("submitBtn") as HTMLInputElement;
+        this.result = document.getElementById('result') as HTMLInputElement;
+        this.defaults();
+        this.listeners();
+    }
 
-    let url = endpoint.value + route.value;
-    let response = await fetch(url, {
-        method: 'GET',
-        headers: {
-            Accept: 'application/json',
+    defaults() {
+        this.apiURL.value = 'http://localhost:3040/api/repos/plaguera/tfm-testing/issues/3/comments';
+        this.body.value = '{"body":"Comment #2"}';
+        this.method.value = 'POST';
+        if (this.method.value == 'GET') this.body.style.display = 'none';
+        else if (this.method.value == 'POST') this.body.style.display = 'block';
+    }
+
+    listeners() {
+        this.method.addEventListener("change", (e: Event) => {
+            if (this.method.value == 'GET') this.body.style.display = 'none';
+            else if (this.method.value == 'POST') this.body.style.display = 'block';
+        });
+        this.submitBtn.addEventListener("click", (e: Event) => this.submit());
+    }
+
+    async submit() {
+        let parsedBody = JSON.parse(this.body.value);
+        let init = {
+            method: this.method.value,
+            headers: {
+                'Content-Type': 'application/json'
+            }
         }
-    }).then(response => {
-        if (response.ok) {
-            response.json().then(json => {
-                let result = document.getElementById('result') as HTMLInputElement;
-                result.value = JSON.stringify(json, undefined, 4);
-            });
-        }
-    }).catch((e) => console.error(e));
+        if (init['method'] == 'POST')
+            init['body'] = JSON.stringify(parsedBody);
+            
+        return await fetch(this.apiURL.value, init).then(response => {
+            if (response.ok) {
+                response.json().then(json => {
+                    this.result.value = JSON.stringify(json, undefined, 4);
+                });
+            }
+        }).catch((e) => console.error(e));
+    }
 }
+
+let index: HTMLIndexElement = new HTMLIndexElement();
