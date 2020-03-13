@@ -1,8 +1,10 @@
 import express from 'express';
 import cors from 'cors';
 import { Controller } from './controller';
+import { OAuth } from './oauth';
 
 export class Server {
+
     public socket: express.Application;
 
     constructor() {
@@ -40,7 +42,7 @@ export class Server {
     middleware() {
         this.socket.use(express.json());
         this.socket.use(express.urlencoded({
-            extended: true
+            extended: false
         }));
     }
 
@@ -49,7 +51,7 @@ export class Server {
             res.send({ result: "version 0.0.2" });
         });
 
-        this.socket.route("/api/users").get(Controller.user);
+        this.socket.route("/api/user").get(Controller.user);
         this.socket.route("/api/users/:id").get(Controller.user);
         this.socket.route("/api/repos/:user/:repo").get(Controller.repo);
         this.socket.route("/api/repos/:user/:repo/issues").get(Controller.issues);
@@ -57,6 +59,7 @@ export class Server {
         this.socket.route("/api/repos/:user/:repo/issues/:issuenumber/comments").get(Controller.comments);
         this.socket.route("/api/repos/:user/:repo/issues/:issuenumber/comments").post(Controller.comment);
         this.socket.route("/api/repos/:user/:repo/issues/comments/:comment_id").get(Controller.comment);
+        this.socket.route("/oauth/redirect").get(Controller.authorize);
     }
 
 }

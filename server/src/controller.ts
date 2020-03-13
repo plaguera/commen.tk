@@ -1,17 +1,20 @@
-import { User } from './user'
+import httpStatus from 'http-status';
+import { OAuth } from './oauth';
 import { Repository } from './repository'
 import { Request, Response } from 'express';
-import httpStatus from 'http-status';
+import { User } from './user'
 
-const sendReponse = function (res, statusCode, data) {
+const sendReponse = function (res: Response<any>, statusCode: number, data: object | null) {
     res.status(statusCode).json(data);
 };
 
 export class Controller {
 
+    static oauth: OAuth = new OAuth;
+
     static user(req: Request, res: Response) {
         let user = new User(req.params.id || '');
-        user.json('').then(result => {
+        user.get().then(result => {
             sendReponse(res, httpStatus.OK, result);
         }).catch((error) => {
             sendReponse(res, httpStatus.NOT_FOUND, null);
@@ -21,7 +24,7 @@ export class Controller {
 
     static repo(req: Request, res: Response) {
         let repo = new Repository(req.params.user, req.params.repo);
-        repo.json('').then(result => {
+        repo.get().then(result => {
             sendReponse(res, httpStatus.OK, result);
         }).catch((error) => {
             sendReponse(res, httpStatus.NOT_FOUND, null);
@@ -81,6 +84,17 @@ export class Controller {
                 console.error(error);
             });
         }
+    }
+
+    static async authorize(req: Request, res: Response) { 
+        Controller.oauth.access_token(req.query.code).then((result: any) => {
+            res.redirect('http://localhost:1234');
+            //sendReponse(res, httpStatus.OK, result);
+        }).catch((error: any) => {
+            //sendReponse(res, httpStatus.NOT_FOUND, null);
+            console.error(error);
+        });
+        
     }
 
 }

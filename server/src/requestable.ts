@@ -1,25 +1,26 @@
 import { Auth } from './auth';
 import fetch from 'node-fetch';
+import { Controller } from './controller';
 
 export abstract class Requestable {
 
-    private endpoint: string = 'https://api.github.com/';
+    endpoint: string = 'https://api.github.com/';
 
-    abstract get(path: string): string;
+    abstract route(path?: string): string;
 
-    public async fetch(method: string, path: string, data?: Object): Promise<Object> {
-        let headers = {
-            'Accept': 'application/vnd.github.v3+json',
-            'Authorization': 'token ' + Auth.token,
-            'Content-Type': 'application/json',
-        };
-        const init = {
+    async fetch(method: string, path: string, data?: object): Promise<object> {
+        let init = {
             method: method,
-            headers: headers,
+            headers: {
+                'Accept': 'application/vnd.github.v3+json',
+                'Authorization': 'token ' + Controller.oauth.accessToken?.value,
+                'Content-Type': 'application/json',
+            },
             body: JSON.stringify(data)
         };
         console.log(init);
         const res = await fetch(this.endpoint + path, init).catch((error) => console.error(error));
         return await res.json();
     }
+    
 }

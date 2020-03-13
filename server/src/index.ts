@@ -1,5 +1,6 @@
 import { Server } from './server'
 import { Auth } from './auth';
+import { OAuth } from './oauth';
 
 require('dotenv').config();
 Auth.validate();
@@ -10,8 +11,4 @@ server.socket.listen(port, function () {
     console.log(`Listening on port ${port}`);
 });
 
-/*
-    //"dev": "nodemon --watch 'src/**//*.ts' --exec ts-node src/index.ts", sobra // -> /
-    //"start": "parcel serve src/*.html src/index.ts --port 4000",
-    //"build": "parcel build src/*.html src/index.ts"
-*/ 
+process.on('SIGINT', () => { console.log("Bye bye!"); process.exit(); })

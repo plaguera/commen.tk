@@ -3,19 +3,23 @@ class HTMLIndexElement {
     method: HTMLSelectElement;
     body: HTMLInputElement;
     submitBtn: HTMLInputElement;
+    loginBtn: HTMLAnchorElement;
     result: HTMLInputElement;
 
     constructor() {
         this.apiURL = document.getElementById('apiURL') as HTMLInputElement;
         this.method = document.getElementById('method') as HTMLSelectElement;
         this.body = document.getElementById('body') as HTMLInputElement;
-        this.submitBtn = document.getElementById("submitBtn") as HTMLInputElement;
+        this.submitBtn = document.getElementById('submitBtn') as HTMLInputElement;
+        this.loginBtn = document.getElementById('loginBtn') as HTMLAnchorElement;
         this.result = document.getElementById('result') as HTMLInputElement;
         this.defaults();
         this.listeners();
     }
 
     defaults() {
+        this.loginBtn.href = 'https://github.com/login/oauth/authorize?client_id=3de3fe66bebbf5945dab'
+        console.log(this.loginBtn.href);
         this.apiURL.value = 'http://localhost:3040/api/repos/plaguera/tfm-testing/issues/3/comments';
         this.body.value = '{"body":"Comment #2"}';
         this.method.value = 'POST';

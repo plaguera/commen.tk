@@ -2,20 +2,20 @@ import { Requestable } from './requestable'
 
 export class User extends Requestable {
 
-    username: string;
+    username: string | undefined;
 
-    constructor(username: string) {
+    constructor(username?: string) {
         super();
         this.username = username;
     }
 
-    get(path: string): string {
+    route(path?: string): string {
         if (this.username)
             return path ? `users/${this.username}/${path}` : `users/${this.username}`;
         return 'user'
     }
 
-    async json(path: string) {
-        return await this.fetch('GET', this.get(path));
+    async get(path?: string) {
+        return await this.fetch('GET', this.route(path));
     }
 }
