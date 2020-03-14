@@ -1,13 +1,18 @@
 doctype html
 html
-    head
+    header
         meta(charset='utf-8')
         meta(http-equiv='X-UA-Compatible' content='IE=edge')
         meta(name='description' content='Some description')
-        meta(name='viewport' content='width=device-width, initial-scale=1')
+        meta(name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no')
+        link(rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css")
+        link(rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-social/5.1.1/bootstrap-social.min.css")
+        link(rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css")
         link(rel="stylesheet" type="text/css" href="../public/style.scss")
+        //script(src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js")
         title Github API
 
+    body
         .form
             h4 API URI
             div
@@ -17,8 +22,13 @@ html
                     option(value="GET") GET
                     option(value="POST") POST
             textarea#body(cols="100" rows="20")
-            input#submitBtn(type="button" value="Submit")
-            a#loginBtn(href="/login") Log In with Github
+            div#buttons
+                div
+                    button#submitBtn.btn.btn-dark(type="button") Submit
+                div
+                    a#signinBtn.btn.btn-social.btn-lg.btn-github(href="")
+                        span.fa.fa-github
+                        |  Sign in with GitHub
         .result
             h4 Result
             textarea#result(cols="40" rows="5")

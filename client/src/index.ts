@@ -3,7 +3,7 @@ class HTMLIndexElement {
     method: HTMLSelectElement;
     body: HTMLInputElement;
     submitBtn: HTMLInputElement;
-    loginBtn: HTMLAnchorElement;
+    signinBtn: HTMLAnchorElement;
     result: HTMLInputElement;
 
     constructor() {
@@ -11,18 +11,18 @@ class HTMLIndexElement {
         this.method = document.getElementById('method') as HTMLSelectElement;
         this.body = document.getElementById('body') as HTMLInputElement;
         this.submitBtn = document.getElementById('submitBtn') as HTMLInputElement;
-        this.loginBtn = document.getElementById('loginBtn') as HTMLAnchorElement;
+        this.signinBtn = document.getElementById('signinBtn') as HTMLAnchorElement;
         this.result = document.getElementById('result') as HTMLInputElement;
         this.defaults();
         this.listeners();
     }
 
     defaults() {
-        this.loginBtn.href = 'https://github.com/login/oauth/authorize?client_id=3de3fe66bebbf5945dab'
-        console.log(this.loginBtn.href);
-        this.apiURL.value = 'http://localhost:3040/api/repos/plaguera/tfm-testing/issues/3/comments';
+        this.signinBtn.href = 'https://github.com/login/oauth/authorize?client_id=3de3fe66bebbf5945dab'
+        //console.log(this.signinBtn.href);
+        this.apiURL.value = 'http://localhost:3040/api/user'; // repos/plaguera/tfm-testing/issues/3/comments
         this.body.value = '{"body":"Comment #2"}';
-        this.method.value = 'POST';
+        this.method.value = 'GET';
         if (this.method.value == 'GET') this.body.style.display = 'none';
         else if (this.method.value == 'POST') this.body.style.display = 'block';
     }

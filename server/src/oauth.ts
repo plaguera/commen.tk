@@ -10,7 +10,7 @@ export class OAuth {
 
     accessToken: AccessToken = { value: '', type: '', scope: '' };
     accessTokenURL: string = 'https://github.com/login/oauth/access_token';
-    code: string = 'null';
+    code: string = '';
 
     getParamURL(): string {
         return  this.accessTokenURL
@@ -31,7 +31,7 @@ export class OAuth {
         this.accessToken.value = json['access_token'];
         this.accessToken.type = json['token_type'];
         this.accessToken.scope = json['scope'];
-        
+
         return res;
     }
 

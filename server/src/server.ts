@@ -1,7 +1,8 @@
 import express from 'express';
 import cors from 'cors';
+let session = require('express-session');
+let FileStore = require('session-file-store')(session);
 import { Controller } from './controller';
-import { OAuth } from './oauth';
 
 export class Server {
 
@@ -43,6 +44,18 @@ export class Server {
         this.socket.use(express.json());
         this.socket.use(express.urlencoded({
             extended: false
+        }));
+        this.socket.use(session({
+            store: new FileStore({
+                path: './session-store'
+            }),
+            secret: 'keyboard cat',
+            name: '_github_api_',
+            resave: false,
+            saveUninitialized: false,
+            cookie: {
+                maxAge: 60 * 60 * 24
+            }
         }));
     }
 
