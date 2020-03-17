@@ -21,6 +21,10 @@ export class Repository extends Requestable {
         return await this.fetch('GET', this.route());
     }
 
+    async issue(issue_id: number) {
+        return await this.fetch('GET', this.route(`issues/${issue_id}`));
+    }
+
     async issues() {
         return await this.fetch('GET', this.route('issues'));
     }
