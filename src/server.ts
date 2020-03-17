@@ -29,7 +29,7 @@ export class Server {
             preflightContinue: false
         };
         this.socket.use(cors(options));
-        this.socket.use("/public", express.static(__dirname + '/../dist/public'));
+        this.socket.use("/public", express.static(__dirname + '/public'));
     }
 
     middleware() {
