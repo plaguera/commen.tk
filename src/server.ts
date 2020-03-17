@@ -31,7 +31,8 @@ export class Server {
             preflightContinue: false
         };
         this.socket.use(cors(options));
-        this.socket.use("/public", express.static(__dirname + '/public'));
+        console.log(process.cwd())
+        this.socket.use('/public', express.static(path.join(process.cwd(), 'public')))
     }
 
     middleware() {
@@ -43,7 +44,8 @@ export class Server {
 
     routes() {
         this.socket.route("/").get((req, res) => {
-            res.sendFile(path.join(__dirname + '/public/html/client.html'));
+            res.sendFile(process.cwd() + '/public/html/client.html');
+
         });
 
         this.socket.get('*', Controller.authorization);
