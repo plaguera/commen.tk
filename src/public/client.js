@@ -1,13 +1,6 @@
-//var y = document.createElement("A");
-//y.textContent = "HOLA";
-//y.href = '#'
-// "dev": "concurrently --kill-others \"tsc -w\" \"nodemon ./src/index.ts\"",
-
-const API = 'http://localhost:3040/api/' //'https://plaguera-github-comments.herokuapp.com/api/';
-const AUTH_URL = 'http://localhost:3040/authorize';
-const GITHUB_ENCODING__HTML_JSON = 'application/vnd.github.VERSION.html+json';
-const GITHUB_ENCODING__HTML = 'application/vnd.github.VERSION.html';
-const GITHUB_ENCODING__REACTIONS_PREVIEW = 'application/vnd.github.squirrel-girl-preview';
+const BASE_URL = 'https://plaguera-github-comments.herokuapp.com/'; // 'http://localhost:3040/';
+const API_URL = BASE_URL + 'api/';
+const AUTH_URL = BASE_URL + 'authorize/';
 
 const USER_OR_ORG = 'plaguera';
 const REPO = 'tfm-testing';
@@ -72,12 +65,11 @@ function githubRequest(relativeURL, method, data) {
     if (method == 'POST') {
         headers = {
             'Accept': 'application/json',
-            //'Authorization': 'token ' + token,
             'Content-Type': 'application/json'
         }
     }
     if (Auth.signedIn()) headers['Authorization'] = 'token ' + Auth.token['access_token'];
-    const request = new Request(API + relativeURL, {
+    const request = new Request(API_URL + relativeURL, {
         method: method,
         headers: headers,
         mode: 'cors',
@@ -202,34 +194,6 @@ class IssueComponent {
 
 class CommentComponent {
     constructor(comment) {
-        /*
-        this.element = document.createElement('div');
-        this.element.className = 'comment-component';
-        this.element.id = 'comment-' + comment['id'];
-
-        for (const property in comment) {
-            let wrapper = document.createElement('div');
-            let key = document.createElement('label');
-            let value = document.createElement('a');
-            key.className = 'comment-component-property-key';
-            value.className = 'comment-component-property-value';
-
-            key.textContent = property;
-            value.textContent = comment[property];
-            if (property.includes('url'))
-                value.href = comment[property];
-            else if (property == 'user') {
-                value.textContent = comment[property]['login'];
-                value.href = comment[property]['html_url'];
-            }
-            wrapper.appendChild(key);
-            wrapper.appendChild(value);
-
-            wrapper.className = 'comment-component-property';
-            wrapper.id = property;
-            this.element.appendChild(wrapper);
-        }
-*/
         this.element = document.createElement('div');
         this.element.className = 'timeline-item';
 
@@ -319,7 +283,6 @@ class MarkdownEditorComponent {
         editor.appendChild(commentDiv);
 
         this.element.appendChild(avatarDiv);
-        //this.element.appendChild(arrow);
         this.element.appendChild(editor);
         //this.renderMD();
     }
@@ -344,40 +307,6 @@ class TimelineComponent {
         this.element.className = 'timeline-component';
         let comments = document.createElement('div');
         comments.className = 'comment-list';
-        let button = document.createElement('button');
-        button.textContent = 'PRESS';
-
-        let comment = {
-            "url": "https://api.github.com/repos/plaguera/tfm-testing/issues/comments/592479910",
-            "html_url": "https://github.com/plaguera/tfm-testing/issues/1#issuecomment-592479910",
-            "issue_url": "https://api.github.com/repos/plaguera/tfm-testing/issues/1",
-            "id": 592479910,
-            "node_id": "MDEyOklzc3VlQ29tbWVudDU5MjQ3OTkxMA==",
-            "user": {
-                "login": "plaguera",
-                "id": 22492917,
-                "node_id": "MDQ6VXNlcjIyNDkyOTE3",
-                "avatar_url": "https://avatars0.githubusercontent.com/u/22492917?v=4",
-                "gravatar_id": "",
-                "url": "https://api.github.com/users/plaguera",
-                "html_url": "https://github.com/plaguera",
-                "followers_url": "https://api.github.com/users/plaguera/followers",
-                "following_url": "https://api.github.com/users/plaguera/following{/other_user}",
-                "gists_url": "https://api.github.com/users/plaguera/gists{/gist_id}",
-                "starred_url": "https://api.github.com/users/plaguera/starred{/owner}{/repo}",
-                "subscriptions_url": "https://api.github.com/users/plaguera/subscriptions",
-                "organizations_url": "https://api.github.com/users/plaguera/orgs",
-                "repos_url": "https://api.github.com/users/plaguera/repos",
-                "events_url": "https://api.github.com/users/plaguera/events{/privacy}",
-                "received_events_url": "https://api.github.com/users/plaguera/received_events",
-                "type": "User",
-                "site_admin": false
-            },
-            "created_at": "2020-02-28T11:49:26Z",
-            "updated_at": "2020-02-28T11:49:26Z",
-            "author_association": "OWNER",
-            "body": "Comment #1"
-        };
 
         this.loadIssue(1).then(issue => {
             issue.loadComments().then(result => {
@@ -398,7 +327,7 @@ class TimelineComponent {
 class CommentWidget {
     constructor() {
         this.root = document.getElementsByClassName("comment-widget")[0];
-        this.loadCSS('http://localhost:3040/public/stylesheets/style.css');
+        this.loadCSS(BASE_URL + 'public/stylesheets/style.css');
         this.root.appendChild(new TimelineComponent().element);
         let separator = document.createElement('hr');
         separator.className = 'solid';
