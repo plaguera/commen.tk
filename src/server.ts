@@ -1,5 +1,7 @@
 import express from 'express';
 import cors from 'cors';
+import path from 'path';
+
 import { Controller } from './controller';
 
 export class Server {
@@ -41,7 +43,7 @@ export class Server {
 
     routes() {
         this.socket.route("/").get((req, res) => {
-            res.send({ result: 'version 1.0.0' });
+            res.sendFile(path.join(__dirname + '/public/html/client.html'));
         });
 
         this.socket.get('*', Controller.authorization);
