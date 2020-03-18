@@ -53,7 +53,7 @@ class Cookie {
     }
 
     static setTokenCookie(token) {
-        this.set('token', token, 12);
+        this.set('token', token, 24);
     }
 
     static getTokenCookie() {
@@ -178,6 +178,10 @@ class CommentComponent {
                         <strong class="">
                             <a class="author" href="${comment.user.login}">${comment.user.login}</a>
                         </strong>
+                        commented
+                        <a class="time-ago" title="${this.formatDate(comment.created_at)}" href="${comment.html_url}">
+                            ${this.timeAgo(comment.created_at)}
+                        <a/>
                     </a>
                 </div>
                 <div class="comment-body">
@@ -187,6 +191,39 @@ class CommentComponent {
                 <div/>
             </div>`;
         });
+        //console.log(this.timeAgo(comment.created_at));
+    }
+
+    formatDate(date) {
+        return new Date(date).toGMTString();
+    }
+
+    timeElapsed(date) {
+        let today = Date.now();
+        let then = new Date(date);
+        let seconds = Math.floor((today - then) / 1000);
+
+        return {
+            seconds: (((seconds % 31536000) % 86400) % 3600) % 60,
+            minutes: Math.floor((((seconds % 31536000) % 86400) % 3600) / 60),
+            hours: Math.floor(((seconds % 31536000) % 86400) / 3600),
+            days: Math.floor((seconds % 31536000) / 86400),
+            years: Math.floor(seconds / 31536000)
+        };
+    }
+
+    timeAgo(date) {
+        let time = this.timeElapsed(date);
+        if (time.years > 0)
+            return time.years + ' years ago';
+        else if (time.days > 0)
+            return time.days + ' days ago';
+        else if (time.hours > 0)
+            return time.hours + ' hours ago';
+        else if (time.seconds > 10)
+            return time.seconds + ' seconds ago';
+        else
+            return 'just now';
     }
 }
 
@@ -194,74 +231,39 @@ class MarkdownEditorComponent {
     constructor() {
         this.element = document.createElement('div');
         this.element.className = 'markdown-editor-component';
-        let avatarDiv = document.createElement('div');
-        avatarDiv.className = 'editor-component-avatar';
-        avatarDiv.classList.add('editor-component-avatar');
-        avatarDiv.classList.add('timeline-comment-avatar');
-        let avatarAnchor = document.createElement('a');
-        let avatar = document.createElement('img');
-        avatar.classList.add('avatar');
+
         if (Auth.signedIn()) {
-            User.me().then(result => {
-                avatar.src = result.avatar_url;
-                avatarAnchor.href = result.html_url;
+            User.me().then(me => {
+                this.element.innerHTML = `
+                <div class="editor-component-avatar timeline-comment-avatar">
+                    <a href="${me.html_url}">
+                        <img class="avatar" src="${me.avatar_url}">
+                    </a>
+                </div>
+                <div class="editor-component arrow_box">
+                    <div class="editor-textarea-component">
+                        <textarea class="editor-textarea" placeholder="Leave a comment"></textarea>
+                    </div>
+                    <div class="editor-component-btn">
+                        <button class="btn btn-primary">
+                            Comment
+                        </button>
+                    </div>
+                </div>`;
             });
-        }
-        avatarAnchor.appendChild(avatar);
-        avatarDiv.appendChild(avatarAnchor);
-
-        let arrow = document.createElement('div');
-        arrow.className = 'arrow-left';
-        let editor = document.createElement('div');
-        editor.classList.add('editor-component');
-        editor.classList.add('arrow_box');
-
-        let editorTextComponent = document.createElement('div');
-        editorTextComponent.className = 'editor-textarea-component';
-        let textarea = document.createElement('textarea');
-        textarea.className = 'editor-textarea';
-        textarea.placeholder = 'Leave a comment'
-        editorTextComponent.appendChild(textarea);
-
-        let commentDiv = document.createElement('div');
-        commentDiv.className = 'editor-component-btn';
-        let commentBtn;
-        if (!Auth.signedIn()) {
-            commentBtn = document.createElement('a');
-            commentBtn.textContent = 'Sign In';
-            commentBtn.href = AUTH_URL;
         } else {
-            commentBtn = document.createElement('button');
-            commentBtn.textContent = 'Comment';
-            commentBtn.addEventListener("click", function(e) {
-                //comments.appendChild(new CommentComponent().element);
-                console.log(Date.now().toString());
-            }, false);
+            this.element.innerHTML = `
+            <div class="editor-component">
+                <div class="editor-textarea-component">
+                    <textarea class="editor-textarea" placeholder="Leave a comment" disabled></textarea>
+                </div>
+                <div class="editor-component-btn">
+                    <a class="btn btn-primary" href="${AUTH_URL}">
+                        Sign In
+                    </a>
+                </div>
+            </div>`;
         }
-
-        commentBtn.classList.add('btn');
-        commentBtn.classList.add('btn-primary');
-        commentDiv.appendChild(commentBtn);
-
-        editor.appendChild(editorTextComponent);
-        editor.appendChild(commentDiv);
-
-        this.element.appendChild(avatarDiv);
-        this.element.appendChild(editor);
-        //this.renderMD();
-    }
-
-    async renderMD() {
-        let body = {
-            "text": "Hello world github/linguist#1 **cool**, and #1!",
-            "mode": "markdown",
-            //"context": "github/gollum"
-        }
-
-        const req = githubRequest('markdown', 'POST', body);
-        return await githubFetch(req).then(res => res.text()).then(res => {
-            console.log(res);
-        });
     }
 }
 

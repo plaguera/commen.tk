@@ -169,7 +169,7 @@ img {
 }
 
 hr.solid {
-    border-top: 1px solid #bbb;
+    border-top: 1px solid #ccc;
     border-radius: 1pc;
     margin-left: 10px;
     margin-right: 10px;
@@ -199,6 +199,26 @@ hr.solid {
 }
 
 .author:hover {
+    text-decoration: underline;
+}
+
+.comment-header-anchor {
+    font-size: 11px;
+    font-weight: 400;
+}
+
+.time-ago {
+    color: rgb(175, 175, 175);
+    height: auto;
+    line-height: 21px;
+    overflow-wrap: break-word;
+    text-decoration-color: rgb(175, 175, 175);
+    text-decoration-line: none;
+    text-decoration-style: solid;
+    text-shadow: none;
+}
+
+.time-ago:hover {
     text-decoration: underline;
 }
 
