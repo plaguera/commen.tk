@@ -119,7 +119,7 @@
     display: flex;
 }
 
-.timeline-comment-avatar .avatar {
+.timeline-comment-avatar a .avatar {
     width: 40px;
     height: 40px;
 }
@@ -183,9 +183,23 @@ hr.solid {
 
 .comment-body {
     color: #ccc;
-    padding: 10px;
+    padding: 15px;
     padding-top: 0px;
     padding-bottom: 0px;
+}
+
+.author {
+    color: rgb(210, 210, 210);
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration-color: rgb(210, 210, 210);
+    text-decoration-line: none;
+    text-decoration-style: solid;
+    text-overflow: ellipsis;
+}
+
+.author:hover {
+    text-decoration: underline;
 }
 
 body {

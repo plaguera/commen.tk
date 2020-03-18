@@ -1,4 +1,5 @@
-const BASE_URL = 'https://plaguera-github-comments.herokuapp.com/'; // 'http://localhost:3040/';
+//const BASE_URL = 'https://plaguera-github-comments.herokuapp.com/';
+const BASE_URL = 'http://localhost:3040/';
 const API_URL = BASE_URL + 'api/';
 const AUTH_URL = BASE_URL + 'authorize/';
 
@@ -103,6 +104,11 @@ function githubFetch(request) {
     });
 }
 
+async function renderMarkdown(body) {
+    const req = githubRequest('markdown', 'POST', { text: body, mode: 'markdown' });
+    return await githubFetch(req).then(res => res.text());
+}
+
 class Comment {
     constructor(json) {
         this.url = json['url'];
@@ -155,79 +161,32 @@ class User {
     }
 }
 
-class IssueComponent {
-    constructor(issue) {
-        this.issue = issue;
-        this.element = document.createElement('div');
-        this.element.className = 'issue-component';
-        this.element.id = 'issue-' + issue['number'];
-
-        for (const property in issue) {
-            let wrapper = document.createElement('div');
-            let key = document.createElement('label');
-            let value = document.createElement('a');
-            key.className = 'issue-component-property-key';
-            value.className = 'issue-component-property-value';
-
-            key.textContent = property;
-            value.textContent = issue[property];
-            if (property.includes('url'))
-                value.href = issue[property];
-            else if (property == 'user') {
-                value.textContent = issue[property]['login'];
-                value.href = issue[property]['html_url'];
-            }
-            wrapper.appendChild(key);
-            wrapper.appendChild(value);
-
-            wrapper.className = 'issue-component-property';
-            wrapper.id = property;
-            this.element.appendChild(wrapper);
-        }
-
-        this.issue.loadComments().then(() => {
-            for (let comment of this.issue.comments)
-                this.element.appendChild(new CommentComponent(comment).element);
-        });
-    }
-}
-
 class CommentComponent {
     constructor(comment) {
         this.element = document.createElement('div');
         this.element.className = 'timeline-item';
-
-        let avatarDiv = document.createElement('div');
-        avatarDiv.classList.add('comment-component-avatar');
-        avatarDiv.classList.add('timeline-comment-avatar');
-        let avatar = document.createElement('img');
-        avatar.classList.add('avatar');
-        avatar.src = comment.user.avatar_url;
-        avatarDiv.appendChild(avatar);
-
-        let timelineComment = document.createElement('div');
-        timelineComment.classList.add('timeline-comment');
-        timelineComment.classList.add('arrow_box');
-
-        let commentHeader = document.createElement('div');
-        commentHeader.className = 'comment-header';
-        let headerAnchor = document.createElement('a');
-        headerAnchor.className = 'comment-header-anchor';
-        let headerUsername = document.createElement('strong');
-        headerUsername.className = 'comment-header-username';
-        headerUsername.textContent = comment.user.login;
-
-        let commentBody = document.createElement('p');
-        commentBody.className = 'comment-body';
-        commentBody.textContent = comment.body;
-
-        headerAnchor.appendChild(headerUsername);
-        commentHeader.appendChild(headerAnchor);
-        timelineComment.appendChild(commentHeader);
-        timelineComment.appendChild(commentBody);
-
-        this.element.appendChild(avatarDiv);
-        this.element.appendChild(timelineComment);
+        renderMarkdown(comment.body).then(body => {
+            this.element.innerHTML = `
+            <div class="comment-component-avatar timeline-comment-avatar">
+                <a href="${comment.user.html_url}">
+                    <img class="avatar" src="${comment.user.avatar_url}" alt="${comment.user.login}">
+                </a>
+            </div>
+            <div class="timeline-comment arrow_box">
+                <div class="comment-header">
+                    <a class="comment-header-anchor">
+                        <strong class="">
+                            <a class="author" href="${comment.user.login}">${comment.user.login}</a>
+                        </strong>
+                    </a>
+                </div>
+                <div class="comment-body">
+                <p>
+                    ${body}
+                </p>
+                <div/>
+            </div>`;
+        });
     }
 }
 
@@ -239,12 +198,17 @@ class MarkdownEditorComponent {
         avatarDiv.className = 'editor-component-avatar';
         avatarDiv.classList.add('editor-component-avatar');
         avatarDiv.classList.add('timeline-comment-avatar');
+        let avatarAnchor = document.createElement('a');
         let avatar = document.createElement('img');
         avatar.classList.add('avatar');
         if (Auth.signedIn()) {
-            User.me().then(result => avatar.src = result.avatar_url);
+            User.me().then(result => {
+                avatar.src = result.avatar_url;
+                avatarAnchor.href = result.html_url;
+            });
         }
-        avatarDiv.appendChild(avatar);
+        avatarAnchor.appendChild(avatar);
+        avatarDiv.appendChild(avatarAnchor);
 
         let arrow = document.createElement('div');
         arrow.className = 'arrow-left';
@@ -310,8 +274,9 @@ class TimelineComponent {
 
         this.loadIssue(1).then(issue => {
             issue.loadComments().then(result => {
-                for (let comment of result)
+                for (let comment of result) {
                     comments.appendChild(new CommentComponent(new Comment(comment)).element);
+                }
                 this.element.appendChild(comments);
             });
         });

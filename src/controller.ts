@@ -11,6 +11,10 @@ const sendReponse = function (res: Response<any>, statusCode: number, data: obje
     res.status(statusCode).json(data);
 };
 
+const sendReponseText = function (res: Response<any>, statusCode: number, data: string | void) {
+    res.status(statusCode).send(data);
+};
+
 export class Controller {
 
     static oauth: OAuth = new OAuth;
@@ -130,7 +134,8 @@ export class Controller {
     }
 
     static async markdown(req: Request, res: Response) {
-        Markdown.render(req.body).then(result => console.log(result));
+        console.log(req.body);
+        Markdown.render(req.body).then(result => sendReponseText(res, httpStatus.OK, result));
     }
 
 }
