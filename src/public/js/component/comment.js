@@ -59,6 +59,10 @@ export class CommentComponent {
             return time.days + ' days ago';
         else if (time.hours > 0)
             return time.hours + ' hours ago';
+        else if (time.minutes > 1)
+            return time.minutes + ' minutes ago';
+        else if (time.minutes > 0)
+            return time.minutes + ' minute ago';
         else if (time.seconds > 10)
             return time.seconds + ' seconds ago';
         else

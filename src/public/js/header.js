@@ -23,6 +23,8 @@ export class Header {
         inputUser.addEventListener('keyup', (event) => {
             if (event.keyCode == 13) {
                 event.preventDefault();
+                inputRepo.innerHTML = '';
+                inputIssue.innerHTML = '';
                 Github.repos(inputUser.value).then(result => {
                     for (let repo of result) {
                         let option = document.createElement('option');
@@ -36,6 +38,7 @@ export class Header {
 
         inputRepo.addEventListener('change', (event) => {
             event.preventDefault();
+            inputIssue.innerHTML = '';
             Github.issues(inputUser.value, inputRepo.value).then(result => {
                 for (let issue of result) {
                     let option = document.createElement('option');
