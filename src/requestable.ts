@@ -12,7 +12,6 @@ export abstract class Requestable {
             method: method,
             headers: {
                 'Accept': 'application/vnd.github.v3+json',
-                //'Authorization': 'token ' + Controller.oauth.accessToken?.value,
                 'Content-Type': 'application/json',
             }
         };

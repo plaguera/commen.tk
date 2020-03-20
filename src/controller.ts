@@ -8,7 +8,7 @@ import { User } from './user'
 import { Markdown } from './markdown';
 
 const sendReponse = function (res: Response<any>, statusCode: number, data: object | null) {
-    console.log(data);
+    //console.log(data);
     res.status(statusCode).json(data);
 };
 
@@ -21,7 +21,8 @@ export class Controller {
     static oauth: OAuth = new OAuth;
 
     static authorization(req: Request, res: Response, next){
-        Controller.oauth.accessToken = req.headers['authorization']?.substring(5) || '';
+        if (req.cookies['token'])
+            Controller.oauth.accessToken = JSON.parse(req.cookies['token'])['access_token'];
         next();
     }
     

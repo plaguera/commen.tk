@@ -16,8 +16,6 @@ export class Github {
                 'Content-Type': 'application/json'
             }
         }
-        if (Auth.signedIn()) headers['Authorization'] = 'token ' + Auth.token['access_token'];
-        console.log(Auth.signedIn() ? 'Auth = ' + headers['Authorization'] : 'Not Signed In');
         const request = new Request(API_URL + relativeURL, {
             method: method,
             headers: headers,

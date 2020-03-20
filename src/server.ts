@@ -1,6 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import path from 'path';
+var cookieParser = require('cookie-parser')
 
 import { Controller } from './controller';
 
@@ -40,6 +41,7 @@ export class Server {
         this.socket.use(express.urlencoded({
             extended: false
         }));
+        this.socket.use(cookieParser())
     }
 
     routes() {
