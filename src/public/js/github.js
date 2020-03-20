@@ -3,8 +3,8 @@ import { Auth } from './auth';
 import { Issue, Repository } from './types';
 import { CommentWidget } from './comment-widget';
 
-//const BASE_URL = 'https://plaguera-github-comments.herokuapp.com/';
-const BASE_URL = 'http://localhost:3040/';
+const BASE_URL = 'https://plaguera-github-comments.herokuapp.com/';
+//const BASE_URL = 'http://localhost:3040/';
 const API_URL = BASE_URL + 'api/';
 export const AUTH_URL = BASE_URL + 'authorize/';
 
