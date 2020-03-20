@@ -1,6 +1,7 @@
 import { Auth } from "../auth";
 import { User } from "../types";
-import { AUTH_URL } from "../github"
+import { AUTH_URL, Github } from "../github"
+import { CommentWidget } from "../comment-widget";
 
 export class EditorComponent {
     constructor() {
@@ -20,18 +21,18 @@ export class EditorComponent {
                         <button class="tab-nav-btn" id="tab-nav-btn-preview">Preview</button>
                     </div>
                     <div class="editor-textarea tab" id="tab-editor">
-                        <textarea placeholder="Leave a comment"></textarea>
+                        <textarea placeholder="Leave a comment" id="textarea-comment"></textarea>
                     </div>
                     <div class="editor-preview tab" style="display:none" id="tab-preview">
                         <div class="markdown-render"></div>
                     </div>
                     <div class="editor-buttons">
-                        <button class="btn btn-primary">
+                        <button class="btn btn-primary" id="btn-comment">
                             Comment
                         </button>
                     </div>
                 </div>`;
-                let editor = this.element.getElementsByClassName('editor-textarea')[0].firstChild;
+                let editor = this.element.getElementsByTagName('textarea').namedItem('textarea-comment');
                 let render = this.element.getElementsByClassName('markdown-render')[0];
                 let tabNavBtns = this.element.getElementsByClassName('tab-nav-btn');
                 let tabs = this.element.getElementsByClassName('tab');
@@ -49,11 +50,25 @@ export class EditorComponent {
                 btnPreview.addEventListener('click', (event) => {
                     if (event.currentTarget.classList.contains('active')) return;
                     if (editor.value.trim() === '') render.innerHTML = 'Nothing to preview';
-                    else renderMarkdown(editor.value).then(result => render.innerHTML = result);
+
+                    else {
+                        render.innerHTML = 'Loading preview...';
+                        Github.renderMarkdown(editor.value).then(result => render.innerHTML = result);
+                    }
                     btnWrite.classList.remove('active');
                     event.currentTarget.classList.add('active');
                     tabs.namedItem('tab-editor').style.display = 'none';
                     tabs.namedItem('tab-preview').style.display = 'block';
+                });
+
+                let btnComment = this.element.getElementsByTagName('button').namedItem('btn-comment');
+                btnComment.addEventListener('click', (event) => {
+                    if (editor.value.trim() === '') return;
+                    Github.renderMarkdown(editor.value).then(result => {
+                        Github.createComment(result);
+                        CommentWidget.reloadTimeline();
+                    });
+                    editor.value = '';
                 });
             });
 

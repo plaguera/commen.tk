@@ -26,7 +26,8 @@ export class OAuth {
         if (referer)
             this.redirectURI = referer;
         return 'https://github.com/login/oauth/authorize'
-                + `?client_id=${process.env.CLIENT_ID}`;
+                + `?client_id=${process.env.CLIENT_ID}`
+                + `&scope=public_repo`;
                 //+ `?redirect_uri=${this.redirectURI}`;
     }
 

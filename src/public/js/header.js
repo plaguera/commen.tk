@@ -1,6 +1,7 @@
 import '../scss/header.scss';
 import { Github } from './github';
 import { TimelineComponent } from './component/timeline';
+import { CommentWidget } from './comment-widget';
 
 export class Header {
     constructor() {
@@ -47,7 +48,7 @@ export class Header {
 
         inputIssue.addEventListener('change', (event) => {
             event.preventDefault();
-            TimelineComponent.instance.loadIssue(inputUser.value, inputRepo.value, inputIssue.value);
+            CommentWidget.setAttributes(inputUser.value, inputRepo.value, inputIssue.value);
         });
     }
 }

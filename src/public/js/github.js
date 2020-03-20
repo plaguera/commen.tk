@@ -1,6 +1,7 @@
 import 'idempotent-babel-polyfill';
 import { Auth } from './auth';
 import { Issue, Repository } from './types';
+import { CommentWidget } from './comment-widget';
 
 //const BASE_URL = 'https://plaguera-github-comments.herokuapp.com/';
 const BASE_URL = 'http://localhost:3040/';
@@ -50,6 +51,12 @@ export class Github {
     static async renderMarkdown(body) {
         const req = Github.request('markdown', 'POST', { text: body, mode: 'markdown' });
         return await Github.fetch(req).then(res => res.text());
+    }
+
+    static async createComment(comment) {
+        let url = `repos/${CommentWidget.attributes.user}/${CommentWidget.attributes.repo}/issues/${CommentWidget.attributes.issue}/comments`;
+        const req = Github.request(url, 'POST', { 'body': comment });
+        return await Github.fetch(req).then(res => res.json());
     }
 
     static async repos(user) {
