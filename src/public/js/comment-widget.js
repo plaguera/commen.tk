@@ -12,7 +12,13 @@ export class CommentWidget {
         this.element.appendChild(new EditorComponent().element);
     }
 
-    static init(htmlElement) {
-        CommentWidget.instance = new CommentWidget(htmlElement);
+    static init(data) {
+        let root = document.body.getElementsByClassName('comment-widget')[0];
+        let separator = document.createElement('hr');
+        separator.className = 'solid';
+
+        root.appendChild(new TimelineComponent(data).element);
+        root.appendChild(separator);
+        root.appendChild(new EditorComponent().element);
     }
 }

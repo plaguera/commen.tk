@@ -8,6 +8,7 @@ import { User } from './user'
 import { Markdown } from './markdown';
 
 const sendReponse = function (res: Response<any>, statusCode: number, data: object | null) {
+    console.log(data);
     res.status(statusCode).json(data);
 };
 
@@ -119,15 +120,6 @@ export class Controller {
 
     static async authorize(req: Request, res: Response) {
         res.redirect(Controller.oauth.authorize(req.headers.referer));
-        /*console.log(req.query);
-        Controller.oauth.access_token(req.query.code).then((result: any) => {
-            //res.redirect('http://localhost:1234');
-            //sendReponse(res, httpStatus.OK, result);
-        }).catch((error: any) => {
-            //sendReponse(res, httpStatus.NOT_FOUND, null);
-            console.error(error);
-        });
-        */
     }
 
     static async access_token(req: Request, res: Response) {
