@@ -21,13 +21,22 @@ export class Controller {
 
     static authorization(req: Request, res: Response, next){
         Controller.oauth.accessToken = req.headers['authorization']?.substring(5) || '';
-        console.log(Controller.oauth.accessToken);
         next();
     }
     
     static user(req: Request, res: Response) {
         let user = new User(req.params.id || '');
         user.get().then(result => {
+            sendReponse(res, httpStatus.OK, result);
+        }).catch((error) => {
+            sendReponse(res, httpStatus.NOT_FOUND, null);
+            console.error(error);
+        });
+    }
+
+    static repos(req: Request, res: Response) {
+        let user = new User(req.params.id || '');
+        user.repos().then(result => {
             sendReponse(res, httpStatus.OK, result);
         }).catch((error) => {
             sendReponse(res, httpStatus.NOT_FOUND, null);
@@ -59,7 +68,6 @@ export class Controller {
         let repo = new Repository(req.params.user, req.params.repo);
         if (req.method == 'GET') { 
             repo.issues().then(result => {
-                //(result as Array<Object>).sort((a, b) => { return a['number'] - b['number']; });
                 sendReponse(res, httpStatus.OK, result);
             }).catch((error) => {
                 sendReponse(res, httpStatus.NOT_FOUND, null);
@@ -122,11 +130,6 @@ export class Controller {
         */
     }
 
-    static async authorized(req: Request, res: Response) {
-        console.log(req.session !== undefined && req.session.access_token !== undefined)
-        res.json({ logged_in: req.session !== undefined && req.session.access_token !== undefined });
-    }
-
     static async access_token(req: Request, res: Response) {
         Controller.oauth.access_token(req.query.code).then(result => {
             res.redirect(Controller.oauth.redirectURI + '?' + querystring.stringify(result));
@@ -134,7 +137,6 @@ export class Controller {
     }
 
     static async markdown(req: Request, res: Response) {
-        console.log(req.body);
         Markdown.render(req.body).then(result => sendReponseText(res, httpStatus.OK, result));
     }
 

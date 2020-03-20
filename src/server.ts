@@ -32,7 +32,7 @@ export class Server {
         };
         this.socket.use(cors(options));
         console.log(process.cwd())
-        this.socket.use('/public', express.static(path.join(process.cwd(), 'public')))
+        this.socket.use('/public', express.static(path.join(process.cwd(), 'dist/public')))
     }
 
     middleware() {
@@ -44,14 +44,14 @@ export class Server {
 
     routes() {
         this.socket.route("/").get((req, res) => {
-            res.sendFile(process.cwd() + '/public/html/client.html');
-
+            res.sendFile(path.join(process.cwd(), 'dist/public/index.html'));
         });
 
         this.socket.get('*', Controller.authorization);
 
         this.socket.route("/api/user").get(Controller.user);
         this.socket.route("/api/users/:id").get(Controller.user);
+        this.socket.route("/api/users/:id/repos").get(Controller.repos);
         this.socket.route("/api/repos/:user/:repo").get(Controller.repo);
         this.socket.route("/api/repos/:user/:repo/issues").get(Controller.issues);
         this.socket.route("/api/repos/:user/:repo/issues").post(Controller.issues);
@@ -59,10 +59,9 @@ export class Server {
         this.socket.route("/api/repos/:user/:repo/issues/:issuenumber/comments").get(Controller.comments);
         this.socket.route("/api/repos/:user/:repo/issues/:issuenumber/comments").post(Controller.comment);
         this.socket.route("/api/repos/:user/:repo/issues/comments/:comment_id").get(Controller.comment);
-        this.socket.route("/authorize").get(Controller.authorize);
-        this.socket.route("/authorized").get(Controller.authorized);
-        this.socket.route("/oauth/redirect").get(Controller.access_token);
         this.socket.route("/api/markdown").post(Controller.markdown);
+        this.socket.route("/authorize").get(Controller.authorize);
+        this.socket.route("/oauth/redirect").get(Controller.access_token);
     }
 
 }
