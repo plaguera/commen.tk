@@ -12,17 +12,19 @@ export class TimelineComponent {
         this.element.appendChild(this.comments);
         console.log(data);
         if (data['user'] && data['repo'] && data['issue'])
-            this.loadIssue(data['user'], data['repo'], data['issue']);
+            this.loadIssue(data);
         //this.loadIssue('plaguera', 'tfm-testing', 1);
     }
 
-    loadIssue(user, repo, issueNumber) {
-        Github.issue(user, repo, issueNumber).then(issue => {
+    loadIssue(data) {
+        Github.issue(data['user'], data['repo'], data['issue']).then(issue => {
             this.comments.innerHTML = '';
-            let issueObj = new Issue(repo, issue);
+            let issueObj = new Issue(data['repo'], issue);
             issueObj.comments().then(result => {
-                for (let comment of result)
+                for (let comment of result) {
+
                     this.comments.appendChild(new CommentComponent(new Comment(comment)).element);
+                }
             });
         })
     }

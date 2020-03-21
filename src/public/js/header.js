@@ -1,6 +1,5 @@
 import '../scss/header.scss';
 import { Github } from './github';
-import { TimelineComponent } from './component/timeline';
 import { CommentWidget } from './comment-widget';
 
 export class Header {
@@ -8,7 +7,7 @@ export class Header {
         this.element = document.createElement('header');
         this.element.innerHTML = `
             <div class="header-element">
-                <input type="text" class="header-input" id="user-input" value="plaguera">
+                <input type="text" class="header-input" id="user-input" value="ULL-MII-SYTWS-1920">
             </div>
             <div class="header-element">
                 <select class="header-select" id="repo-input"></select>

@@ -26,11 +26,11 @@ export class Comment {
 }
 
 export class Issue {
-    constructor(repo, json) {
-        this.repo = repo;
+    constructor(json) {
         this.url = json['url'];
         this.html_url = json['html_url'];
         this.repository_url = json['repository_url'];
+        this.comments_url = json['comments_url'];
         this.title = json['title'];
         this.number = json['number'];
         this.user = new User(json['user']);
@@ -38,7 +38,7 @@ export class Issue {
     }
 
     async comments() {
-        return await Github.comments(this.user.login, this.repo, this.number);
+        return await Github.comments(this.comments_url);
     }
 }
 

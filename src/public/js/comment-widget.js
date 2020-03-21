@@ -31,21 +31,13 @@ export class CommentWidget {
     }
 
     static reloadTimeline() {
-        CommentWidget.timeline.loadIssue(
-            CommentWidget.attributes['user'],
-            CommentWidget.attributes['repo'],
-            CommentWidget.attributes['issue']
-        );
+        CommentWidget.timeline.loadIssue(CommentWidget.attributes);
     }
 
     static setAttributes(user, repo, issue) {
         CommentWidget.attributes['user'] = user;
         CommentWidget.attributes['repo'] = repo;
         CommentWidget.attributes['issue'] = issue;
-        CommentWidget.timeline.loadIssue(
-            CommentWidget.attributes['user'],
-            CommentWidget.attributes['repo'],
-            CommentWidget.attributes['issue']
-        );
+        CommentWidget.timeline.loadIssue(CommentWidget.attributes);
     }
 }

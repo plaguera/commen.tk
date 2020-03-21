@@ -87,9 +87,11 @@ export class Controller {
 
     static comments(req: Request, res: Response) {
         let repo = new Repository(req.params.user, req.params.repo);
+        console.log(req.params.user + '/' + req.params.repo);
         let issuenumber = Number.parseInt(req.params.issuenumber);
         if (req.method == 'GET') {
             repo.comments(issuenumber).then(result => {
+                console.log(result);
                 sendReponse(res, httpStatus.OK, result);
             }).catch((error) => {
                 sendReponse(res, httpStatus.NOT_FOUND, null);

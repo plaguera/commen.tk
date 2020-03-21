@@ -1,11 +1,4 @@
 import fetch from 'node-fetch';
-import querystring from 'query-string';
-
-interface AccessToken {
-    access_token: string;
-    token_type: string;
-    scope: string;
-} 
 
 export class OAuth {
 
@@ -27,7 +20,7 @@ export class OAuth {
             this.redirectURI = referer;
         return 'https://github.com/login/oauth/authorize'
                 + `?client_id=${process.env.CLIENT_ID}`
-                + `&scope=public_repo`;
+                + `&scope=repo`;
                 //+ `?redirect_uri=${this.redirectURI}`;
     }
 

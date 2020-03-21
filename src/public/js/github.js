@@ -3,8 +3,8 @@ import { Auth } from './auth';
 import { Issue, Repository } from './types';
 import { CommentWidget } from './comment-widget';
 
-const BASE_URL = 'https://plaguera-github-comments.herokuapp.com/';
-//const BASE_URL = 'http://localhost:3040/';
+//const BASE_URL = 'https://plaguera-github-comments.herokuapp.com/';
+const BASE_URL = 'http://localhost:3040/';
 const API_URL = BASE_URL + 'api/';
 export const AUTH_URL = BASE_URL + 'authorize/';
 
@@ -78,7 +78,7 @@ export class Github {
             .then(result => {
                 let issues = [];
                 for (let issue of result)
-                    issues.push(new Issue(repo, issue));
+                    issues.push(new Issue(issue));
                 return issues;
             });
     }
@@ -89,9 +89,10 @@ export class Github {
             .then(result => result.json());
     }
 
-    static async comments(user, repo, issueNumber) {
-        let url = `repos/${user}/${repo}/issues/${issueNumber}/comments`;
-        return await Github.fetch(Github.request(url))
+    static async comments(url) {
+        //console.log(user + repo + issueNumber);
+        //let url = `repos/${user}/${repo}/issues/${issueNumber}/comments`;
+        return await Github.fetch(Github.request(url.replace('https://api.github.com/', '')))
             .then(result => result.json());
     }
 
