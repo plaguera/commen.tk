@@ -1,6 +1,6 @@
 import { Auth } from "../auth";
-import { User } from "../types";
-import { AUTH_URL, Github } from "../github"
+import { User, Markdown } from "../types";
+import { AUTH_URL } from "../github"
 import { CommentWidget } from "../comment-widget";
 
 export class EditorComponent {
@@ -53,7 +53,7 @@ export class EditorComponent {
 
                     else {
                         render.innerHTML = 'Loading preview...';
-                        Github.renderMarkdown(editor.value).then(result => render.innerHTML = result);
+                        Markdown.convert(editor.value).then(result => render.innerHTML = result);
                     }
                     btnWrite.classList.remove('active');
                     event.currentTarget.classList.add('active');
@@ -64,9 +64,10 @@ export class EditorComponent {
                 let btnComment = this.element.getElementsByTagName('button').namedItem('btn-comment');
                 btnComment.addEventListener('click', (event) => {
                     if (editor.value.trim() === '') return;
-                    Github.renderMarkdown(editor.value).then(result => {
-                        Github.createComment(result);
-                        CommentWidget.reloadTimeline();
+                    Markdown.convert(editor.value).then(result => {
+                        CommentWidget.issue.create_comment(result).then(() => {
+                            CommentWidget.reload();
+                        });
                     });
                     editor.value = '';
                 });

@@ -6,8 +6,8 @@
     "author": "Pedro Lagüera <laguerapedro@gmail.com>",
     "license": "MIT",
     "scripts": {
-        "build": "webpack --config webpack.config.js && tsc",
-        "dev": "concurrently \"webpack --config webpack.config.js --watch\" \"nodemon ./src/index.ts\"",
+        "build": "webpack --config webpack.prod.config.js && tsc",
+        "dev": "concurrently \"webpack --config webpack.dev.config.js --watch\" \"nodemon ./src/index.ts\"",
         "start": "node dist/index.js"
     },
     "devDependencies": {

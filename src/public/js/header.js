@@ -1,6 +1,6 @@
 import '../scss/header.scss';
-import { Github } from './github';
 import { CommentWidget } from './comment-widget';
+import { User, Repository, Issue } from './types';
 
 export class Header {
     constructor() {
@@ -24,13 +24,15 @@ export class Header {
                 event.preventDefault();
                 inputRepo.innerHTML = '';
                 inputIssue.innerHTML = '';
-                Github.repos(inputUser.value).then(result => {
-                    for (let repo of result) {
-                        let option = document.createElement('option');
-                        option.textContent = repo.full_name;
-                        option.value = repo.name;
-                        inputRepo.appendChild(option);
-                    }
+                User.find(inputUser.value).then(user => {
+                    user.repos().then(repos => {
+                        for (let repo of repos) {
+                            let option = document.createElement('option');
+                            option.textContent = repo.full_name;
+                            option.value = repo.name;
+                            inputRepo.appendChild(option);
+                        }
+                    });
                 });
             }
         });
@@ -38,19 +40,23 @@ export class Header {
         inputRepo.addEventListener('change', (event) => {
             event.preventDefault();
             inputIssue.innerHTML = '';
-            Github.issues(inputUser.value, inputRepo.value).then(result => {
-                for (let issue of result) {
-                    let option = document.createElement('option');
-                    option.textContent = issue.title;
-                    option.value = issue.number;
-                    inputIssue.appendChild(option);
-                }
+            Repository.find(inputUser.value, inputRepo.value).then(repo => {
+                repo.issues().then(issues => {
+                    for (let issue of issues) {
+                        let option = document.createElement('option');
+                        option.textContent = issue.title;
+                        option.value = issue.number;
+                        inputIssue.appendChild(option);
+                    }
+                });
             });
         });
 
         inputIssue.addEventListener('change', (event) => {
             event.preventDefault();
-            CommentWidget.setAttributes(inputUser.value, inputRepo.value, inputIssue.value);
+            Issue.find(inputUser.value, inputRepo.value, inputIssue.value).then(issue => {
+                CommentWidget.setIssue(issue);
+            });
         });
     }
 }

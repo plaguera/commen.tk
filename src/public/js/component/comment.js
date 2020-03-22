@@ -1,10 +1,10 @@
-import { Github } from "../github";
+import { Markdown } from "../types";
 
 export class CommentComponent {
     constructor(comment) {
         this.element = document.createElement('div');
         this.element.className = 'timeline-item';
-        Github.renderMarkdown(comment.body).then(body => {
+        Markdown.convert(comment.body).then(body => {
             this.element.innerHTML = `
             <div class="comment-component-avatar timeline-comment-avatar">
                 <a href="${comment.user.html_url}">
