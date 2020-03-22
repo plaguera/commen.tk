@@ -6,8 +6,6 @@ export const AUTH_URL = BASE_URL + 'authorize/';
 
 export class Github {
     static async fetch(method = 'GET', relativeURL, data) {
-        console.log('1 ' + API_URL);
-        console.log('2 ' + process.env.NODE_ENV);
         var headers = { 'Content-Type': 'application/json' };
         if (method == 'POST') headers['Accept'] = 'application/json';
 

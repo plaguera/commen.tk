@@ -16,7 +16,6 @@ export class Auth {
         } else if (cookie && !params) {
             console.log('YES COOKIE NO PARAMS');
         }
-        //console.log(`${JSON.stringify(Auth.token)}`);
     }
 
     static signedIn() {

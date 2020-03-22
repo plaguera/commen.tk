@@ -30,7 +30,6 @@ export class CommentComponent {
                 <div/>
             </div>`;
         });
-        //console.log(this.timeAgo(comment.created_at));
     }
 
     formatDate(date) {
