@@ -17,6 +17,7 @@ export abstract class Requestable {
         };
         if (Controller.oauth.authorized())
             init.headers['Authorization'] = 'token ' + Controller.oauth.accessToken;
+        console.log(path + ' - ' + init.headers['Authorization']);
         if (data) init['body'] = JSON.stringify(data);
         return await fetch(this.endpoint + path, init).then(res => res.json()).catch((error) => console.error(error));
     }

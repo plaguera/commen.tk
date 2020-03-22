@@ -23,3 +23,26 @@ header {
     margin-left: 5px;
     margin-right: 5px;
 }
+
+.header-input,
+.header-select {
+    background-color: rgb(32, 32, 32);
+    border-color: rgb(64, 64, 64);
+    border-radius: 3px;
+    border-style: none;
+    border-width: 0px;
+    color: rgb(210, 210, 210);
+    font-family: -apple-system, system-ui, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: normal;
+    line-height: 20px;
+    min-height: 28px;
+    outline-color: rgb(210, 210, 210);
+    outline-style: none;
+    vertical-align: middle;
+}
+
+.header-input {
+    width: 275px;
+}
