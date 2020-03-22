@@ -1,8 +1,4 @@
 const path = require('path');
-var webpack = require('webpack');
-new webpack.EnvironmentPlugin({
-    NODE_ENV: 'production'
-});
 
 module.exports = {
     entry: {
