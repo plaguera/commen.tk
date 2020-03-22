@@ -3,7 +3,8 @@ import '../html/index.html';
 import { Auth } from "./auth";
 import { CommentWidget } from "./comment-widget";
 import { Header } from "./header";
-
+import { API_URL } from "./github"
+console.log(API_URL);
 Auth.init();
 document.body.before(new Header().element);
 CommentWidget.init();
