@@ -16,10 +16,10 @@ export class User extends Requestable {
     }
 
     async repos() {
-        return await this.fetch('GET', this.route('repos'));
+        return await this.fetch_json('GET', this.route('repos'));
     }
 
     async get(path?: string) {
-        return await this.fetch('GET', this.route(path));
+        return await this.fetch_json('GET', this.route(path));
     }
 }

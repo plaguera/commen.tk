@@ -18,30 +18,30 @@ export class Repository extends Requestable {
     }
 
     async get() {
-        return await this.fetch('GET', this.route());
+        return await this.fetch_json('GET', this.route());
     }
 
     async issue(issue_id: number) {
-        return await this.fetch('GET', this.route(`issues/${issue_id}`));
+        return await this.fetch_json('GET', this.route(`issues/${issue_id}`));
     }
 
     async issues() {
-        return await this.fetch('GET', this.route('issues'));
+        return await this.fetch_json('GET', this.route('issues'));
     }
 
     async comment(comment_id: number) {
-        return await this.fetch('GET', this.route(`issues/comments/${comment_id}`));
+        return await this.fetch_json('GET', this.route(`issues/comments/${comment_id}`));
     }
 
     async comments(issuenumber: number) {
-        return await this.fetch('GET', this.route(`issues/${issuenumber}/comments`));
+        return await this.fetch_json('GET', this.route(`issues/${issuenumber}/comments`));
     }
 
     async create_issue(data: Object) {
-        return await this.fetch('POST', this.route('issues'), data);
+        return await this.fetch_json('POST', this.route('issues'), data);
     }
 
     async create_comment(issuenumber: number, data: Object) {
-        return await this.fetch('POST', this.route(`issues/${issuenumber}/comments`), data);
+        return await this.fetch_json('POST', this.route(`issues/${issuenumber}/comments`), data);
     }
 }

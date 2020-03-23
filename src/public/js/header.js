@@ -7,7 +7,7 @@ export class Header {
         this.element = document.createElement('header');
         this.element.innerHTML = `
             <div class="header-element">
-                <input type="text" class="header-input" id="user-input" value="ULL-MII-SYTWS-1920" placeholder="User / Org Name">
+                <input type="text" class="header-input" id="user-input" value="utterance" placeholder="User / Org Name">
             </div>
             <div class="header-element">
                 <select class="header-select" id="repo-input"></select>
@@ -28,7 +28,7 @@ export class Header {
                     user.repos().then(repos => {
                         for (let repo of repos) {
                             let option = document.createElement('option');
-                            option.textContent = repo.full_name;
+                            option.textContent = repo.name;
                             option.value = repo.name;
                             inputRepo.appendChild(option);
                         }

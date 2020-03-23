@@ -1,5 +1,6 @@
 import fetch from 'node-fetch';
 import { Controller } from './controller';
+import status from 'http-status';
 
 export abstract class Requestable {
 
@@ -7,7 +8,7 @@ export abstract class Requestable {
 
     abstract route(path?: string): string;
 
-    async fetch(method: string, path: string, data?: object): Promise<object> {
+    async fetch(method: string, path: string, data?: object) {
         let init = {
             method: method,
             headers: {
@@ -17,9 +18,19 @@ export abstract class Requestable {
         };
         if (Controller.oauth.authorized())
             init.headers['Authorization'] = 'token ' + Controller.oauth.accessToken;
-        console.log(path + ' - ' + init.headers['Authorization']);
+        console.log(init.headers['Authorization'] + ' - ' + path);
         if (data) init['body'] = JSON.stringify(data);
-        return await fetch(this.endpoint + path, init).then(res => res.json()).catch((error) => console.error(error));
+        return await fetch(this.endpoint + path, init);
+    }
+
+    async fetch_json(method: string, path: string, data?: object): Promise<object> {
+        let response = await this.fetch(method, path, data);
+        console.log('Status: ' + response.status + ' ' + status[`${response.status}_NAME`]);
+        return await response.json();
+    }
+
+    async fetch_text(method: string, path: string, data?: object): Promise<string> {
+        return await this.fetch(method, path, data).then(res => res.text());
     }
 
 }
