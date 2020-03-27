@@ -20,6 +20,6 @@ export class User extends Requestable {
     }
 
     async get(path?: string) {
-        return await this.fetch_json('GET', this.route(path));
+        return await this.fetch('GET', this.route(path));
     }
 }

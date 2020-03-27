@@ -108,6 +108,6 @@ export class Comment {
 
 export class Markdown {
     static async convert(body) {
-        return await Github.fetch_text('POST', 'markdown', { text: body, mode: 'markdown' });
+        return await Github.fetch_text('POST', 'markdown', { text: body, mode: 'gfm' });
     }
 }
