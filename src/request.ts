@@ -1,5 +1,6 @@
 import fetch from 'node-fetch';
 import { Response } from 'node-fetch';
+import { Controller } from './controllers/controller';
 
 const BASE_API_URL = 'https://api.github.com/';
 
@@ -16,10 +17,29 @@ export async function get(path: string) {
 	}
 }
 
+export async function post(path: string, data?: object) {
+	const options = {
+		headers: {
+			Accept: 'application/json'
+		},
+		method: 'POST',
+		body: JSON.stringify(data)
+	};
+
+	let url = path.includes('https://') ? path : BASE_API_URL + path;
+	let res = await fetch(url, options);
+	if (res.headers.get('content-type')?.includes('application/json')) {
+		let json = await res.json();
+		//console.log(json);
+		return json;
+	}
+	return res;
+}
+
 export async function graphql(data: string) {
 	const options = {
 		headers: {
-			authorization: 'token ' + process.env.GITHUB_TOKEN
+			authorization: 'token ' + Controller.token //|| process.env.GITHUB_TOKEN
 		},
 		method: 'POST',
 		body: JSON.stringify({

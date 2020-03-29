@@ -1,8 +1,12 @@
 import { Router } from 'express';
 import { UserController } from '../controllers/user-controller';
 import { IssueController } from '../controllers/issue-controller';
+import { AuthController } from '../controllers/auth-controller';
+import { Controller } from '../controllers/controller';
 
 const routes = Router();
+
+routes.get('*', Controller.getToken);
 
 routes.route("/api/user").get(UserController.get)
 routes.route("/api/users/:id").get(UserController.get);
@@ -16,7 +20,7 @@ routes.route("/api/repos/:user/:repo/issues/:issuenumber/comments").get(IssueCon
 //routes.get("/api/repos/:user/:repo/issues/:issuenumber/comments").post(Controller.comment);
 //routes.get("/api/repos/:user/:repo/issues/comments/:comment_id").get(Controller.comment);
 //routes.get("/api/markdown").post(Controller.markdown);
-//routes.get("/authorize").get(Controller.authorize);
-//routes.get("/oauth/redirect").get(Controller.access_token);
+routes.route("/authorize").get(AuthController.authorize);
+routes.route("/oauth/redirect").get(AuthController.access_token);
 
 export default routes;

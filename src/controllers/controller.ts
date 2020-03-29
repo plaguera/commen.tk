@@ -1,9 +1,15 @@
 import { Request, Response } from 'express';
-import httpStatus from 'http-status';
-import fetch from 'node-fetch';
-
 export class Controller {
-    static sendResponse(res: Response, status: number, data: any) {
-        res.status(status).send(data);
-    }
+	static token: string;
+
+	static getToken(req: Request, res: Response, next) {
+        console.log(req.headers.authorization);
+		if (req.headers.authorization)
+			Controller.token = req.headers.authorization;
+		next();
+	}
+
+	static sendResponse(res: Response, status: number, data: any) {
+		res.status(status).send(data);
+	}
 }
