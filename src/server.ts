@@ -1,6 +1,7 @@
-import express from 'express';
-import cors from 'cors';
 import cookieParser from 'cookie-parser';
+import cors from 'cors';
+import express from 'express';
+import path from 'path';
 
 import routes from './routes';
 
@@ -31,8 +32,8 @@ class Server {
             preflightContinue: false
         };
         this.express.use(cors(options));
-        //console.log(process.cwd())
-        //this.socket.use('/public', express.static(path.join(process.cwd(), 'dist/public')))
+        console.log(process.cwd())
+        this.express.use('/public', express.static(path.join(process.cwd(), 'frontend/dist')))
     }
 
     middleware() {
