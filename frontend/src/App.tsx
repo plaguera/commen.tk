@@ -1,24 +1,17 @@
 import React from 'react';
 import './App.css';
+import Editor from './components/Editor';
 
 function App() {
+  let styles = {
+    margin: '0 auto',
+    width: '50%'
+  }
   return (
-    <div className="App">
-      <header className="App-header">
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div style={styles}>
+      <Editor />
     </div>
-  );
+  )
 }
 
 export default App;
