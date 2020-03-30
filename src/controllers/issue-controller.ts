@@ -7,7 +7,7 @@ export class IssueController extends Controller {
 		let query = `{
             repository(name: "${req.params.repo}", owner: "${req.params.user}") {
               createdAt
-              issue(number: ${req.params.issue_number}) {
+              issue(number: ${req.params.issuenumber}) {
                 comments(first: 10) {
                     totalCount
                     nodes {
@@ -26,7 +26,7 @@ export class IssueController extends Controller {
             }
           }`;
         graphql(query).then(api => {
-            console.log(req.params.issue_number);
+            console.log(req.params.issuenumber);
 			IssueController.sendResponse(res, api.status, api.data)}
 		);
 	}

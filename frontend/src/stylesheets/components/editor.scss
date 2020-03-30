@@ -1,10 +1,3 @@
-hr.solid {
-    border-top: 1px solid #ccc;
-    border-radius: 1pc;
-    margin-left: 10px;
-    margin-right: 10px;
-}
-
 .editor-textarea textarea {
     background-color: #181818;
     border: #404040 1px solid;
@@ -80,10 +73,6 @@ hr.solid {
     background-clip: initial !important;
     background-color: initial !important;
     border-color: #193 !important;
-    border-top-color: rgb(17, 153, 51) !important;
-    border-right-color: rgb(17, 153, 51) !important;
-    border-bottom-color: rgb(17, 153, 51) !important;
-    border-left-color: rgb(17, 153, 51) !important;
     color: #d2d2d2 !important;
     text-decoration: none;
 }
@@ -115,8 +104,7 @@ hr.solid {
     appearance: none;
 }
 
-.editor,
-.timeline-comment {
+.editor {
     background-color: rgb(27, 31, 35);
     border-color: #343434;
     border-radius: 3px;
@@ -133,8 +121,7 @@ hr.solid {
     box-sizing: border-box;
 }
 
-.editor-wrapper,
-.timeline-item {
+.editor-wrapper {
     display: flex;
 }
 

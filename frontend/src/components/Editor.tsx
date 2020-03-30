@@ -18,9 +18,6 @@ function getCookie(name: string) {
 class Editor extends React.Component {
 
     render() {
-        let displayNone = {
-            display: 'none'
-        }
         if (getCookie('loggedin')) {
             return (
                 <div className='editor-wrapper'>
@@ -38,8 +35,10 @@ class Editor extends React.Component {
                                 </div>
                             </TabPanel>
                             <TabPanel>
-                                <div className="editor-preview" style={displayNone} id="tab-preview">
-                                    <div className="markdown-render"></div>
+                                <div className="editor-preview" id="tab-preview">
+                                    <div className="markdown-render">
+                                        <p>Nothing to preview...</p>
+                                    </div>
                                 </div>
                             </TabPanel>
                         </Tabs>
@@ -67,7 +66,7 @@ class Editor extends React.Component {
                                 </div>
                             </TabPanel>
                             <TabPanel>
-                                <div className="editor-preview" style={displayNone} id="tab-preview">
+                                <div className="editor-preview" id="tab-preview">
                                     <div className="markdown-render"></div>
                                 </div>
                             </TabPanel>

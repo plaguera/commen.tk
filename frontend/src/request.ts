@@ -14,12 +14,11 @@ export async function get(path: string) {
 			Authorization: getCookie('token')
 		}
 	};
-    console.log(getCookie('token'));
     let res = await fetch(BASE_API_URL + path, options);
 
 	if (res.headers.get('content-type')?.includes('application/json')) {
 		let json = await res.json();
-		console.log(json);
+		//console.log(json);
 		return json;
     }
     return res;
