@@ -1,5 +1,6 @@
 import * as React from 'react';
-import Markdown from 'react-markdown'
+import Markdown from 'react-markdown';
+import * as request from '../request';
 import '../stylesheets/components/editor.scss';
 
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
@@ -15,7 +16,13 @@ function getCookie(name: string) {
     return;
 }
 
-class Editor extends React.Component {
+interface Issue {
+    user: string;
+    repo: string;
+    number: number;
+}
+
+class Editor extends React.Component<Issue, {}> {
 
     private textareaRef = React.createRef<HTMLTextAreaElement>();
 
@@ -25,6 +32,14 @@ class Editor extends React.Component {
 
     handleClick(e: any) {
         this.setState({textareaValue: this.textareaRef.current?.value});
+    }
+
+    comment(e: any) {
+        request.post(`repos/${this.props.user}/${this.props.repo}/issues/${this.props.number}/comments`, { body: this.textareaRef.current?.value })
+            .then(result => {
+                console.log(result);
+            })
+            .catch(console.log);
     }
 
     render() {
@@ -53,7 +68,7 @@ class Editor extends React.Component {
                             </TabPanel>
                         </Tabs>
                         <div className="editor-buttons">
-                            <button className="btn btn-primary" id="btn-comment">
+                            <button className="btn btn-primary" id="btn-comment" onClick={this.comment.bind(this)}>
                                 Comment
                             </button>
                         </div>

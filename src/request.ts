@@ -36,7 +36,7 @@ export async function post(path: string, data?: object) {
 	return res;
 }
 
-export async function graphql(data: string) {
+export async function query(data: string) {
 	const options = {
 		headers: {
 			authorization: 'token ' + Controller.token //|| process.env.GITHUB_TOKEN
@@ -47,14 +47,14 @@ export async function graphql(data: string) {
 		})
 	};
 
-  let res = await fetch('https://api.github.com/graphql', options);
-  let json = await res.json();
-  return {
-    url: res.url,
-    status: res.status,
-    statusText: res.statusText,
-    data: json
-  }
+	let res = await fetch('https://api.github.com/graphql', options);
+	let json = await res.json();
+	return {
+		url: res.url,
+		status: res.status,
+		statusText: res.statusText,
+		data: json
+	};
 }
 
 function printHeader(res: Response) {

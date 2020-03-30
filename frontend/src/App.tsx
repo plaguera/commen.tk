@@ -11,7 +11,7 @@ function App() {
   return (
     <div style={styles}>
       <Timeline user="plaguera" repo="tfm-testing" number={1} />
-      <Editor />
+      <Editor user="plaguera" repo="tfm-testing" number={1} />
     </div>
   )
 }

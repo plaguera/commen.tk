@@ -1,10 +1,10 @@
 import { Request, Response } from 'express';
 import { Controller } from './controller';
-import { graphql } from '../request';
+import { query } from '../request';
 
 export class IssueController extends Controller {
 	static get(req: Request, res: Response) {
-		let query = `{
+		let data = `{
             repository(name: "${req.params.repo}", owner: "${req.params.user}") {
               createdAt
               issue(number: ${req.params.issuenumber}) {
@@ -25,6 +25,36 @@ export class IssueController extends Controller {
               }
             }
           }`;
-        graphql(query).then(api => IssueController.sendResponse(res, api.status, api.data));
+		query(data).then(api =>
+			IssueController.sendResponse(res, api.status, api.data)
+		);
+  }
+  
+  static id(req: Request, res: Response) {
+		let data = `{
+            repository(name: "${req.params.repo}", owner: "${req.params.user}") {
+              issue(number: ${req.params.issuenumber}) {
+                id
+              }
+            }
+          }`;
+		return query(data);
+	}
+
+	static post(req: Request, res: Response) {
+    IssueController.id(req, res).then(id => {
+      let data = `mutation {
+        __typename
+        addComment(input: {subjectId: "${id.data.data.repository.issue.id}", body: "${req.body.body}"}) {
+          clientMutationId
+        }
+      }`;
+      
+      query(data).then(api => {
+        IssueController.sendResponse(res, api.status, api.data)
+      }
+      );
+    });
+		
 	}
 }

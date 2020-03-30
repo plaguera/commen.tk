@@ -40,7 +40,7 @@ class Server {
         this.express.use(cookieParser());
         this.express.use(express.json());
         this.express.use(express.urlencoded({
-            extended: false
+            extended: true
         }));
     }
 

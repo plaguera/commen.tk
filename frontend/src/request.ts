@@ -27,7 +27,9 @@ export async function get(path: string) {
 export async function post(path: string, data?: object) {
 	const options = {
 		headers: {
-			Accept: 'application/json'
+			Accept: 'application/json',
+			Authorization: getCookie('token'),
+			'Content-Type': 'application/json'
 		},
 		method: 'POST',
 		body: JSON.stringify(data)
