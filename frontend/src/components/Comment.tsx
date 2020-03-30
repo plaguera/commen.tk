@@ -5,7 +5,7 @@ import Avatar from './Avatar';
 
 export interface CommentProps {
     url: string;
-    id: string;
+    key: string;
     body: string;
     created_at: string;
     author: {

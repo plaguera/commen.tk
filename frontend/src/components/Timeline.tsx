@@ -30,7 +30,7 @@ class Timeline extends React.Component<Issue, {}> {
                 {this.state.comments.map(comment =>
                     (
                         <Comment url={comment['url']}
-                            id={comment['id']}
+                            key={comment['id']}
                             body={comment['body']}
                             created_at={comment['createdAt']}
                             author={comment['author']}
