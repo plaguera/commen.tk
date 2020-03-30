@@ -20,5 +20,5 @@ export interface IssueProps {
 
 export interface EditorProps {
     user: UserProps;
-    commentFunction: (e: any) => void;
+    onComment: (text: string) => void;
 }

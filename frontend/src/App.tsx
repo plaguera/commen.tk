@@ -5,12 +5,12 @@ import Editor from './components/Editor';
 import Timeline from './components/Timeline';
 import { IssueProps, UserProps, CommentProps } from './props';
 
-class App extends React.Component<IssueProps, { commentsList: CommentProps[], me: UserProps }> {
+class App extends React.Component<IssueProps, { comments: CommentProps[], me: UserProps }> {
   
   constructor(props: IssueProps) {
     super(props);
     this.state = {
-      commentsList: [],
+      comments: [],
       me: {
         url: '',
         login: '',
@@ -19,19 +19,15 @@ class App extends React.Component<IssueProps, { commentsList: CommentProps[], me
     }
   }
 
-  comment(e: any) {
-    request.post(`repos/${this.props.user}/${this.props.repo}/issues/${this.props.number}/comments`, { body: 'texto' })
-      .then(result => {
-        console.log(result);
-      })
+  comment(text: string) {
+    request.post(`repos/${this.props.user}/${this.props.repo}/issues/${this.props.number}/comments`, { body: text })
       .catch(console.error);
   }
 
   comments() {
     request.get(`repos/${this.props.user}/${this.props.repo}/issues/${this.props.number}/comments`)
       .then(result => {
-        this.setState({ commentsList: result.data.repository.issue.comments.nodes })
-        console.log(this.state.commentsList)
+        this.setState({ comments: result.data.repository.issue.comments.nodes })
       })
       .catch(console.error);
   }
@@ -52,11 +48,11 @@ class App extends React.Component<IssueProps, { commentsList: CommentProps[], me
   render() {
     let tmp = {
       user: this.state.me,
-      commentFunction: this.comment
+      onComment: this.comment.bind(this)
     };
     return (
       <div>
-        <Timeline {...this.state.commentsList}/>
+        <Timeline {...this.state.comments}/>
         <hr className='separator' />
         <Editor {...tmp} />
       </div>

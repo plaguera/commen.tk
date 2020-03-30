@@ -1,5 +1,4 @@
 import * as React from 'react';
-import * as request from '../request';
 import '../stylesheets/components/comment.scss';
 import Comment from './Comment';
 import { CommentProps } from '../props';

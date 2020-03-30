@@ -10,16 +10,24 @@ import { getCookie } from '../util';
 const BASE_URL = process.env.NODE_ENV === 'production' ? 'https://plaguera-github-comments.herokuapp.com/' : 'http://localhost:8000/';
 const AUTH_URL = BASE_URL + 'authorize/';
 
-class Editor extends React.Component<EditorProps, {}> {
+class Editor extends React.Component<EditorProps, { text: string }> {
 
     private ref = React.createRef<HTMLTextAreaElement>();
 
-    state = {
-        textareaValue: ''
+    constructor(props: EditorProps) {
+        super(props);
+        this.state = {
+            text: ''
+        }
+        this.onComment = this.onComment.bind(this);
     }
 
     handleClick(e: any) {
-        this.setState({textareaValue: this.ref.current?.value});
+        this.setState({ text: this.ref.current?.value || '' });
+    }
+
+    onComment() {
+        this.setState({ text: this.ref.current?.value || '' }, () => this.props.onComment(this.state.text));
     }
 
     render() {
@@ -42,13 +50,13 @@ class Editor extends React.Component<EditorProps, {}> {
                             <TabPanel>
                                 <div className="editor-preview" id="tab-preview">
                                     <div className="markdown-render">
-                                        <Markdown source={this.state.textareaValue} />
+                                        <Markdown source={this.state.text} />
                                     </div>
                                 </div>
                             </TabPanel>
                         </Tabs>
                         <div className="editor-buttons">
-                            <button className="btn btn-primary" id="btn-comment" onClick={this.props.commentFunction.bind(this)}>
+                            <button className="btn btn-primary" id="btn-comment" onClick={this.onComment}>
                                 Comment
                             </button>
                         </div>
