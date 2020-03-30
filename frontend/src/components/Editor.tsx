@@ -1,52 +1,32 @@
 import * as React from 'react';
 import Markdown from 'react-markdown';
-import * as request from '../request';
 import '../stylesheets/components/editor.scss';
 
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import Avatar from './Avatar';
+import { UserProps, EditorProps } from '../props';
+import { getCookie } from '../util';
 
 const BASE_URL = process.env.NODE_ENV === 'production' ? 'https://plaguera-github-comments.herokuapp.com/' : 'http://localhost:8000/';
 const AUTH_URL = BASE_URL + 'authorize/';
 
-function getCookie(name: string) {
-    var re = new RegExp('[; ]' + name + '=([^\\s;]*)');
-    var sMatch = (' ' + document.cookie).match(re);
-    if (name && sMatch) return JSON.parse(unescape(sMatch[1]));
-    return;
-}
+class Editor extends React.Component<EditorProps, {}> {
 
-interface Issue {
-    user: string;
-    repo: string;
-    number: number;
-}
-
-class Editor extends React.Component<Issue, {}> {
-
-    private textareaRef = React.createRef<HTMLTextAreaElement>();
+    private ref = React.createRef<HTMLTextAreaElement>();
 
     state = {
         textareaValue: ''
     }
 
     handleClick(e: any) {
-        this.setState({textareaValue: this.textareaRef.current?.value});
-    }
-
-    comment(e: any) {
-        request.post(`repos/${this.props.user}/${this.props.repo}/issues/${this.props.number}/comments`, { body: this.textareaRef.current?.value })
-            .then(result => {
-                console.log(result);
-            })
-            .catch(console.log);
+        this.setState({textareaValue: this.ref.current?.value});
     }
 
     render() {
         if (getCookie('loggedin')) {
             return (
                 <div className='editor-wrapper'>
-                    <Avatar user="me"/>
+                    <Avatar {...this.props.user}/>
                     <div className="editor arrow-box">
                         <Tabs forceRenderTabPanel={true}>
                             <TabList>
@@ -56,7 +36,7 @@ class Editor extends React.Component<Issue, {}> {
 
                             <TabPanel>
                                 <div className="editor-textarea" id="tab-editor">
-                                    <textarea placeholder="Leave a comment" id="textarea-comment" ref={this.textareaRef}></textarea>
+                                    <textarea placeholder="Leave a comment" id="textarea-comment" ref={this.ref}></textarea>
                                 </div>
                             </TabPanel>
                             <TabPanel>
@@ -68,7 +48,7 @@ class Editor extends React.Component<Issue, {}> {
                             </TabPanel>
                         </Tabs>
                         <div className="editor-buttons">
-                            <button className="btn btn-primary" id="btn-comment" onClick={this.comment.bind(this)}>
+                            <button className="btn btn-primary" id="btn-comment" onClick={this.props.commentFunction.bind(this)}>
                                 Comment
                             </button>
                         </div>

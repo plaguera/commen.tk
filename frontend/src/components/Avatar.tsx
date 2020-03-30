@@ -1,41 +1,15 @@
 import * as React from 'react';
 import * as request from '../request';
 import '../stylesheets/components/avatar.scss';
+import { UserProps } from '../props';
 
-interface AvatarProps { user: string; }
-
-
-class Avatar extends React.Component<AvatarProps, {}> {
-
-    state = {
-        user: {
-            login: '',
-            url: '',
-            avatarUrl: ''
-        }
-    }
-
-    componentDidMount() {
-        if (this.props.user != 'me') {
-            request.get(`users/${this.props.user}`)
-            .then(result => {
-                this.setState({ user: result.data.user })
-            })
-            .catch(console.log);
-        } else {
-            request.get('user')
-            .then(result => {
-                this.setState({ user: result.data.viewer })
-            })
-            .catch(console.log);
-        }
-    }
+class Avatar extends React.Component<UserProps, {}> {
 
     render() {
         return (
             <div className="avatar-wrapper">
-                <a className="avatar-link" href={this.state.user.url}>
-                    <img className="avatar-img" src={this.state.user.avatarUrl} alt={this.state.user.login} />
+                <a className="avatar-link" href={this.props.url}>
+                    <img className="avatar-img" src={this.props.avatarUrl} alt={this.props.login} />
                 </a>
             </div>
         );

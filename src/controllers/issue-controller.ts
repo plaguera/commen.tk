@@ -28,9 +28,9 @@ export class IssueController extends Controller {
 		query(data).then(api =>
 			IssueController.sendResponse(res, api.status, api.data)
 		);
-  }
-  
-  static id(req: Request, res: Response) {
+	}
+
+	static id(req: Request, res: Response) {
 		let data = `{
             repository(name: "${req.params.repo}", owner: "${req.params.user}") {
               issue(number: ${req.params.issuenumber}) {
@@ -42,19 +42,17 @@ export class IssueController extends Controller {
 	}
 
 	static post(req: Request, res: Response) {
-    IssueController.id(req, res).then(id => {
-      let data = `mutation {
+		IssueController.id(req, res).then(id => {
+			let data = `mutation {
         __typename
         addComment(input: {subjectId: "${id.data.data.repository.issue.id}", body: "${req.body.body}"}) {
           clientMutationId
         }
       }`;
-      
-      query(data).then(api => {
-        IssueController.sendResponse(res, api.status, api.data)
-      }
-      );
-    });
-		
+
+			query(data).then(api => {
+				IssueController.sendResponse(res, api.status, api.data);
+			});
+		});
 	}
 }

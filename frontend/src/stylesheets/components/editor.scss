@@ -199,8 +199,8 @@
             border-radius: 5px 5px 0 0;
         }
         &--disabled {
-            color: GrayText;
-            cursor: default;
+            /*color: GrayText;*/
+            cursor: no-drop;
         }
         &:focus {
             outline: 0;

@@ -14,20 +14,20 @@ function setCookie(name: string, value: any, exhours: number) {
 export class AuthController extends Controller {
 	static async authorize(req: Request, res: Response) {
 		let redirect_url =
-			'https://github.com/login/oauth/authorize' +
-			`?client_id=${process.env.CLIENT_ID}` +
-			`&scope=repo` +
-			`&redirect_uri=http://localhost:8000/oauth/redirect`;
+			'https://github.com/login/oauth/authorize'
+			+ `?client_id=${process.env.CLIENT_ID}`
+			+ `&scope=repo`
+			//+ `&redirect_uri=http://localhost:8000/oauth/redirect`;
 		res.redirect(redirect_url);
 	}
 
 	static async access_token(req: Request, res: Response) {
 		let code = req.query.code;
 		let accessTokenUrl =
-			ACCESS_TOKEN_BASE_URL +
-			`?client_id=${process.env.CLIENT_ID}` +
-			`&client_secret=${process.env.CLIENT_SECRET}` +
-			`&code=${code}`;
+			ACCESS_TOKEN_BASE_URL
+			+ `?client_id=${process.env.CLIENT_ID}`
+			+ `&client_secret=${process.env.CLIENT_SECRET}`
+			+ `&code=${code}`;
         let accessToken = await request.post(accessTokenUrl);
         
 		console.log('1 - ' + accessToken['access_token']);

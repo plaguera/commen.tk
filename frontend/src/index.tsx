@@ -4,9 +4,15 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
+let data = {
+  user:"plaguera",
+  repo:"tfm-testing",
+  number: 1
+}
+
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <App {...data}/>
   </React.StrictMode>,
   document.getElementById('root')
 );
