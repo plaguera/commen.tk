@@ -27,7 +27,7 @@ class Comment extends React.Component<CommentProps, {}> {
                             <strong>
                                 <a className="author" href={this.props.author.url}>{this.props.author.login}</a>
                             </strong>
-                             commented 
+                            <a> commented </a>
                             <a className="time-ago" title={formatDate(this.props.created_at)} href={this.props.url}>
                                 {timeAgo(this.props.created_at)}
                             </a>

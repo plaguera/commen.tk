@@ -25,9 +25,6 @@ export class IssueController extends Controller {
               }
             }
           }`;
-        graphql(query).then(api => {
-            console.log(req.params.issuenumber);
-			IssueController.sendResponse(res, api.status, api.data)}
-		);
+        graphql(query).then(api => IssueController.sendResponse(res, api.status, api.data));
 	}
 }

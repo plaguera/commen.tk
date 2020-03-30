@@ -26,7 +26,7 @@ class Timeline extends React.Component<Issue, {}> {
 
     render() {
         return (
-            <ul className="timeline">
+            <div className="timeline">
                 {this.state.comments.map(comment =>
                     (
                         <Comment url={comment['url']}
@@ -35,8 +35,9 @@ class Timeline extends React.Component<Issue, {}> {
                             created_at={comment['createdAt']}
                             author={comment['author']}
                         />
-                    ))}
-            </ul>
+                    )
+                )}
+            </div>
         );
     }
 }
