@@ -6,7 +6,7 @@ import Timeline from './components/Timeline';
 import { IssueProps, UserProps, CommentProps } from './props';
 
 class App extends React.Component<IssueProps, { comments: CommentProps[], me: UserProps }> {
-  
+
   constructor(props: IssueProps) {
     super(props);
     this.state = {
@@ -15,12 +15,13 @@ class App extends React.Component<IssueProps, { comments: CommentProps[], me: Us
         url: '',
         login: '',
         avatarUrl: ''
-      } 
+      }
     }
   }
 
   comment(text: string) {
     request.post(`repos/${this.props.user}/${this.props.repo}/issues/${this.props.number}/comments`, { body: text })
+      .then(() => this.comments())
       .catch(console.error);
   }
 
@@ -52,7 +53,7 @@ class App extends React.Component<IssueProps, { comments: CommentProps[], me: Us
     };
     return (
       <div>
-        <Timeline {...this.state.comments}/>
+        <Timeline {...this.state.comments} />
         <hr className='separator' />
         <Editor {...tmp} />
       </div>

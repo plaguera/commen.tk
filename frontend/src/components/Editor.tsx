@@ -27,7 +27,10 @@ class Editor extends React.Component<EditorProps, { text: string }> {
     }
 
     onComment() {
-        this.setState({ text: this.ref.current?.value || '' }, () => this.props.onComment(this.state.text));
+        this.setState({ text: this.ref.current?.value || '' }, () => {
+            this.props.onComment(this.state.text);
+            if (this.ref.current) this.ref.current.value = '';
+        });
     }
 
     render() {
