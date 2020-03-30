@@ -1,5 +1,5 @@
 import * as React from 'react';
-import * as request from '../request';
+import Markdown from 'react-markdown'
 import '../stylesheets/components/comment.scss';
 import Avatar from './Avatar';
 
@@ -16,7 +16,6 @@ export interface CommentProps {
 }
 
 class Comment extends React.Component<CommentProps, {}> {
-
     render() {
         return (
             <div className="comment-wrapper">
@@ -34,9 +33,7 @@ class Comment extends React.Component<CommentProps, {}> {
                         </div>
                     </div>
                     <div className="comment-body">
-                        <p>
-                            {this.props.body}
-                        </p>
+                        <Markdown source={this.props.body} />
                     </div>
                 </div>
             </div>

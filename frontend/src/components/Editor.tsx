@@ -1,5 +1,5 @@
 import * as React from 'react';
-import * as request from '../request';
+import Markdown from 'react-markdown'
 import '../stylesheets/components/editor.scss';
 
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
@@ -17,27 +17,37 @@ function getCookie(name: string) {
 
 class Editor extends React.Component {
 
+    private textareaRef = React.createRef<HTMLTextAreaElement>();
+
+    state = {
+        textareaValue: ''
+    }
+
+    handleClick(e: any) {
+        this.setState({textareaValue: this.textareaRef.current?.value});
+    }
+
     render() {
         if (getCookie('loggedin')) {
             return (
                 <div className='editor-wrapper'>
                     <Avatar user="me"/>
                     <div className="editor arrow-box">
-                        <Tabs>
+                        <Tabs forceRenderTabPanel={true}>
                             <TabList>
                                 <Tab>Write</Tab>
-                                <Tab>Preview</Tab>
+                                <Tab onClick={this.handleClick.bind(this)}>Preview</Tab>
                             </TabList>
 
                             <TabPanel>
                                 <div className="editor-textarea" id="tab-editor">
-                                    <textarea placeholder="Leave a comment" id="textarea-comment"></textarea>
+                                    <textarea placeholder="Leave a comment" id="textarea-comment" ref={this.textareaRef}></textarea>
                                 </div>
                             </TabPanel>
                             <TabPanel>
                                 <div className="editor-preview" id="tab-preview">
                                     <div className="markdown-render">
-                                        <p>Nothing to preview...</p>
+                                        <Markdown source={this.state.textareaValue} />
                                     </div>
                                 </div>
                             </TabPanel>
