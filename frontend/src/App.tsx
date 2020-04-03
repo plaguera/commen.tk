@@ -31,7 +31,7 @@ class App extends React.Component<IssueProps, { comments: CommentProps[], me: Us
     request.get(`repos/${this.props.user}/${this.props.repo}/issues/${this.props.number}/comments`)
       .then(result => {
         this.setState({ comments: result.data.repository.issue.comments.nodes });
-        this.setState({ totalCount: result.data.repository.issue.comments.totalCount })
+        this.setState({ totalCount: result.data.repository.issue.comments.totalCount });
       })
       .catch(console.error);
   }

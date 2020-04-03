@@ -4,10 +4,10 @@ import '../stylesheets/components/editor.scss';
 
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import Avatar from './Avatar';
-import { UserProps, EditorProps } from '../props';
+import { EditorProps } from '../props';
 import { getCookie } from '../util';
+import { BASE_URL } from '../request';
 
-const BASE_URL = process.env.NODE_ENV === 'production' ? 'https://api-github-comments.herokuapp.com/' : 'http://localhost:8000/';
 const AUTH_URL = BASE_URL + 'authorize/';
 
 class Editor extends React.Component<EditorProps, { text: string }> {
