@@ -4,14 +4,13 @@ export const BASE_URL = process.env.NODE_ENV === 'production' ? BASE_URL_PROD : 
 export const API_URL = BASE_URL + 'api/';
 
 function getCookie(name: string) {
-    var re = new RegExp('[; ]' + name + '=([^\\s;]*)');
-    var sMatch = (' ' + document.cookie).match(re);
-    if (name && sMatch) return unescape(sMatch[1]);
-    return '';
+    var v = document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)');
+    return v ? v[2] : '';
 }
 
 export async function get(path: string) {    
 	console.log(getCookie('token'))
+	console.log(document.cookie)
     const options: RequestInit = {
         method: 'GET',
         headers: {
