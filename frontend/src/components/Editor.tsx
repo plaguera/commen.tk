@@ -7,7 +7,7 @@ import Avatar from './Avatar';
 import { UserProps, EditorProps } from '../props';
 import { getCookie } from '../util';
 
-const BASE_URL = process.env.NODE_ENV === 'production' ? 'https://plaguera-github-comments.herokuapp.com/' : 'http://localhost:8000/';
+const BASE_URL = process.env.NODE_ENV === 'production' ? 'https://api-github-comments.herokuapp.com/' : 'http://localhost:8000/';
 const AUTH_URL = BASE_URL + 'authorize/';
 
 class Editor extends React.Component<EditorProps, { text: string }> {
