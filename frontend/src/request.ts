@@ -1,7 +1,7 @@
 const BASE_API_URL_DEV = 'http://localhost:8000/api/';
 const BASE_API_URL_PROD = 'https://api-github-comments.herokuapp.com/api/';
 
-const BASE_API_URL = process.env.WEBPACK_MODE === 'production' ? BASE_API_URL_PROD : BASE_API_URL_DEV;
+const BASE_API_URL = process.env.NODE_ENV === 'production' ? BASE_API_URL_PROD : BASE_API_URL_DEV;
 
 function getCookie(name: string) {
     var re = new RegExp('[; ]' + name + '=([^\\s;]*)');

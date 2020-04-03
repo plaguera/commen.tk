@@ -5,14 +5,27 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 
 let data = {
-  user:"plaguera",
-  repo:"tfm-testing",
+  user: "plaguera",
+  repo: "tfm-testing",
   number: 1
 }
+let script = document.currentScript;
+if (script) {
+  let tokens = script.getAttribute('repo')?.valueOf().split('/');
+  if (tokens) {
+    data = {
+      user: tokens[0],
+      repo: tokens[1],
+      number: parseInt(tokens[2])
+    }
+  }
+  script.removeAttribute('repo');
+}
+console.log(process.env.NODE_ENV);
 
 ReactDOM.render(
   <React.StrictMode>
-    <App {...data}/>
+    <App {...data} />
   </React.StrictMode>,
   document.getElementById('root')
 );
