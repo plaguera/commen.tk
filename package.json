@@ -5,10 +5,12 @@
     "author": "Pedro Lagüera <laguerapedro@gmail.com>",
     "license": "MIT",
     "scripts": {
-        "build": "tsc && npx webpack --mode production --config webpack.config.js src/index.tsx",
-        "dev": "nodemon ./src/index.ts",
-        "watch": "concurrently \"nodemon ./src/index.ts\" \"cd frontend && npx webpack --mode development --watch src/index.tsx\"",
+        "build": "tsc",
         "start": "node dist/index.js",
+        "bundle": "cd frontend && npx webpack --mode production src/index.tsx",
+        "watch": "concurrently \"yarn watch:front\" \"yarn watch:back\"",
+        "watch:front": "cd frontend && npx webpack --mode development --watch src/index.tsx",
+        "watch:back": "nodemon src/index.ts",
         "test": "mocha -r ts-node/register src/test/**/*.test.ts"
     },
     "devDependencies": {
