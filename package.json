@@ -1,7 +1,6 @@
 {
     "name": "tfm-pedro-laguera-software",
     "version": "1.0.0",
-    "main": "src/index.ts",
     "repository": "git@github.com:ULL-ESIT-GRADOII-TFG/tfm-pedro-laguera-software.git",
     "author": "Pedro Lagüera <laguerapedro@gmail.com>",
     "license": "MIT",
