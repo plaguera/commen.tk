@@ -42,10 +42,14 @@ export class AuthController extends Controller {
 		if (cookie === undefined) {
 			res.cookie('token', accessToken['access_token'], {
 				//httpOnly: true,
-				maxAge: 24 * 60 * 60 * 1000
+				maxAge: 24 * 60 * 60 * 1000,
+				sameSite: "none",
+				secure: true
 			});
 			res.cookie('loggedin', true, {
-				maxAge: 24 * 60 * 60 * 1000
+				maxAge: 24 * 60 * 60 * 1000,
+				sameSite: "none",
+				secure: true
 			});
 			console.log('cookie created successfully');
 		} else {
