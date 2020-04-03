@@ -3,19 +3,14 @@ import { Controller } from './controller';
 import * as request from '../request';
 
 const ACCESS_TOKEN_BASE_URL = 'https://github.com/login/oauth/access_token';
-
-function setCookie(name: string, value: any, exhours: number) {
-	var d = new Date();
-	d.setTime(d.getTime() + (exhours * 60 * 60 * 1000));
-	var expires = "expires=" + d.toUTCString();
-	document.cookie = name + "=" + JSON.stringify(value) + ";" + expires + ";path=/";
-}
+const CLIENT_ID = process.env[`${process.env.NODE_ENV}_CLIENT_ID`];
+const CLIENT_SECRET = process.env[`${process.env.NODE_ENV}_CLIENT_SECRET`];
 
 export class AuthController extends Controller {
 	static async authorize(req: Request, res: Response) {
 		let redirect_url =
 			'https://github.com/login/oauth/authorize'
-			+ `?client_id=${process.env.CLIENT_ID}`
+			+ `?client_id=${CLIENT_ID}`
 			+ `&scope=repo`
 			//+ `&redirect_uri=http://localhost:8000/oauth/redirect`;
 		res.redirect(redirect_url);
@@ -25,8 +20,8 @@ export class AuthController extends Controller {
 		let code = req.query.code;
 		let accessTokenUrl =
 			ACCESS_TOKEN_BASE_URL
-			+ `?client_id=${process.env.CLIENT_ID}`
-			+ `&client_secret=${process.env.CLIENT_SECRET}`
+			+ `?client_id=${CLIENT_ID}`
+			+ `&client_secret=${CLIENT_SECRET}`
 			+ `&code=${code}`;
         let accessToken = await request.post(accessTokenUrl);
         
