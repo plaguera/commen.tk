@@ -6,9 +6,9 @@
     "author": "Pedro Lagüera <laguerapedro@gmail.com>",
     "license": "MIT",
     "scripts": {
-        "build": "webpack --mode production --config webpack.config.js && tsc",
+        "build": "tsc && cd frontend && npx webpack --mode development src/index.tsx",
         "dev": "nodemon ./src/index.ts",
-        "watch": "concurrently \"webpack --mode development --config webpack.config.js --watch\" \"nodemon ./src/index.ts\"",
+        "watch": "concurrently \"nodemon ./src/index.ts\" \"cd frontend && npx webpack --mode development --watch src/index.tsx\"",
         "start": "node dist/index.js",
         "test": "mocha -r ts-node/register src/test/**/*.test.ts"
     },

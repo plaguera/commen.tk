@@ -33,15 +33,13 @@ class Server {
         };
         this.express.use(cors(options));
         console.log(process.cwd())
-        this.express.use('/public', express.static(path.join(process.cwd(), 'dist')))
+        this.express.use('/public', express.static(path.join(process.cwd(), 'public')))
     }
 
     middleware() {
         this.express.use(cookieParser());
         this.express.use(express.json());
-        this.express.use(express.urlencoded({
-            extended: true
-        }));
+        this.express.use(express.urlencoded({ extended: true }));
     }
 
     routes() {
