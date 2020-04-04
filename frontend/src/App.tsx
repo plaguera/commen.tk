@@ -40,14 +40,15 @@ class App extends React.Component<IssueProps, { comments: CommentProps[], me: Us
 	me() {
 		request.get('user')
 			.then(result => {
-				this.setState({ me: result.data.viewer })
+				if (result == 'Unauthorized') this.setState({ me: { avatarUrl: '', login: '', url: '' } })
+				else this.setState({ me: result.data.viewer })
 			})
 			.catch(console.log);
 	}
 
 	componentDidMount() {
 		this.me();
-		if (!this.state.me) return;
+		if (this.state.me.login == '') return;
 		this.comments();
 	}
 
