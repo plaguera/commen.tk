@@ -8,7 +8,7 @@ const default_issue = {
 	number: 1
 }
 
-export function loadUser() {
+export async function loadUser() {
     request.get('user')
         .then(result => user = result.data.viewer)
         .catch(error => user = undefined);
