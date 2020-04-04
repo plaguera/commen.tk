@@ -48,7 +48,7 @@ class Server {
 			session({
 				secret: 'keyboard cat',
 				resave: false,
-				saveUninitialized: true,
+                saveUninitialized: true,
 				cookie: { secure: true, sameSite: 'none' }
 			})
 		);

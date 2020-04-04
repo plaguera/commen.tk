@@ -53,7 +53,7 @@ export class AuthController extends Controller {
 		console.log('1 - ' + accessToken['access_token']);
 		console.log('2 - ' + referer);
 
-		console.log(req.session);
+		/*console.log(req.session);
 		if (req.session) {
 			console.log('IF 1');
 			if (req.session.views) {
@@ -64,11 +64,12 @@ export class AuthController extends Controller {
 				req.session.views = 1;
 				//res.end('welcome to the session demo. refresh!');
 			}
-		}
-		
-		var cookie = req.cookies.token;
+		}*/
+		console.log('AUTH');
+		console.log(req.connection);
+		setcookie(res, 'token', accessToken['access_token'], 'secret', { secure: true, sameSite: 'none' });
+		/*var cookie = req.cookies.token;
 		if (cookie === undefined) {
-			setcookie(res, 'token', accessToken['access_token'], 'secret', req.session?.cookie);
 			let options : CookieOptions = {
 				httpOnly: true,
 				maxAge: 24 * 60 * 60 * 1000,
@@ -84,7 +85,7 @@ export class AuthController extends Controller {
 		} else {
 			// TODO: Update cookie access_token
 			console.log('cookie exists', cookie);
-		}
+		}*/
 
 		// TODO: referer ends with /
 		res.redirect(referer);
