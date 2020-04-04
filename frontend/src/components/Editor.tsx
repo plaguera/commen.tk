@@ -5,8 +5,8 @@ import '../stylesheets/components/editor.scss';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import Avatar from './Avatar';
 import { EditorProps } from '../props';
-import { getCookie } from '../util';
 import { BASE_URL } from '../request';
+import { loggedIn } from '../util';
 
 const AUTH_URL = BASE_URL + 'authorize/';
 
@@ -34,7 +34,7 @@ class Editor extends React.Component<EditorProps, { text: string }> {
     }
 
     render() {
-        if (getCookie('loggedin')) {
+        if (loggedIn()) {
             return (
                 <div className='editor-wrapper'>
                     <Avatar {...this.props.user}/>

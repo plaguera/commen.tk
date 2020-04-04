@@ -3,31 +3,15 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+import { loadUser, parseScriptAttributes } from './util';
 
-let data = {
-  user: "plaguera",
-  repo: "tfm-testing",
-  number: 1
-}
-let script = document.currentScript;
-if (script) {
-  let tokens = script.getAttribute('repo')?.valueOf().split('/');
-  if (tokens) {
-    data = {
-      user: tokens[0],
-      repo: tokens[1],
-      number: parseInt(tokens[2])
-    }
-  }
-  script.removeAttribute('repo');
-}
 console.log(process.env.NODE_ENV);
-console.log(document.cookie);
+loadUser();
 ReactDOM.render(
-  <React.StrictMode>
-    <App {...data} />
-  </React.StrictMode>,
-  document.getElementById('root')
+	<React.StrictMode>
+		<App {...parseScriptAttributes()} />
+	</React.StrictMode>,
+	document.getElementById('root')
 );
 
 // If you want your app to work offline and load faster, you can change

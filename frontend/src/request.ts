@@ -17,9 +17,6 @@ export async function get(path: string) {
 	};
 	let res = await fetch(API_URL + path, options);
 	
-	if (res.status == 401) {
-		return 'Unauthorized';
-	}
 	if (res.headers.get('content-type')?.includes('application/json')) {
 		let json = await res.json();
 		//console.log(json);

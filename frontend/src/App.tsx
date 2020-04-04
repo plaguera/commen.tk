@@ -5,7 +5,7 @@ import Editor from './components/Editor';
 import Timeline from './components/Timeline';
 import { IssueProps, UserProps, CommentProps } from './props';
 import Header from './components/Header';
-import { getCookie } from './util';
+import { loggedIn } from './util';
 
 class App extends React.Component<IssueProps, { comments: CommentProps[], me: UserProps, totalCount: number }> {
 
@@ -39,16 +39,13 @@ class App extends React.Component<IssueProps, { comments: CommentProps[], me: Us
 
 	me() {
 		request.get('user')
-			.then(result => {
-				if (result == 'Unauthorized') this.setState({ me: { avatarUrl: '', login: '', url: '' } })
-				else this.setState({ me: result.data.viewer })
-			})
-			.catch(console.log);
+			.then(result => this.setState({ me: result.data.viewer }))
+			.catch(console.error);
 	}
 
 	componentDidMount() {
+		if (!loggedIn()) return;
 		this.me();
-		if (this.state.me.login == '') return;
 		this.comments();
 	}
 
