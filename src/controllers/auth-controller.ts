@@ -2,12 +2,26 @@ import { Request, Response, CookieOptions } from 'express';
 import { Controller } from './controller';
 import * as request from '../request';
 import crypto from 'crypto';
+var cookie = require('cookie');
+var signature = require('cookie-signature');
 
 const OAUTH_URL = 'https://github.com/login/oauth/';
 const URL_AUTH = 'authorize';
 const URL_ACCT = 'access_token';
 const CLIENT_ID = process.env[`${process.env.NODE_ENV}_CLIENT_ID`];
 const CLIENT_SECRET = process.env[`${process.env.NODE_ENV}_CLIENT_SECRET`];
+
+function setcookie(res, name, val, secret, options) {
+	var signed = 's:' + signature.sign(val, secret);
+	var data = cookie.serialize(name, signed, options);
+  
+	console.log('set-cookie %s', data);
+  
+	var prev = res.getHeader('Set-Cookie') || []
+	var header = Array.isArray(prev) ? prev.concat(data) : [prev, data];
+  
+	res.setHeader('Set-Cookie', header)
+  }
 
 export class AuthController extends Controller {
 	static referers: object = {};
@@ -54,6 +68,7 @@ export class AuthController extends Controller {
 		
 		var cookie = req.cookies.token;
 		if (cookie === undefined) {
+			setcookie(res, 'token', accessToken['access_token'], 'secret', req.session?.cookie);
 			let options : CookieOptions = {
 				httpOnly: true,
 				maxAge: 24 * 60 * 60 * 1000,
@@ -61,7 +76,7 @@ export class AuthController extends Controller {
 				secure: true,
 				signed: true
 			};
-			res.cookie('token', accessToken['access_token'], options);
+			//res.cookie('token', accessToken['access_token'], options);
 			//res.cookie('loggedin', true, options);
 			//res.setHeader('Set-Cookie', `token=${accessToken['access_token']}; Path=/; HttpOnly; Secure; SameSite=None; Max-Age=${60 * 60 * 24 * 1000}`);
 			//res.setHeader('Set-Cookie', `loggedin=true; Path=/token; HttpOnly; Secure; SameSite=None; Max-Age=${60 * 60 * 24 * 356}`);
