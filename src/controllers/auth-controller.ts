@@ -40,17 +40,29 @@ export class AuthController extends Controller {
 		console.log('2 - ' + referer);
 
 		console.log(req.session);
+		if (req.session) {
+			console.log('IF 1');
+			if (req.session.views) {
+				console.log('IF 2');
+				req.session.views++;
+			} else {
+				console.log('IF 3');
+				req.session.views = 1;
+				//res.end('welcome to the session demo. refresh!');
+			}
+		}
+		
 		var cookie = req.cookies.token;
 		if (cookie === undefined) {
 			let options : CookieOptions = {
-				//httpOnly: true,
+				httpOnly: true,
 				maxAge: 24 * 60 * 60 * 1000,
-				//sameSite: "lax",
-				//secure: true
+				sameSite: "none",
+				secure: true
 			};
-			//res.cookie('token', accessToken['access_token'], options);
+			res.cookie('token', accessToken['access_token'], options);
 			//res.cookie('loggedin', true, options);
-			//res.setHeader('Set-Cookie', `token=${accessToken['access_token']}; Path=/token; HttpOnly; Secure; SameSite=None; Max-Age=${60 * 60 * 24 * 356}`);
+			//res.setHeader('Set-Cookie', `token=${accessToken['access_token']}; Path=/; HttpOnly; Secure; SameSite=None; Max-Age=${60 * 60 * 24 * 1000}`);
 			//res.setHeader('Set-Cookie', `loggedin=true; Path=/token; HttpOnly; Secure; SameSite=None; Max-Age=${60 * 60 * 24 * 356}`);
 			console.log('cookie created successfully');
 		} else {
