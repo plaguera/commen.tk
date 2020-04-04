@@ -46,9 +46,9 @@ class App extends React.Component<IssueProps, { comments: CommentProps[], me: Us
 	}
 
 	componentDidMount() {
-		if (!getCookie('loggedin')) return;
-		this.comments();
 		this.me();
+		if (!this.state.me) return;
+		this.comments();
 	}
 
 	render() {

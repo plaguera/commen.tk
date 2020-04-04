@@ -13,11 +13,7 @@ export async function get(path: string) {
 	console.log(document.cookie)
     const options: RequestInit = {
         method: 'GET',
-        headers: {
-			Authorization: getCookie('token')
-		},
-		credentials: "include",
-		mode: 'cors'
+		credentials: 'include'
 	};
     let res = await fetch(API_URL + path, options);
 
