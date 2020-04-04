@@ -35,10 +35,10 @@ export async function post(path: string, data?: object) {
 	return res;
 }
 
-export async function query(data: string) {
+export async function query(data: string, token: string) {
 	const options = {
 		headers: {
-			authorization: 'token ' + Controller.token //|| process.env.GITHUB_TOKEN
+			authorization: 'token ' + token //|| process.env.GITHUB_TOKEN
 		},
 		method: 'POST',
 		body: JSON.stringify({

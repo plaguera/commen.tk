@@ -6,7 +6,7 @@ import { Controller } from '../controllers/controller';
 
 const routes = Router();
 
-routes.all('*', Controller.getToken);
+//routes.all('*', Controller.getToken);
 
 routes.route("/api/user").get(UserController.get)
 routes.route("/api/users/:id").get(UserController.get);

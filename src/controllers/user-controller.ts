@@ -12,6 +12,6 @@ export class UserController extends Controller {
                 avatarUrl
             }
         }`;
-        query(data).then(api => UserController.sendResponse(res, api.status, api.data));
+        query(data, req.cookies.token).then(api => UserController.sendResponse(res, api.status, api.data));
     }
 }

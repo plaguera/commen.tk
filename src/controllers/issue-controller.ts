@@ -25,7 +25,7 @@ export class IssueController extends Controller {
               }
             }
           }`;
-		query(data).then(api =>
+		query(data, req.cookies.token).then(api =>
 			IssueController.sendResponse(res, api.status, api.data)
 		);
 	}
@@ -38,19 +38,19 @@ export class IssueController extends Controller {
               }
             }
           }`;
-		return query(data);
+		return query(data, req.cookies.token);
 	}
 
 	static post(req: Request, res: Response) {
 		IssueController.id(req, res).then(id => {
 			let data = `mutation {
-        __typename
-        addComment(input: {subjectId: "${id.data.data.repository.issue.id}", body: "${req.body.body}"}) {
-          clientMutationId
-        }
-      }`;
+							__typename
+							addComment(input: {subjectId: "${id.data.data.repository.issue.id}", body: "${req.body.body}"}) {
+							clientMutationId
+							}
+						}`;
 
-			query(data).then(api => {
+			query(data, req.cookies.token).then(api => {
 				IssueController.sendResponse(res, api.status, api.data);
 			});
 		});
