@@ -50,48 +50,20 @@ export class AuthController extends Controller {
 		let accessToken = await request.post(accessTokenUrl);
 		let referer = AuthController.referers[req.query.state];
 
-		console.log('1 - ' + accessToken['access_token']);
-		console.log('2 - ' + referer);
+		console.log('AT - ' + accessToken['access_token']);
+		console.log('REF - ' + referer);
 
-		/*console.log(req.session);
-		if (req.session) {
-			console.log('IF 1');
-			if (req.session.views) {
-				console.log('IF 2');
-				req.session.views++;
-			} else {
-				console.log('IF 3');
-				req.session.views = 1;
-				//res.end('welcome to the session demo. refresh!');
-			}
-		}*/
-		console.log(req.connection);
-		let options : CookieOptions = {
-			//httpOnly: true,
-			maxAge: 24 * 60 * 60 * 1000,
-			sameSite: "none",
-			secure: true
-		};
-		res.cookie('token', accessToken['access_token'], options);
-		//setcookie(res, 'token', accessToken['access_token'], 'secret', { secure: true, sameSite: 'none' });
-		/*var cookie = req.cookies.token;
+		let cookie = req.cookies.token;
 		if (cookie === undefined) {
+			console.log(req.connection);
 			let options : CookieOptions = {
 				httpOnly: true,
 				maxAge: 24 * 60 * 60 * 1000,
 				sameSite: "none",
-				secure: true,
-				signed: true
+				secure: true
 			};
-			//res.cookie('token', accessToken['access_token'], options);
-			//res.cookie('loggedin', true, options);
-			//res.setHeader('Set-Cookie', `token=${accessToken['access_token']}; Path=/; HttpOnly; Secure; SameSite=None; Max-Age=${60 * 60 * 24 * 1000}`);
-			//res.setHeader('Set-Cookie', `loggedin=true; Path=/token; HttpOnly; Secure; SameSite=None; Max-Age=${60 * 60 * 24 * 356}`);
-			console.log('cookie created successfully');
-		} else {
-			// TODO: Update cookie access_token
-			console.log('cookie exists', cookie);
-		}*/
+			res.cookie('token', accessToken['access_token'], options);
+		}
 
 		// TODO: referer ends with /
 		res.redirect(referer);

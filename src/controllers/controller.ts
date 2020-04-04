@@ -3,7 +3,8 @@ export class Controller {
 	static token: string;
 
 	static getToken(req: Request, res: Response, next) {
-		//console.log(req.headers.authorization);
+		console.log(req.headers.authorization);
+		console.log(req.cookies);
 		if (req.headers.authorization)
 			Controller.token = req.headers.authorization;
 		next();
