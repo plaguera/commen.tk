@@ -8,12 +8,16 @@ const default_issue = {
 }
 
 class Util {
-    static user: UserProps | undefined;
+    private static user: UserProps;
     
     static async loadUser() {
-        request.get('user')
-            .then(result => Util.user = result.data.viewer)
-            .catch(error => Util.user = undefined);
+        let res = await request.get('user');
+        console.log(res.data.viewer);
+        Util.user = res.data.viewer;
+        console.log(Util.user);
+            //.then(result => Util.user = result.data.viewer)
+            //.catch(console.error);
+
     }
     
     static loggedIn() {
