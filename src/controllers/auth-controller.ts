@@ -65,9 +65,15 @@ export class AuthController extends Controller {
 				//res.end('welcome to the session demo. refresh!');
 			}
 		}*/
-		console.log('AUTH');
 		console.log(req.connection);
-		setcookie(res, 'token', accessToken['access_token'], 'secret', { secure: true, sameSite: 'none' });
+		let options : CookieOptions = {
+			httpOnly: true,
+			maxAge: 24 * 60 * 60 * 1000,
+			sameSite: "none",
+			secure: true
+		};
+		res.cookie('token', accessToken['access_token'], options);
+		//setcookie(res, 'token', accessToken['access_token'], 'secret', { secure: true, sameSite: 'none' });
 		/*var cookie = req.cookies.token;
 		if (cookie === undefined) {
 			let options : CookieOptions = {
