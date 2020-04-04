@@ -27,8 +27,8 @@ class Server {
                 "Authorization"
             ],
             credentials: true,
-            methods: "GET,HEAD,OPTIONS,PUT,PATCH,POST,DELETE",
-            origin: "*",
+            methods: "GET,POST",
+            origin: true,
             preflightContinue: false
         };
         this.express.use(cors(options));
