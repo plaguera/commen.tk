@@ -67,7 +67,7 @@ export class AuthController extends Controller {
 		}*/
 		console.log(req.connection);
 		let options : CookieOptions = {
-			httpOnly: true,
+			//httpOnly: true,
 			maxAge: 24 * 60 * 60 * 1000,
 			sameSite: "none",
 			secure: true

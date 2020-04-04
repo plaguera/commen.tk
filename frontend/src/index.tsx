@@ -22,7 +22,7 @@ if (script) {
   script.removeAttribute('repo');
 }
 console.log(process.env.NODE_ENV);
-
+console.log(document.cookie);
 ReactDOM.render(
   <React.StrictMode>
     <App {...data} />
