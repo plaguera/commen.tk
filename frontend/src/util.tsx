@@ -10,8 +10,8 @@ const default_issue = {
 
 export async function loadUser() {
     request.get('user')
-        .then(result => {user = result.data.viewer; console.log('Y = ' + user)})
-        .catch(error => {user = undefined; console.log('N = ' + user)});
+        .then(result => {user = result.data.viewer; console.log('Y'); console.log(user)})
+        .catch(error => {user = undefined; console.log('N'); console.log(user)});
 }
 
 export function loggedIn() {
