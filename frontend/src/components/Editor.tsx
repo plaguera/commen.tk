@@ -6,7 +6,7 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import Avatar from './Avatar';
 import { EditorProps } from '../props';
 import { BASE_URL } from '../request';
-import { loggedIn } from '../util';
+import Util from '../util';
 
 const AUTH_URL = BASE_URL + 'authorize/';
 
@@ -34,7 +34,7 @@ class Editor extends React.Component<EditorProps, { text: string }> {
     }
 
     render() {
-        if (loggedIn()) {
+        if (Util.loggedIn()) {
             return (
                 <div className='editor-wrapper'>
                     <Avatar {...this.props.user}/>

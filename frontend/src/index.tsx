@@ -3,14 +3,14 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import { loadUser, parseScriptAttributes, loggedIn } from './util';
+import Util from './util';
 
 console.log(process.env.NODE_ENV);
-loadUser().then(() => {
-	console.log(loggedIn());
+Util.loadUser().then(() => {
+	console.log(Util.loggedIn());
 	ReactDOM.render(
 		<React.StrictMode>
-			<App {...parseScriptAttributes()} />
+			<App {...Util.parseScriptAttributes()} />
 		</React.StrictMode>,
 		document.getElementById('root')
 	);

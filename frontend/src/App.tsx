@@ -5,7 +5,7 @@ import Editor from './components/Editor';
 import Timeline from './components/Timeline';
 import { IssueProps, UserProps, CommentProps } from './props';
 import Header from './components/Header';
-import { loggedIn } from './util';
+import Util from './util';
 
 class App extends React.Component<IssueProps, { comments: CommentProps[], me: UserProps, totalCount: number }> {
 
@@ -44,7 +44,7 @@ class App extends React.Component<IssueProps, { comments: CommentProps[], me: Us
 	}
 
 	componentDidMount() {
-		if (!loggedIn()) return;
+		if (!Util.loggedIn()) return;
 		this.me();
 		this.comments();
 	}
