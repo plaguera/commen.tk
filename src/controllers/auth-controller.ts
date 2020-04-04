@@ -43,8 +43,8 @@ export class AuthController extends Controller {
 			let options : CookieOptions = {
 				//httpOnly: true,
 				maxAge: 24 * 60 * 60 * 1000,
-				sameSite: "none",
-				secure: true
+				//sameSite: "lax",
+				//secure: true
 			};
 			res.cookie('token', accessToken['access_token'], options);
 			res.cookie('loggedin', true, options);
