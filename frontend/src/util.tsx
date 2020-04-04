@@ -11,10 +11,12 @@ class Util {
     private static user: UserProps;
     
     static async loadUser() {
-        let res = await request.get('user');
-        console.log(res.data.viewer);
-        Util.user = res.data.viewer;
-        console.log(Util.user);
+        let res = await request.get('user').catch(console.error);
+        if (res.data) {
+            console.log(res.data.viewer);
+            Util.user = res.data.viewer;
+            console.log(Util.user);
+        }
             //.then(result => Util.user = result.data.viewer)
             //.catch(console.error);
 
