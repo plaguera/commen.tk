@@ -31,21 +31,20 @@ class App extends React.Component<IssueProps, { comments: CommentProps[], me: Us
 	comments() {
 		request.get(`repos/${this.props.user}/${this.props.repo}/issues/${this.props.number}/comments`)
 			.then(result => {
-				this.setState({ comments: result.data.repository.issue.comments.nodes });
-				this.setState({ totalCount: result.data.repository.issue.comments.totalCount });
+				this.setState({ comments: result.repository.issue.comments.nodes });
+				this.setState({ totalCount: result.repository.issue.comments.totalCount });
 			})
 			.catch(console.error);
 	}
 
 	me() {
 		request.get('user')
-			.then(result => this.setState({ me: result.data.viewer }))
+			.then(result => this.setState({ me: result.viewer }))
 			.catch(console.error);
 	}
 
 	componentDidMount() {
-		if (!Util.loggedIn()) return;
-		this.me();
+		if (Util.loggedIn()) this.me();
 		this.comments();
 	}
 

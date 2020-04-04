@@ -40,15 +40,25 @@ export class AuthController extends Controller {
 		console.log('REF - ' + referer);
 
 		let cookie = req.cookies.token;
+		console.log(process.env.NODE_ENV)
 		if (cookie === undefined) {
 			console.log('Create Cookie');
-			let options : CookieOptions = {
-				httpOnly: true,
-				maxAge: 24 * 60 * 60 * 1000,
-				sameSite: 'none',
-				secure: true
-			};
-			res.cookie('token', accessToken['access_token'], options);
+			if (process.env.NODE_ENV === 'PRODUCTION') {
+				let options : CookieOptions = {
+					httpOnly: true,
+					maxAge: 24 * 60 * 60 * 1000,
+					sameSite: 'none',
+					secure: true
+				};
+				res.cookie('token', accessToken['access_token'], options);
+			} else if (process.env.NODE_ENV === 'DEVELOPMENT') {
+				let options : CookieOptions = {
+					httpOnly: true,
+					maxAge: 24 * 60 * 60 * 1000
+				};
+				res.cookie('token', accessToken['access_token'], options);
+			}
+			
 		}
 
 		// TODO: referer ends with /

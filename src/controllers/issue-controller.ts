@@ -25,7 +25,8 @@ export class IssueController extends Controller {
               }
             }
           }`;
-		query(data, req.cookies.token).then(api =>
+		let token = req.cookies.token ?? process.env.DEFAULT_GITHUB_TOKEN;
+		query(data, token).then(api =>
 			IssueController.sendResponse(res, api.status, api.data)
 		);
 	}

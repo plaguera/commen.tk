@@ -38,21 +38,20 @@ export async function post(path: string, data?: object) {
 export async function query(data: string, token: string) {
 	const options = {
 		headers: {
-			authorization: 'token ' + token //|| process.env.GITHUB_TOKEN
+			authorization: 'token ' + token
 		},
 		method: 'POST',
 		body: JSON.stringify({
 			query: data
 		})
 	};
-
 	let res = await fetch('https://api.github.com/graphql', options);
 	let json = await res.json();
 	return {
 		url: res.url,
 		status: res.status,
 		statusText: res.statusText,
-		data: json
+		data: json.data
 	};
 }
 

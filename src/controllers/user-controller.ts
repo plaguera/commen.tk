@@ -12,6 +12,7 @@ export class UserController extends Controller {
                 avatarUrl
             }
         }`;
-        query(data, req.cookies.token).then(api => UserController.sendResponse(res, api.status, api.data));
+        let token = req.params.id ? req.cookies.token || process.env.DEFAULT_GITHUB_TOKEN : req.cookies.token;
+        query(data, token).then(api => UserController.sendResponse(res, api.status, api.data));
     }
 }
