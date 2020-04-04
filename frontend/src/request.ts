@@ -15,7 +15,8 @@ export async function get(path: string) {
         method: 'GET',
         headers: {
 			Authorization: getCookie('token')
-		}
+		},
+		credentials: "include"
 	};
     let res = await fetch(API_URL + path, options);
 
