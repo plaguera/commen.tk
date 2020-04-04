@@ -1,7 +1,7 @@
 import * as request from './request';
 import { UserProps } from './props';
 
-var user: UserProps | undefined = undefined;
+var user: UserProps | undefined;
 const default_issue = {
 	user: "plaguera",
 	repo: "tfm-testing",

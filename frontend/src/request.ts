@@ -9,14 +9,12 @@ function getCookie(name: string) {
 }
 
 export async function get(path: string) {    
-	console.log(getCookie('token'))
-	console.log(document.cookie)
     const options: RequestInit = {
         method: 'GET',
 		credentials: 'include'
 	};
 	let res = await fetch(API_URL + path, options);
-	
+
 	if (res.headers.get('content-type')?.includes('application/json')) {
 		let json = await res.json();
 		//console.log(json);
