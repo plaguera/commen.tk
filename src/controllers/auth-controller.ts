@@ -1,4 +1,4 @@
-import { Request, Response } from 'express';
+import { Request, Response, CookieOptions } from 'express';
 import { Controller } from './controller';
 import * as request from '../request';
 import crypto from 'crypto';
@@ -40,17 +40,14 @@ export class AuthController extends Controller {
 
 		var cookie = req.cookies.token;
 		if (cookie === undefined) {
-			res.cookie('token', accessToken['access_token'], {
+			let options : CookieOptions = {
 				//httpOnly: true,
 				maxAge: 24 * 60 * 60 * 1000,
 				sameSite: "none",
-				secure: true
-			});
-			res.cookie('loggedin', true, {
-				maxAge: 24 * 60 * 60 * 1000,
-				sameSite: "none",
-				secure: true
-			});
+				//secure: true
+			};
+			res.cookie('token', accessToken['access_token'], options);
+			res.cookie('loggedin', true, options);
 			console.log('cookie created successfully');
 		} else {
 			// TODO: Update cookie access_token
