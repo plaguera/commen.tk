@@ -39,6 +39,7 @@ export class AuthController extends Controller {
 		console.log('1 - ' + accessToken['access_token']);
 		console.log('2 - ' + referer);
 
+		console.log(req.session);
 		var cookie = req.cookies.token;
 		if (cookie === undefined) {
 			let options : CookieOptions = {
@@ -49,8 +50,8 @@ export class AuthController extends Controller {
 			};
 			//res.cookie('token', accessToken['access_token'], options);
 			//res.cookie('loggedin', true, options);
-			res.setHeader('Set-Cookie', `token=${accessToken['access_token']}; Path=/token; HttpOnly; Secure; SameSite=None; Max-Age=${60 * 60 * 24 * 356}`);
-			res.setHeader('Set-Cookie', `loggedin=true; Path=/token; HttpOnly; Secure; SameSite=None; Max-Age=${60 * 60 * 24 * 356}`);
+			//res.setHeader('Set-Cookie', `token=${accessToken['access_token']}; Path=/token; HttpOnly; Secure; SameSite=None; Max-Age=${60 * 60 * 24 * 356}`);
+			//res.setHeader('Set-Cookie', `loggedin=true; Path=/token; HttpOnly; Secure; SameSite=None; Max-Age=${60 * 60 * 24 * 356}`);
 			console.log('cookie created successfully');
 		} else {
 			// TODO: Update cookie access_token
