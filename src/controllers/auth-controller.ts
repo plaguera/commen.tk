@@ -48,6 +48,7 @@ export class AuthController extends Controller {
 			};
 			res.cookie('token', accessToken['access_token'], options);
 			res.cookie('loggedin', true, options);
+			res.setHeader("Set-Cookie", "HttpOnly;Secure;SameSite=Strict");
 			console.log('cookie created successfully');
 		} else {
 			// TODO: Update cookie access_token
