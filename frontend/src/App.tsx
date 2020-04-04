@@ -5,6 +5,7 @@ import Editor from './components/Editor';
 import Timeline from './components/Timeline';
 import { IssueProps, UserProps, CommentProps } from './props';
 import Header from './components/Header';
+import { getCookie } from './util';
 
 class App extends React.Component<IssueProps, { comments: CommentProps[], me: UserProps, totalCount: number }> {
 
@@ -45,6 +46,7 @@ class App extends React.Component<IssueProps, { comments: CommentProps[], me: Us
   }
 
   componentDidMount() {
+    if (!getCookie('loggedin')) return;
     this.comments();
     this.me();
   }

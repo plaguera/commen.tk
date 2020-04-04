@@ -34,9 +34,10 @@ export class AuthController extends Controller {
 			`&client_secret=${CLIENT_SECRET}` +
 			`&code=${code}`;
 		let accessToken = await request.post(accessTokenUrl);
+		let referer = AuthController.referers[req.query.state];
 
 		console.log('1 - ' + accessToken['access_token']);
-		console.log('2 - ' + AuthController.referers[req.query.state]);
+		console.log('2 - ' + referer);
 
 		var cookie = req.cookies.token;
 		if (cookie === undefined) {
@@ -57,6 +58,7 @@ export class AuthController extends Controller {
 		}
 
 		// TODO: referer ends with /
-		res.redirect(AuthController.referers[req.query.state]);
+		res.redirect(referer);
+		delete AuthController.referers[req.query.state];
 	}
 }
