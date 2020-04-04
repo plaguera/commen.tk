@@ -55,7 +55,7 @@ export class AuthController extends Controller {
 
 		let cookie = req.cookies.token;
 		if (cookie === undefined) {
-			console.log(req.connection);
+			console.log('Create Cookie');
 			let options : CookieOptions = {
 				httpOnly: true,
 				maxAge: 24 * 60 * 60 * 1000,
