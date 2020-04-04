@@ -10,11 +10,12 @@ const default_issue = {
 
 export async function loadUser() {
     request.get('user')
-        .then(result => {user = result.data.viewer; console.log('Y'); console.log(user)})
-        .catch(error => {user = undefined; console.log('N'); console.log(user)});
+        .then(result => user = result.data.viewer)
+        .catch(error => user = undefined);
 }
 
 export function loggedIn() {
+    console.log(user);
     return user !== undefined;
 }
 
