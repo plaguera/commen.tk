@@ -7,7 +7,6 @@ import Util from './util';
 
 console.log(process.env.NODE_ENV);
 Util.loadUser().then(() => {
-	console.log(Util.loggedIn());
 	ReactDOM.render(
 		<React.StrictMode>
 			<App {...Util.parseScriptAttributes()} />
