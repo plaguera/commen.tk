@@ -48,7 +48,6 @@ export async function query(data: string) {
 
 	let res = await fetch('https://api.github.com/graphql', options);
 	let json = await res.json();
-	console.log(json);
 	return {
 		url: res.url,
 		status: res.status,

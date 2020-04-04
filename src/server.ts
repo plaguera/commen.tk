@@ -44,14 +44,6 @@ class Server {
 		this.express.use(express.json());
 		this.express.use(express.urlencoded({ extended: true }));
 		this.express.set('trust proxy', 1);
-		this.express.use(
-			session({
-				secret: 'keyboard cat',
-				resave: false,
-                saveUninitialized: true,
-				cookie: { secure: true, sameSite: 'none' }
-			})
-		);
 	}
 
 	routes() {
