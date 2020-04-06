@@ -1,5 +1,4 @@
 import * as React from 'react';
-import '../stylesheets/components/avatar.scss';
 import { UserProps } from '../props';
 
 class Avatar extends React.Component<UserProps, {}> {

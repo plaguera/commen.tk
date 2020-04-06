@@ -1,6 +1,5 @@
 import * as React from 'react';
 import Markdown from 'react-markdown'
-import '../stylesheets/components/comment.scss';
 import Avatar from './Avatar';
 import { CommentProps } from '../props';
 

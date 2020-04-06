@@ -1,5 +1,5 @@
 import React from 'react';
-import './stylesheets/App.css';
+import './stylesheets/themes/light/App';
 import * as request from './request';
 import Editor from './components/Editor';
 import Timeline from './components/Timeline';

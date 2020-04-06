@@ -1,10 +1,10 @@
 .editor-textarea textarea {
-    background-color: #181818;
-    border: #404040 1px solid;
+    background-color: $editor-textarea_background-color;
+    border: $editor-textarea_border-color 1px solid;
     border-radius: 2px;
     box-shadow: inset 0 1px 2px rgba(27, 31, 35, .075);
     box-sizing: border-box;
-    color: #d2d2d2;
+    color: $editor-textarea_color;
     font-size: 14px;
     line-height: 1.6;
     min-height: 125px;
@@ -29,9 +29,9 @@
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
-    background-color: #181818;
-    border: #404040 1px solid;
-    color: #d2d2d2;
+    background-color: $markdown-render_background-color;
+    border: $markdown-render_border-color 1px solid;
+    color: $markdown-render_color;
     border-radius: 2px;
     text-rendering: auto;
     letter-spacing: normal;
@@ -105,17 +105,15 @@
 }
 
 .editor {
-    background-color: rgb(27, 31, 35);
-    border-color: #343434;
+    background-color: $editor_background-color;
+    border-color: $editor_border-color;
+    border-bottom-color: $editor_border-bottom-color;
+    color: $editor_color;
     border-radius: 3px;
     margin: 10px;
     margin-left: 10px;
-    /*padding: 10px;*/
-    color: white;
     font-family: Arial, Helvetica, sans-serif;
     flex: 1;
-    background-color: rgb(24, 24, 24);
-    border-bottom-color: rgb(64, 64, 64);
     border-style: solid;
     border-width: 1px;
     box-sizing: border-box;
@@ -139,14 +137,14 @@
         pointer-events: none;
     }
     &:after {
-        border-color: rgba(27, 31, 35, 0);
-        border-right-color: #1b1f23;
+        border-color: $arrow-box--after_border-color;
+        border-right-color: $arrow-box--after_border-right-color;
         border-width: 5px;
         margin-top: -5px;
     }
     &:before {
-        border-color: rgba(52, 52, 52, 0);
-        border-right-color: #343434;
+        border-color: $arrow-box--before_border-color;
+        border-right-color: $arrow-box--before_border-right-color;
         border-width: 6px;
         margin-top: -6px;
     }
@@ -155,11 +153,11 @@
 .react-tabs {
     -webkit-tap-highlight-color: transparent;
     &__tab-list {
-        border-bottom: rgb(64, 64, 64) 1px solid;
-        color: #ccc;
+        border-bottom: $react-tabs-tab-list_border-bottom-color 1px solid;
+        color: $react-tabs-tab-list_color;
         padding: 10px;
         padding-bottom: 0;
-        background-color: rgb(32, 32, 32);
+        background-color: $react-tabs-tab-list_background-color;
         margin-top: 0;
     }
     &__tab {
@@ -173,7 +171,7 @@
         cursor: pointer;
         align-items: flex-start;
         box-sizing: border-box;
-        color: rgb(175, 175, 175);
+        color: $react-tabs-tab-list-tab_color;
         cursor: pointer;
         display: inline-block;
         flex-basis: auto;
@@ -189,17 +187,16 @@
         padding-right: 16px;
         padding-top: 8px;
         text-align: center;
-        text-decoration-color: rgb(175, 175, 175);
+        text-decoration-color: $react-tabs-tab-list-tab_color;
         text-decoration-line: none;
         text-decoration-style: solid;
         &--selected {
-            background-color: rgb(24, 24, 24);
-            border-color: rgb(64, 64, 64);
-            color: rgb(210, 210, 210);
+            background-color: $react-tabs-tab-list-tab-selected_background-color;
+            border-color: $react-tabs-tab-list-tab-selected_border-color;
+            color: $react-tabs-tab-list-tab-selected_color;
             border-radius: 5px 5px 0 0;
         }
         &--disabled {
-            /*color: GrayText;*/
             cursor: no-drop;
         }
         &:focus {

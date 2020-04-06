@@ -1,29 +1,27 @@
 .comment {
-    background-color: rgb(27, 31, 35);
-    border-color: #343434;
+    border-color: $comment_border-color;
     border-radius: 3px;
     margin: 10px;
     margin-left: 10px;
-    /*padding: 10px;*/
-    color: white;
+    color: $comment_color;
     font-family: Arial, Helvetica, sans-serif;
     flex: 1;
-    background-color: rgb(24, 24, 24);
-    border-bottom-color: rgb(64, 64, 64);
+    background-color: $comment_background-color;
+    border-bottom-color: $comment_border-bottom-color;
     border-style: solid;
     border-width: 1px;
     box-sizing: border-box;
     &-body {
-        color: #ccc;
+        color: $comment-body_color;
         padding: 5;
         padding-left: 15px;
         padding-right: 15px;
     }
     &-header {
-        border-bottom: rgb(64, 64, 64) 1px solid;
-        color: #ccc;
+        border-bottom: $comment-header_border-bottom-color 1px solid;
+        color: $comment-header_color;
         padding: 10px;
-        background-color: rgb(32, 32, 32);
+        background-color: $comment-header_background-color;
         &-anchor {
             font-size: 11px;
             font-weight: 400;
@@ -35,10 +33,10 @@
 }
 
 .author {
-    color: rgb(210, 210, 210);
+    color: $author_color;
     font-size: 14px;
     font-weight: 600;
-    text-decoration-color: rgb(210, 210, 210);
+    text-decoration-color: $author_color;
     text-decoration-line: none;
     text-decoration-style: solid;
     text-overflow: ellipsis;
@@ -48,11 +46,11 @@
 }
 
 .time-ago {
-    color: rgb(175, 175, 175);
+    color: $time-ago_color;
     height: auto;
     line-height: 21px;
     overflow-wrap: break-word;
-    text-decoration-color: rgb(175, 175, 175);
+    text-decoration-color: $time-ago_color;
     text-decoration-line: none;
     text-decoration-style: solid;
     text-shadow: none;
@@ -75,14 +73,14 @@
         pointer-events: none;
     }
     &:after {
-        border-color: rgba(27, 31, 35, 0);
-        border-right-color: #1b1f23;
+        border-color: $arrow-box--after_border-color;
+        border-right-color: $arrow-box--after_border-right-color;
         border-width: 5px;
         margin-top: -5px;
     }
     &:before {
-        border-color: rgba(52, 52, 52, 0);
-        border-right-color: #343434;
+        border-color: $arrow-box--before_border-color;
+        border-right-color: $arrow-box--before_border-right-color;
         border-width: 6px;
         margin-top: -6px;
     }

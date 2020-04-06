@@ -1,5 +1,4 @@
 import * as React from 'react';
-import '../stylesheets/components/header.scss';
 
 class Header extends React.Component<{ commentCount: number, url: string }, {}> {
 

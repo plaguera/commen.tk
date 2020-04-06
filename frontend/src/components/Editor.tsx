@@ -1,6 +1,5 @@
 import * as React from 'react';
 import Markdown from 'react-markdown';
-import '../stylesheets/components/editor.scss';
 
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import Avatar from './Avatar';
