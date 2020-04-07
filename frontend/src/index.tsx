@@ -1,14 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './App';
+import Widget from './Widget';
 import * as serviceWorker from './serviceWorker';
 import Util from './util';
+import * as attributes from './page-attributes';
 
 console.log(process.env.NODE_ENV);
+let script = document.currentScript;
 Util.loadUser().then(() => {
 	ReactDOM.render(
 		<React.StrictMode>
-			<App {...Util.parseScriptAttributes()} />
+			<Widget {...attributes.parse(script)} />
 		</React.StrictMode>,
 		document.getElementById('root')
 	);

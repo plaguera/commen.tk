@@ -1,5 +1,4 @@
 import cookieParser from 'cookie-parser';
-import session from 'express-session';
 import cors from 'cors';
 import express from 'express';
 import path from 'path';

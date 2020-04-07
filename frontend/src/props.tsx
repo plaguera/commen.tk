@@ -12,10 +12,17 @@ export interface CommentProps {
     author: UserProps;
 }
 
-export interface IssueProps {
+export interface WidgetProps {
     user: string;
     repo: string;
     number: number;
+    theme: string;
+}
+
+export interface WidgetState {
+    comments: CommentProps[];
+    me: UserProps;
+    totalCount: number;
 }
 
 export interface EditorProps {
