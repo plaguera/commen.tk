@@ -39,7 +39,7 @@ class Server {
 	}
 
 	middleware() {
-		this.express.use(cookieParser('secret'));
+		this.express.use(cookieParser(process.env.COOKIE_SECRET));
 		this.express.use(express.json());
 		this.express.use(express.urlencoded({ extended: true }));
 		this.express.set('trust proxy', 1);

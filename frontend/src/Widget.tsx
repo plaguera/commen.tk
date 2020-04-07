@@ -1,14 +1,10 @@
 import React from 'react';
-// TODO: Conditional theme import
-import './stylesheets/themes/light/App';
 import * as request from './request';
 import Editor from './components/Editor';
 import Header from './components/Header';
 import Timeline from './components/Timeline';
 import { WidgetProps, WidgetState } from './props';
 import Util from './util';
-
-//const style = `stylesheets/themes/${this.props.theme}/App`;
 
 class Widget extends React.Component<WidgetProps, WidgetState> {
 
@@ -22,6 +18,10 @@ class Widget extends React.Component<WidgetProps, WidgetState> {
 				avatarUrl: ''
 			},
 			totalCount: 0
+		}
+		switch(this.props.theme) {
+			case 'dark': require('./stylesheets/themes/dark/App'); break;
+			default: require('./stylesheets/themes/light/App');
 		}
 	}
 
