@@ -3,13 +3,12 @@ import Markdown from 'react-markdown';
 
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import Avatar from './Avatar';
-import { EditorProps } from '../props';
+import { EditorProps, EditorState } from '../props';
 import { BASE_URL } from '../request';
-import Util from '../util';
 
 const AUTH_URL = BASE_URL + 'authorize/';
 
-class Editor extends React.Component<EditorProps, { text: string }> {
+class Editor extends React.Component<EditorProps, EditorState> {
 
     private ref = React.createRef<HTMLTextAreaElement>();
 
@@ -33,7 +32,7 @@ class Editor extends React.Component<EditorProps, { text: string }> {
     }
 
     render() {
-        if (Util.loggedIn()) {
+        if (this.props.user) {
             return (
                 <div className='editor-wrapper'>
                     <Avatar {...this.props.user}/>

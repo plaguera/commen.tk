@@ -4,7 +4,6 @@ import Editor from './components/Editor';
 import Header from './components/Header';
 import Timeline from './components/Timeline';
 import { WidgetProps, WidgetState } from './props';
-import Util from './util';
 
 class Widget extends React.Component<WidgetProps, WidgetState> {
 
@@ -12,7 +11,7 @@ class Widget extends React.Component<WidgetProps, WidgetState> {
 		super(props);
 		this.state = {
 			comments: [],
-			me: {
+			user: {
 				url: '',
 				login: '',
 				avatarUrl: ''
@@ -21,6 +20,7 @@ class Widget extends React.Component<WidgetProps, WidgetState> {
 		}
 		switch(this.props.theme) {
 			case 'dark': require('./stylesheets/themes/dark/App'); break;
+			case 'light': require('./stylesheets/themes/light/App'); break;
 			default: require('./stylesheets/themes/light/App');
 		}
 	}
@@ -48,27 +48,23 @@ class Widget extends React.Component<WidgetProps, WidgetState> {
 			.catch(console.error);
 	}
 
-	me() {
+	user() {
 		request.get('user')
-			.then(data => this.setState({ me: data.viewer }))
+			.then(data => this.setState({ user: data.viewer }))
 			.catch(console.error);
 	}
 
 	componentDidMount() {
-		if (Util.loggedIn()) this.me();
+		this.user();
 		this.comments();
 	}
 
 	render() {
-		let tmp = {
-			user: this.state.me,
-			onComment: this.comment.bind(this)
-		};
 		return (
 			<div>
 				<Header commentCount={this.state.totalCount} url={this.issueUrl()} />
 				<Timeline {...this.state.comments} />
-				<Editor {...tmp} />
+				<Editor user={this.state.user} onComment={this.comment.bind(this)}/>
 			</div>
 		)
 	}

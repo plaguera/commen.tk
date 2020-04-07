@@ -3,31 +3,22 @@ const BASE_URL_PROD = 'https://api-github-comments.herokuapp.com/';
 export const BASE_URL = process.env.NODE_ENV === 'production' ? BASE_URL_PROD : BASE_URL_DEV;
 export const API_URL = BASE_URL + 'api/';
 
-function getCookie(name: string) {
-    var v = document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)');
-    return v ? v[2] : '';
-}
-
-export async function get(path: string) {    
-    const options: RequestInit = {
-        method: 'GET',
-		credentials: 'include'
+export async function get(path: string) {
+	const options: RequestInit = {
+		credentials: 'include',
+		method: 'GET',
 	};
 	let res = await fetch(API_URL + path, options);
 
-	if (res.headers.get('content-type')?.includes('application/json')) {
-		let json = await res.json();
-		//console.log(json);
-		return json;
-    }
-    return res;
+	if (res && res.headers.get('content-type')?.includes('application/json'))
+		return await res.json();
+	return res;
 }
 
 export async function post(path: string, data?: object) {
-	const options = {
+	const options: RequestInit = {
+		credentials: 'include',
 		headers: {
-			Accept: 'application/json',
-			Authorization: getCookie('token'),
 			'Content-Type': 'application/json'
 		},
 		method: 'POST',
@@ -36,10 +27,7 @@ export async function post(path: string, data?: object) {
 
 	let url = path.includes('https://') ? path : API_URL + path;
 	let res = await fetch(url, options);
-	if (res.headers.get('content-type')?.includes('application/json')) {
-		let json = await res.json();
-		//console.log(json);
-		return json;
-	}
+	if (res.headers.get('content-type')?.includes('application/json'))
+		return await res.json();
 	return res;
 }

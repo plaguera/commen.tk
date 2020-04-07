@@ -12,7 +12,11 @@ export class UserController extends Controller {
                 avatarUrl
             }
         }`;
-        let token = req.params.id ? req.cookies.token || process.env.DEFAULT_GITHUB_TOKEN : req.cookies.token;
-        query(data, token).then(api => UserController.sendResponse(res, api.status, api.data));
+        if (!req.params.id && !req.signedCookies.token)
+            UserController.sendResponse(res, 200, { data: { viewer: undefined } })
+        else {
+            let token = req.params.id ? req.signedCookies.token || process.env.DEFAULT_GITHUB_TOKEN : req.signedCookies.token;
+            query(data, token).then(api => UserController.sendResponse(res, api.status, api.data));
+        }
     }
 }

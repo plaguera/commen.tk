@@ -21,11 +21,15 @@ export interface WidgetProps {
 
 export interface WidgetState {
     comments: CommentProps[];
-    me: UserProps;
+    user: UserProps;
     totalCount: number;
 }
 
 export interface EditorProps {
     user: UserProps;
     onComment: (text: string) => void;
+}
+
+export interface EditorState {
+    text: string;
 }

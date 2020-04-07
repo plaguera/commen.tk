@@ -25,7 +25,7 @@ export class IssueController extends Controller {
               }
             }
           }`;
-		let token = req.cookies.token ?? process.env.DEFAULT_GITHUB_TOKEN;
+		let token = req.signedCookies.token ?? process.env.DEFAULT_GITHUB_TOKEN;
 		query(data, token).then(api =>
 			IssueController.sendResponse(res, api.status, api.data)
 		);
@@ -39,19 +39,19 @@ export class IssueController extends Controller {
               }
             }
           }`;
-		return query(data, req.cookies.token);
+		return query(data, req.signedCookies.token);
 	}
 
 	static post(req: Request, res: Response) {
 		IssueController.id(req, res).then(id => {
 			let data = `mutation {
 							__typename
-							addComment(input: {subjectId: "${id.data.data.repository.issue.id}", body: "${req.body.body}"}) {
+							addComment(input: {subjectId: "${id.data.repository.issue.id}", body: "${req.body.body}"}) {
 							clientMutationId
 							}
 						}`;
 
-			query(data, req.cookies.token).then(api => {
+			query(data, req.signedCookies.token).then(api => {
 				IssueController.sendResponse(res, api.status, api.data);
 			});
 		});
