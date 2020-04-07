@@ -57,7 +57,6 @@ class App extends React.Component<IssueProps, { comments: CommentProps[], me: Us
 			<div>
 				<Header commentCount={this.state.totalCount} url={`https://github.com/${this.props.user}/${this.props.repo}/issues/${this.props.number}`} />
 				<Timeline {...this.state.comments} />
-				<hr className='separator' />
 				<Editor {...tmp} />
 			</div>
 		)

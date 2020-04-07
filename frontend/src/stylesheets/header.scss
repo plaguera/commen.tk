@@ -1,18 +1,12 @@
 .header {
     &-wrapper {
-        background-color: rgb(32, 32, 32);
-        border-top-left-radius: 3px;
-        border-top-right-radius: 3px;
-        border: rgb(64, 64, 64) solid 1px;
         padding: 10px;
     }
     &-comment-count {
-        color: rgb(210, 210, 210);
+        color: $header_color;
         font-size: 14px;
         font-weight: 600;
-        text-decoration-color: rgb(210, 210, 210);
-        text-decoration-line: none;
-        text-decoration-style: solid;
+        text-decoration: none solid $header_color;
         text-overflow: ellipsis;
         &:hover {
             text-decoration: underline;

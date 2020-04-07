@@ -1,8 +1,12 @@
+.timeline {
+	border-top: $separator_color solid 2px;
+	border-bottom: $separator_color solid 2px;
+}
+
 .comment {
     border-color: $comment_border-color;
     border-radius: 3px;
     margin: 10px;
-    margin-left: 10px;
     color: $comment_color;
     font-family: Arial, Helvetica, sans-serif;
     flex: 1;
