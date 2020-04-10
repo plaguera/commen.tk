@@ -20,10 +20,9 @@ class Comment extends React.Component<CommentProps, {}> {
                             <a className='time-ago' title={formatDate(this.props.createdAt)} href={this.props.url}>
                                 {timeAgo(this.props.createdAt)}
                             </a>
-
                         </div>
                         <div className='comment-header-labels'>
-                            <CommentHeaderLabel authorAssociation={this.props.authorAssociation}/>
+                            <CommentHeaderLabel authorAssociation={this.props.authorAssociation} />
                         </div>
                     </div>
                     <div className='comment-body'>
@@ -55,12 +54,18 @@ function timeElapsed(date: string) {
 
 function timeAgo(date: string) {
     let time = timeElapsed(date);
-    if (time.years > 0)
+    if (time.years > 1)
         return time.years + ' years ago';
-    else if (time.days > 0)
+    else if (time.years > 0)
+        return time.years + ' year ago';
+    else if (time.days > 1)
         return time.days + ' days ago';
-    else if (time.hours > 0)
+    else if (time.days > 0)
+        return time.days + ' day ago';
+    else if (time.hours > 1)
         return time.hours + ' hours ago';
+    else if (time.hours > 0)
+        return time.hours + ' hour ago';
     else if (time.minutes > 1)
         return time.minutes + ' minutes ago';
     else if (time.minutes > 0)
