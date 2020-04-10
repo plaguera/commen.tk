@@ -11,6 +11,7 @@ export interface CommentProps {
     createdAt: string;
     author: UserProps;
     authorAssociation: string;
+    viewerDidAuthor: boolean;
 }
 
 export interface CommentHeaderLabelProps {

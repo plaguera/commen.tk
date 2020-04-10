@@ -21,6 +21,7 @@ export class IssueController extends Controller {
                       }
                       createdAt
                       url
+                      viewerDidAuthor
                     }
                 }
               }

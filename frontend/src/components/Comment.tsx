@@ -6,17 +6,18 @@ import CommentHeaderLabel from './CommentHeaderLabel';
 
 class Comment extends React.Component<CommentProps, {}> {
     render() {
+        let author = this.props.viewerDidAuthor ? ' isauthor' : '';
         return (
-            <div className="comment-wrapper">
+            <div className={'comment-wrapper' + author}>
                 <Avatar {...this.props.author} />
-                <div className="comment arrow-box">
-                    <div className="comment-header">
-                        <div className="comment-header-text">
+                <div className='comment arrow-box'>
+                    <div className='comment-header'>
+                        <div className='comment-header-text'>
                             <strong>
-                                <a className="author" href={this.props.author.url}>{this.props.author.login}</a>
+                                <a className='author' href={this.props.author.url}>{this.props.author.login}</a>
                             </strong>
                             <a> commented </a>
-                            <a className="time-ago" title={formatDate(this.props.createdAt)} href={this.props.url}>
+                            <a className='time-ago' title={formatDate(this.props.createdAt)} href={this.props.url}>
                                 {timeAgo(this.props.createdAt)}
                             </a>
 
@@ -25,7 +26,7 @@ class Comment extends React.Component<CommentProps, {}> {
                             <CommentHeaderLabel authorAssociation={this.props.authorAssociation}/>
                         </div>
                     </div>
-                    <div className="comment-body">
+                    <div className='comment-body'>
                         <Markdown source={this.props.body} />
                     </div>
                 </div>
