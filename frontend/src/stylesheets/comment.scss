@@ -4,88 +4,111 @@
 }
 
 .comment {
-    border-color: $comment_border-color;
-    border-radius: 3px;
-    margin: 10px;
-    color: $comment_color;
-    font-family: Arial, Helvetica, sans-serif;
-    flex: 1;
-    background-color: $comment_background-color;
-    border-bottom-color: $comment_border-bottom-color;
-    border-style: solid;
-    border-width: 1px;
-    box-sizing: border-box;
-    &-body {
-        color: $comment-body_color;
-        padding: 5;
-        padding-left: 15px;
-        padding-right: 15px;
-    }
-    &-header {
-        border-bottom: $comment-header_border-bottom-color 1px solid;
-        color: $comment-header_color;
-        padding: 10px;
-        background-color: $comment-header_background-color;
-        &-anchor {
-            font-size: 11px;
-            font-weight: 400;
-        }
-    }
-    &-wrapper {
-        display: flex;
-    }
+	border-color: $comment_border-color;
+	border-radius: 3px;
+	margin: 10px;
+	color: $comment_color;
+	font-family: Arial, Helvetica, sans-serif;
+	flex: 1;
+	background-color: $comment_background-color;
+	border-bottom-color: $comment_border-bottom-color;
+	border-style: solid;
+	border-width: 1px;
+	box-sizing: border-box;
+	&-body {
+		color: $comment-body_color;
+		padding: 5;
+		padding-left: 15px;
+		padding-right: 15px;
+	}
+	&-header {
+		background-color: $comment-header_background-color;
+		border-bottom: $comment-header_border-bottom-color 1px solid;
+		color: $comment-header_color;
+		padding: 10px;
+		display: flex;
+		&-text {
+			font-size: 11px;
+			font-weight: 400;
+		}
+		&-labels {
+			margin: auto;
+			margin-right: 0;
+		}
+		&-label {
+			border: 1px solid rgb(192, 211, 235);
+			border-radius: 3px;
+			box-sizing: border-box;
+			color: rgb(88, 96, 105);
+			font-size: 12px;
+			font-weight: normal;
+			line-height: 21px;
+			margin-left: 8px;
+			overflow-wrap: break-word;
+			padding-bottom: 2px;
+			padding-left: 4px;
+			padding-right: 4px;
+            padding-top: 2px;
+            &.strong {
+                font-weight: 600;
+            }
+		}
+	}
+	&-wrapper {
+		display: flex;
+	}
 }
 
 .author {
-    color: $author_color;
-    font-size: 14px;
-    font-weight: 600;
-    text-decoration-color: $author_color;
-    text-decoration-line: none;
-    text-decoration-style: solid;
-    text-overflow: ellipsis;
-    &:hover {
-        text-decoration: underline;
-    }
+	color: $author_color;
+	font-size: 14px;
+	font-weight: 600;
+	text-decoration-color: $author_color;
+	text-decoration-line: none;
+	text-decoration-style: solid;
+	text-overflow: ellipsis;
+	&:hover {
+		text-decoration: underline;
+	}
 }
 
 .time-ago {
-    color: $time-ago_color;
-    height: auto;
-    line-height: 21px;
-    overflow-wrap: break-word;
-    text-decoration-color: $time-ago_color;
-    text-decoration-line: none;
-    text-decoration-style: solid;
-    text-shadow: none;
-    &:hover {
-        text-decoration: underline;
-    }
+	color: $time-ago_color;
+	height: auto;
+	line-height: 21px;
+	overflow-wrap: break-word;
+	text-decoration-color: $time-ago_color;
+	text-decoration-line: none;
+	text-decoration-style: solid;
+	text-shadow: none;
+	&:hover {
+		text-decoration: underline;
+	}
 }
 
 .arrow-box {
-    position: relative;
-    &:after,
-    &:before {
-        right: 100%;
-        top: 20px;
-        border: solid transparent;
-        content: " ";
-        height: 0;
-        width: 0;
-        position: absolute;
-        pointer-events: none;
-    }
-    &:after {
-        border-color: $arrow-box--after_border-color;
-        border-right-color: $arrow-box--after_border-right-color;
-        border-width: 5px;
-        margin-top: -5px;
-    }
-    &:before {
-        border-color: $arrow-box--before_border-color;
-        border-right-color: $arrow-box--before_border-right-color;
-        border-width: 6px;
-        margin-top: -6px;
-    }
+	position: relative;
+	&:after,
+	&:before {
+		right: 100%;
+		top: 20px;
+		border: solid transparent;
+		content: ' ';
+		height: 0;
+		width: 0;
+		position: absolute;
+		pointer-events: none;
+	}
+	&:after {
+		border-color: $arrow-box--after_border-color;
+		border-right-color: $arrow-box--after_border-right-color;
+		border-width: 5px;
+		margin-top: -5px;
+	}
+	&:before {
+		border-color: $arrow-box--before_border-color;
+		border-right-color: $arrow-box--before_border-right-color;
+		border-width: 6px;
+		margin-top: -6px;
+	}
 }

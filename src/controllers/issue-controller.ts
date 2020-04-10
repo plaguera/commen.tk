@@ -13,6 +13,7 @@ export class IssueController extends Controller {
                     nodes {
                       body
                       id
+                      authorAssociation
                       author {
                         avatarUrl
                         login

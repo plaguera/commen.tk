@@ -10,6 +10,11 @@ export interface CommentProps {
     body: string;
     createdAt: string;
     author: UserProps;
+    authorAssociation: string;
+}
+
+export interface CommentHeaderLabelProps {
+    authorAssociation: string;
 }
 
 export interface WidgetProps {
