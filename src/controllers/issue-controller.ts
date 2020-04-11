@@ -4,11 +4,12 @@ import { query } from '../request';
 
 export class IssueController extends Controller {
 	static get(req: Request, res: Response) {
+    let pageSize = req.params.pagesize || 10;
 		let data = `{
             repository(name: "${req.params.repo}", owner: "${req.params.user}") {
               createdAt
               issue(number: ${req.params.issuenumber}) {
-                comments(first: 10) {
+                comments(last: ${pageSize}) {
                     totalCount
                     nodes {
                       body

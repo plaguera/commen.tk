@@ -23,6 +23,7 @@ export interface WidgetProps {
     repo: string;
     number: number;
     theme: string;
+    pageSize: number;
 }
 
 export interface WidgetState {

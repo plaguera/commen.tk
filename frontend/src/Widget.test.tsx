@@ -7,7 +7,8 @@ test('renders learn react link', () => {
     user:"plaguera",
     repo:"tfm-testing",
     number: 1,
-    theme: 'light'
+    theme: 'light',
+    pageSize: 10
   }
   const { getByText } = render(<Widget {...data}/>);
   const linkElement = getByText(/learn react/i);

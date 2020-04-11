@@ -30,7 +30,7 @@ class Widget extends React.Component<WidgetProps, WidgetState> {
 	}
 
 	commentsRequestUri() {
-		return `repos/${this.props.user}/${this.props.repo}/issues/${this.props.number}/comments`;
+		return `comments/${this.props.user}/${this.props.repo}/${this.props.number}/${this.props.pageSize}`;
 	}
 
 	comment(text: string) {
