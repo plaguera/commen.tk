@@ -60,6 +60,7 @@ class Widget extends React.Component<WidgetProps, WidgetState> {
 			.then(data => {
 				this.setState({ comments: data.repository.issue.comments.nodes.concat(this.state.comments) });
 				this.setState({ hiddenItems: this.state.totalCount - this.state.comments.length });
+				this.setState({ cursor: data.repository.issue.comments.pageInfo.startCursor });
 			})
 			.catch(console.error);
 	}

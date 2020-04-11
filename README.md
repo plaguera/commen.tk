@@ -8,4 +8,12 @@
 
 [Heroku](https://api-github-comments.herokuapp.com/)
 
+```
+<script src="https://api-github-comments.herokuapp.com/public/client.js"
+        repo="[USER]/[REPO]/[ISSUE NUMBER]"
+        theme="light | dark"
+        page-size="[1, 100]">
+</script>
+```
+
 [Production Build](https://github-comments.github.io/)
