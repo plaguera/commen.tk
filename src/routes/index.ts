@@ -10,6 +10,7 @@ routes.route("/api/users/:id").get(UserController.get);
 routes.route("/api/comments/:user/:repo/:issuenumber").get(IssueController.get);
 routes.route("/api/comments/:user/:repo/:issuenumber").post(IssueController.post);
 routes.route("/api/comments/:user/:repo/:issuenumber/:pagesize").get(IssueController.get);
+routes.route("/api/comments/:user/:repo/:issuenumber/:pagesize/:cursor").get(IssueController.get);
 //routes.route("/api/repos/:user/:repo/issues/:issuenumber/comments").get(IssueController.get);
 //routes.route("/api/repos/:user/:repo/issues/:issuenumber/comments").post(IssueController.post);
 routes.route("/authorize").get(AuthController.authorize);

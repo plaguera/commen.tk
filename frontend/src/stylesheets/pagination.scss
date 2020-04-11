@@ -1,0 +1,23 @@
+.pagination-wrapper {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    background: transparent $pagination-wrapper_background-url repeat-x left center/22px 17px !important;
+	.pagination-button {
+		background-color: $pagination-button_background-color;
+        border: 1px solid $pagination-button_border-color;
+        color: $pagination-button_color;
+        border-radius: 3px;
+		margin: 0 auto;
+        display: block;
+        padding-left: 24px;
+        padding-right: 24px;
+        padding-top: 8px;
+        padding-bottom: 8px;
+        outline: none;
+        font-size: 14px;
+        .pagination-button-load {
+            color: $pagination-button-load_color;
+            font-weight: 600;
+        }
+	}
+}

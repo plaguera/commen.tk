@@ -18,6 +18,11 @@ export interface CommentHeaderLabelProps {
     authorAssociation: string;
 }
 
+export interface PaginationButtonProps {
+    hiddenItems: number;
+    onClick: () => void;
+}
+
 export interface WidgetProps {
     user: string;
     repo: string;
@@ -30,6 +35,8 @@ export interface WidgetState {
     comments: CommentProps[];
     user: UserProps;
     totalCount: number;
+    hiddenItems: number;
+    cursor: string;
 }
 
 export interface EditorProps {
