@@ -9,7 +9,7 @@
 [Heroku](https://api-github-comments.herokuapp.com/)
 
 ```
-<script src="https://api-github-comments.herokuapp.com/public/client.js"
+<script src="https://api-github-comments.herokuapp.com/client.js"
         repo="[USER]/[REPO]/[ISSUE NUMBER]"
         theme="light | dark"
         page-size="[1, 100]">
