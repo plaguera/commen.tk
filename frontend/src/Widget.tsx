@@ -77,6 +77,8 @@ class Widget extends React.Component<WidgetProps, WidgetState> {
 	}
 
 	render() {
+		// TODO: comment anchor style
+		// TODO: pagination if logged in
 		return (
 			<div>
 				<Header commentCount={this.state.totalCount} url={this.issueUrl()} />

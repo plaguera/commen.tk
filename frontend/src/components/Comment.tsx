@@ -3,6 +3,7 @@ import Markdown from 'react-markdown'
 import Avatar from './Avatar';
 import { CommentProps } from '../props';
 import CommentHeaderLabel from './CommentHeaderLabel';
+const breaks = require('remark-breaks');
 
 class Comment extends React.Component<CommentProps, {}> {
     render() {
@@ -26,7 +27,7 @@ class Comment extends React.Component<CommentProps, {}> {
                         </div>
                     </div>
                     <div className='comment-body'>
-                        <Markdown source={this.props.body} />
+                        <Markdown source={this.props.body} plugins={[breaks]}/>
                     </div>
                 </div>
             </div>

@@ -43,7 +43,6 @@ export class AuthController extends Controller {
 		console.log(process.env.NODE_ENV)
 		if (cookie === undefined) {
 			console.log('Create Cookie');
-			// TODO: Sign token cookie
 			if (process.env.NODE_ENV === 'PRODUCTION') {
 				let options : CookieOptions = {
 					httpOnly: true,

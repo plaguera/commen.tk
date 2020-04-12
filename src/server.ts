@@ -33,7 +33,7 @@ class Server {
 		this.express.use(cors(options));
 		console.log(process.cwd());
 		this.express.use(
-			'/public',
+			'/',
 			express.static(path.join(process.cwd(), 'public'))
 		);
 	}
