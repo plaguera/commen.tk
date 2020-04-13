@@ -4,9 +4,7 @@ import Markdown from 'react-markdown';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import Avatar from './Avatar';
 import { EditorProps, EditorState } from '../props';
-import { BASE_URL } from '../request';
-
-const AUTH_URL = BASE_URL + 'authorize/';
+import { AUTH_URL } from '../request';
 
 class Editor extends React.Component<EditorProps, EditorState> {
 

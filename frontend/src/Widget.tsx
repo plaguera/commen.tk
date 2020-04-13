@@ -77,13 +77,12 @@ class Widget extends React.Component<WidgetProps, WidgetState> {
 	}
 
 	render() {
-		// TODO: comment anchor style
 		// TODO: pagination if logged in
 		return (
 			<div>
 				<Header commentCount={this.state.totalCount} url={this.issueUrl()} />
 				<div className='timeline-wrapper'>
-					<PaginationButton hiddenItems={this.state.hiddenItems} onClick={this.nextComments.bind(this)} />
+					<PaginationButton hiddenItems={this.state.hiddenItems} onClick={this.nextComments.bind(this)} user={this.state.user}/>
 					<Timeline {...this.state.comments} />
 				</div>
 				<Editor user={this.state.user} onComment={this.comment.bind(this)} />

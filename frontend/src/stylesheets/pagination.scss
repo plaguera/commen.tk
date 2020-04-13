@@ -4,6 +4,9 @@
     margin-left: 10px;
     margin-right: 10px;
     background: transparent $pagination-wrapper_background-url repeat-x left center/22px 17px !important;
+    a {
+        text-decoration-line: none;
+    }
 	.pagination-button {
 		background-color: $pagination-button_background-color;
         border: 1px solid $pagination-button_border-color;

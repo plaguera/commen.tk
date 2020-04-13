@@ -2,6 +2,7 @@ const BASE_URL_DEV = 'http://localhost:8000/';
 const BASE_URL_PROD = 'https://api-github-comments.herokuapp.com/';
 export const BASE_URL = process.env.NODE_ENV === 'production' ? BASE_URL_PROD : BASE_URL_DEV;
 export const API_URL = BASE_URL + 'api/';
+export const AUTH_URL = BASE_URL + 'authorize/';
 
 export async function get(path: string) {
 	const options: RequestInit = {

@@ -10,8 +10,9 @@ ReactDOM.render(
 	<React.StrictMode>
 		<Widget {...attributes.parse(script)} />
 	</React.StrictMode>,
-	document.getElementById('root')
+	document.getElementById('github-comments')
 );
+if (script) script.parentElement!.removeChild(script);
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

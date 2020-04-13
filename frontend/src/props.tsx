@@ -20,6 +20,7 @@ export interface CommentHeaderLabelProps {
 
 export interface PaginationButtonProps {
     hiddenItems: number;
+    user: UserProps;
     onClick: () => void;
 }
 
