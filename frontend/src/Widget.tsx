@@ -34,8 +34,8 @@ class Widget extends React.Component<WidgetProps, WidgetState> {
 
 	commentsRequestUri(cursor?: string) {
 		if (cursor)
-			return `comments/${this.props.user}/${this.props.repo}/${this.props.number}/${this.props.pageSize}/${cursor}`;
-		return `comments/${this.props.user}/${this.props.repo}/${this.props.number}/${this.props.pageSize}`;
+			return `comments/${this.props.user}/${this.props.repo}/${this.props.number}?pagesize=${this.props.pageSize}&cursor=${cursor}`;
+		return `comments/${this.props.user}/${this.props.repo}/${this.props.number}?pagesize=${this.props.pageSize}`;
 	}
 
 	comment(text: string) {

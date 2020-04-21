@@ -13,7 +13,6 @@
         "css-loader": "^3.4.2",
         "node-sass": "^4.13.1",
         "preact": "^10.4.1",
-        "preact-compat": "^3.19.0",
         "react": "^16.13.1",
         "react-dom": "^16.13.1",
         "react-markdown": "^4.3.1",
