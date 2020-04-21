@@ -77,9 +77,8 @@ class Widget extends React.Component<WidgetProps, WidgetState> {
 	}
 
 	render() {
-		// TODO: pagination if logged in
 		return (
-			<div>
+			<div className='widget-wrapper'>
 				<Header commentCount={this.state.totalCount} url={this.issueUrl()} />
 				<div className='timeline-wrapper'>
 					<PaginationButton hiddenItems={this.state.hiddenItems} onClick={this.nextComments.bind(this)} user={this.state.user}/>
@@ -87,7 +86,7 @@ class Widget extends React.Component<WidgetProps, WidgetState> {
 				</div>
 				<Editor user={this.state.user} onComment={this.comment.bind(this)} />
 			</div>
-		)
+		);
 	}
 }
 

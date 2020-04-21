@@ -33,13 +33,13 @@ class PaginationButton extends React.Component<PaginationButtonProps, {}> {
             return (
                 <div className="pagination-wrapper">
                     <a href={AUTH_URL}>
-                        <button className='pagination-button' onClick={this.onClick}>
+                        <button className='pagination-button'>
                             <div className='pagination-button-items'>
                                 {this.props.hiddenItems} hidden item{this.props.hiddenItems > 1 ? 's' : ''}
                             </div>
                             <div className='pagination-button-load'>
                                 Sign in to load more...
-                        </div>
+                            </div>
                         </button>
                     </a>
                 </div>
