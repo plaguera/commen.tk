@@ -4,10 +4,8 @@ import { query } from '../request';
 
 export class IssueController extends Controller {
 	static get(req: Request, res: Response) {
-		let pageSize = req.params.pagesize || 10;
-		if (pageSize > 100) pageSize = 100;
-		else if (pageSize < 1) pageSize = 1;
-		let cursor = req.params.cursor ? ', before: "' + req.params.cursor + '"' : '';
+		let pageSize = req.query.pagesize ? Math.min(100, Math.max(1, req.query.pagesize)) : 10;
+		let cursor = req.query.cursor ? ', before: "' + req.query.cursor + '"' : '';
 		let data = `{
             repository(name: "${req.params.repo}", owner: "${req.params.user}") {
               createdAt

@@ -5,6 +5,7 @@
     "author": "Pedro Lagüera <laguerapedro@gmail.com>",
     "license": "MIT",
     "scripts": {
+        "analyze": "source-map-explorer public/client.js",
         "build": "tsc",
         "start": "node dist/index.js",
         "bundle:dev": "cd frontend && npx webpack --mode development src/index.tsx",
@@ -38,6 +39,7 @@
         "dotenv": "^8.2.0",
         "express": "^4.17.1",
         "node-fetch": "^2.6.0",
+        "source-map-explorer": "^2.4.2",
         "typescript": "^3.8.2"
     }
 }

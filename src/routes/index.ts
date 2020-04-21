@@ -9,6 +9,7 @@ routes.route("/api/user").get(UserController.get)
 routes.route("/api/users/:id").get(UserController.get);
 routes.route("/api/comments/:user/:repo/:issuenumber").get(IssueController.get);
 routes.route("/api/comments/:user/:repo/:issuenumber").post(IssueController.post);
+// TODO : send pagesize and cursor as get arguments
 routes.route("/api/comments/:user/:repo/:issuenumber/:pagesize").get(IssueController.get);
 routes.route("/api/comments/:user/:repo/:issuenumber/:pagesize/:cursor").get(IssueController.get);
 //routes.route("/api/repos/:user/:repo/issues/:issuenumber/comments").get(IssueController.get);
