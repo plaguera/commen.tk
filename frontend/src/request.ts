@@ -1,15 +1,11 @@
-const BASE_URL_DEV = 'http://localhost:8000/';
-const BASE_URL_PROD = 'https://api-github-comments.herokuapp.com/';
-export const BASE_URL = process.env.NODE_ENV === 'production' ? BASE_URL_PROD : BASE_URL_DEV;
-export const API_URL = BASE_URL + 'api/';
-export const AUTH_URL = BASE_URL + 'authorize/';
+import { PageAttributes } from './page-attributes';
 
 export async function get(path: string) {
 	const options: RequestInit = {
 		credentials: 'include',
 		method: 'GET',
 	};
-	let res = await fetch(API_URL + path, options);
+	let res = await fetch(PageAttributes.base_url + 'api/' + path, options);
 
 	if (res && res.headers.get('content-type')?.includes('application/json'))
 		return await res.json();
@@ -26,7 +22,7 @@ export async function post(path: string, data?: object) {
 		body: JSON.stringify(data)
 	};
 
-	let url = path.includes('https://') ? path : API_URL + path;
+	let url = path.includes('https://') ? path : PageAttributes.base_url + 'api/' + path;
 	let res = await fetch(url, options);
 	if (res.headers.get('content-type')?.includes('application/json'))
 		return await res.json();

@@ -4,7 +4,7 @@ import Markdown from 'react-markdown';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import Avatar from './Avatar';
 import { EditorProps, EditorState } from '../props';
-import { AUTH_URL } from '../request';
+import { PageAttributes } from '../page-attributes';
 
 class Editor extends React.Component<EditorProps, EditorState> {
 
@@ -84,7 +84,7 @@ class Editor extends React.Component<EditorProps, EditorState> {
                             </TabPanel>
                         </Tabs>
                         <div className="editor-buttons">
-                            <a className="btn btn-primary" href={AUTH_URL}>
+                            <a className="btn btn-primary" href={PageAttributes.base_url + 'authorize/'}>
                                 Sign In
                             </a>
                         </div>

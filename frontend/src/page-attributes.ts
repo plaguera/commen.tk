@@ -7,6 +7,9 @@ export function parse(script: HTMLScriptElement | SVGScriptElement | null) {
 		pageSize: 10,
 	};
 	if (script) {
+		if (script instanceof HTMLScriptElement)
+		PageAttributes.base_url = urlHost(script.src);
+		console.log(PageAttributes.base_url)
 		let tokens = script.getAttribute('repo')?.valueOf().split('/');
 		let theme = script.getAttribute('theme')?.valueOf() || '';
 		let pageSize = script.getAttribute('page-size')?.valueOf() || '';
@@ -17,8 +20,15 @@ export function parse(script: HTMLScriptElement | SVGScriptElement | null) {
 		}
 		if (theme) result.theme = theme;
 		if (pageSize) result.pageSize = parseInt(pageSize);
-		//script.removeAttribute('repo');
-		//script.removeAttribute('theme');
 	}
 	return result;
+}
+
+function urlHost(url: string) {
+	var arr = url.split('/');
+	return arr[0] + '//' + arr[2] + '/';
+}
+
+export class PageAttributes {
+	static base_url: string = 'http://localhost:9000/';
 }
