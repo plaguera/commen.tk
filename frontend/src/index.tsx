@@ -9,12 +9,7 @@ let script = document.currentScript;
 if (script && script.parentElement) {
 	var tmp = document.createElement('div');
 	tmp.className = 'github-comments';
-	ReactDOM.render(
-		<React.StrictMode>
-			<Widget {...attributes.parse(script)} />
-		</React.StrictMode>,
-		tmp
-	);
+	ReactDOM.render(<Widget {...attributes.parse(script)} />, tmp);
 	script.parentElement.replaceChild(tmp, script);
 }
 
