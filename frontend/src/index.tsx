@@ -21,8 +21,8 @@ if (script && script.parentElement) {
 	var tmp = document.createElement('div');
 	tmp.className = 'github-comments';
 	let attrs = attributes.parse(script);
-	ReactDOM.render(<Widget {...attrs} />, tmp);
 	addCss(attrs.theme);
+	ReactDOM.render(<Widget {...attrs} />, tmp);
 	script.parentElement.replaceChild(tmp, script);
 }
 
