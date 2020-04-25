@@ -5,6 +5,7 @@ import Header from './components/Header';
 import Timeline from './components/Timeline';
 import { WidgetProps, WidgetState } from './props';
 import PaginationButton from './components/PaginationButton';
+import { PageAttributes } from './page-attributes';
 
 class Widget extends React.Component<WidgetProps, WidgetState> {
 
@@ -20,11 +21,6 @@ class Widget extends React.Component<WidgetProps, WidgetState> {
 			totalCount: 0,
 			hiddenItems: 0,
 			cursor: ''
-		}
-		switch (this.props.theme) {
-			case 'dark': require('./stylesheets/themes/dark/App'); break;
-			case 'light': require('./stylesheets/themes/light/App'); break;
-			default: require('./stylesheets/themes/light/App');
 		}
 	}
 
@@ -81,6 +77,7 @@ class Widget extends React.Component<WidgetProps, WidgetState> {
 	render() {
 		return (
 			<div className='widget-wrapper'>
+				<link rel='stylesheet' type='text/css' href={PageAttributes.base_url + 'themes/' + this.props.theme + '.css'} />
 				<Header commentCount={this.state.totalCount} url={this.issueUrl()} />
 				<div className='timeline-wrapper'>
 					<PaginationButton hiddenItems={this.state.hiddenItems} onClick={this.nextComments.bind(this)} user={this.state.user}/>
