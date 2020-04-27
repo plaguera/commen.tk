@@ -7,12 +7,12 @@
     "scripts": {
         "analyze": "source-map-explorer public/client.js",
         "build": "tsc",
-        "start": "node dist/index.js",
+        "start": "NODE_ENV=PRODUCTION node dist/index.js",
         "bundle:dev": "cd frontend && npx webpack --mode development",
         "bundle:prod": "cd frontend && npx webpack --mode production",
         "watch": "concurrently \"yarn watch:front\" \"yarn watch:back\"",
         "watch:front": "cd frontend && npx webpack --mode development --watch",
-        "watch:back": "nodemon src/index.ts",
+        "watch:back": "NODE_ENV=DEVELOPMENT nodemon src/index.ts",
         "test": "mocha -r ts-node/register src/test/**/*.test.ts"
     },
     "devDependencies": {
