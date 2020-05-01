@@ -5,7 +5,7 @@ import { AuthController } from '../controllers/auth-controller';
 
 const routes = Router();
 
-routes.route('/').get((req, res) => res.send('<h1>API Server is </h1><h1 style="color: green;">RUNNING</h1>'));
+routes.route('/').get((req, res) => res.send('<h1>API Server is <strong style="color: green;">RUNNING</strong></h1>'));
 routes.route('/api/user').get(UserController.get)
 routes.route('/api/users/:id').get(UserController.get);
 routes.route('/api/comments/:user/:repo/:issuenumber').get(IssueController.get);
