@@ -19,7 +19,7 @@ console.log(process.env.NODE_ENV);
 let script = document.currentScript;
 if (script && script.parentElement) {
 	var tmp = document.createElement('div');
-	tmp.className = 'github-comments';
+	tmp.className = 'commen-tk';
 	let attrs = parse(script);
 	loadTheme(attrs.theme).then(() => {
 		ReactDOM.render(<Widget {...attrs} />, tmp);
