@@ -1,6 +1,6 @@
 [![Build Status](https://travis-ci.com/plaguera/commen.tk.svg?branch=master)](https://travis-ci.com/plaguera/commen.tk)
 [![codecov](https://codecov.io/gh/plaguera/commen.tk/branch/master/graph/badge.svg)](https://codecov.io/gh/plaguera/commen.tk)
-[![API Status](https://img.shields.io/website?url=https%3A%2F%2Fapi.commen.tk%2F)](https://api.commen.tk)
+![Website](https://img.shields.io/website?url=https%3A%2F%2Fapi.commen.tk)
 
 # commen.tk
 A very simple widget that uses Github issues and their comments to provide any page with a comment section linked with Github.
