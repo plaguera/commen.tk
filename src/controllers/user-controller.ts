@@ -16,7 +16,6 @@ export class UserController extends Controller {
             UserController.sendResponse(res, 200, { data: { viewer: undefined } })
         else {
             let token = req.params.id ? req.signedCookies.token || process.env.DEFAULT_GITHUB_TOKEN : req.signedCookies.token;
-            console.log(token);
             query(data, token).then(api => UserController.sendResponse(res, api.status, api.data));
         }
     }

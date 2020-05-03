@@ -34,7 +34,7 @@ export class AuthController extends Controller {
 			`&client_secret=${CLIENT_SECRET}` +
 			`&code=${code}`;
 		let accessToken = await request.post(accessTokenUrl);
-		let referer = AuthController.referers[req.query.state];
+		let referer = AuthController.referers[<string>req.query.state];
 
 		console.log('AT - ' + accessToken['access_token']);
 		console.log('REF - ' + referer);
@@ -63,6 +63,6 @@ export class AuthController extends Controller {
 			
 		}
 		res.redirect(referer);
-		delete AuthController.referers[req.query.state];
+		delete AuthController.referers[<string>req.query.state];
 	}
 }
