@@ -7,7 +7,7 @@ import chaiHttp from 'chai-http';
 const { expect } = chai;
 chai.use(chaiHttp);
 
-describe('Repository !', () => {
+describe('GET /api/comments/user/repo/issue', () => {
 
 	var server = express.listen(8001);
 
@@ -15,7 +15,7 @@ describe('Repository !', () => {
 		server.close();
 	});
 
-	it('Request for a repo', (done) => {
+	it('should get any public issue', (done) => {
         let user = 'plaguera';
         let repo = 'tfm-testing';
         let issue = 1;

@@ -3,4 +3,4 @@ node_js:
     - node
     - lts/*
 after_success:
-    - npm run coverage
+    - yarn coverage

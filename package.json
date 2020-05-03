@@ -11,7 +11,7 @@
         "bundle:prod": "cd frontend && npx webpack --mode production",
         "coverage": "codecov",
         "start": "NODE_ENV=PRODUCTION node dist/index.js",
-        "test": "nyc mocha -r ts-node/register src/test/**/*.test.ts",
+        "test": "nyc --reporter=lcov --reporter=text mocha -r ts-node/register src/test/**/*.test.ts",
         "watch": "concurrently \"yarn watch:front\" \"yarn watch:back\"",
         "watch:front": "cd frontend && npx webpack --mode development --watch",
         "watch:back": "NODE_ENV=DEVELOPMENT nodemon src/index.ts"
