@@ -7,13 +7,14 @@
     "scripts": {
         "analyze": "source-map-explorer public/client.js",
         "build": "tsc --listFiles",
-        "start": "NODE_ENV=PRODUCTION node dist/index.js",
         "bundle:dev": "cd frontend && npx webpack --mode development",
         "bundle:prod": "cd frontend && npx webpack --mode production",
+        "coverage": "codecov",
+        "start": "NODE_ENV=PRODUCTION node dist/index.js",
+        "test": "nyc mocha -r ts-node/register src/test/**/*.test.ts",
         "watch": "concurrently \"yarn watch:front\" \"yarn watch:back\"",
         "watch:front": "cd frontend && npx webpack --mode development --watch",
-        "watch:back": "NODE_ENV=DEVELOPMENT nodemon src/index.ts",
-        "test": "nyc mocha -r ts-node/register src/test/**/*.test.ts"
+        "watch:back": "NODE_ENV=DEVELOPMENT nodemon src/index.ts"
     },
     "devDependencies": {
         "@types/chai": "^4.2.11",
@@ -26,6 +27,7 @@
         "@types/node-fetch": "^2.5.5",
         "chai": "^4.2.0",
         "chai-http": "^4.3.0",
+        "codecov": "^3.6.5",
         "concurrently": "^5.1.0",
         "mocha": "^7.1.1",
         "nodemon": "^2.0.2",

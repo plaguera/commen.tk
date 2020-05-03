@@ -7,7 +7,7 @@ import chaiHttp from 'chai-http';
 const { expect } = chai;
 chai.use(chaiHttp);
 
-describe('Server!', () => {
+describe('Repository !', () => {
 
 	var server = express.listen(8001);
 
@@ -22,7 +22,6 @@ describe('Server!', () => {
 		chai.request(server)
 			.get(`/api/comments/${user}/${repo}/${issue}`)
 			.end((err, res) => {
-                //console.log(res.body.repository.issue.comments);
 				expect(res).to.have.status(200);
 				expect(res.body).to.have.property('repository');
                 expect(res.body.repository).to.have.property('createdAt');
