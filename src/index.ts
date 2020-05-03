@@ -5,7 +5,7 @@ import express from './server'
 
 console.log(process.env.NODE_ENV);
 let port = process.env.PORT || '8000';
-module.exports = https.createServer({
+https.createServer({
     key: fs.readFileSync('/etc/letsencrypt/live/api.commen.tk/privkey.pem'),
     cert: fs.readFileSync('/etc/letsencrypt/live/api.commen.tk/cert.pem'),
 }, express).listen(port, () => {
