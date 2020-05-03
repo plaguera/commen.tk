@@ -1,11 +1,12 @@
 [![Build Status](https://travis-ci.com/plaguera/commen.tk.svg?branch=master)](https://travis-ci.com/plaguera/commen.tk)
 [![codecov](https://codecov.io/gh/plaguera/commen.tk/branch/master/graph/badge.svg)](https://codecov.io/gh/plaguera/commen.tk)
+[![API Status](https://img.shields.io/website?url=https%3A%2F%2Fapi.commen.tk%2F)](https://api.commen.tk)
 
 # commen.tk
-
 A very simple widget that uses Github issues and their comments to provide any page with a comment section linked with Github.
 
 ## Usage
+ * Go to [coomen.tk](https://commen.tk/)
  * Generate the script tag you want with the form below.
  * Paste it wherever you want the widget to appear in your webpage.
  * The form below will only show public repos but feel free to use private repos as well.
