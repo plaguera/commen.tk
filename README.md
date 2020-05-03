@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.com/plaguera/commen.tk.svg?branch=master)](https://travis-ci.com/plaguera/commen.tk)
+[![codecov](https://codecov.io/gh/plaguera/commen.tk/branch/master/graph/badge.svg)](https://codecov.io/gh/plaguera/commen.tk)
 
 # commen.tk
 
