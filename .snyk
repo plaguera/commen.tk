@@ -1,0 +1,17 @@
+# Snyk (https://snyk.io) policy file, patches or ignores known vulnerabilities.
+version: v1.14.1
+ignore: {}
+# patches apply the minimum changes required to fix a vulnerability
+patch:
+  SNYK-JS-LODASH-567746:
+    - express-cdn > async > lodash:
+        patched: '2020-05-04T19:14:52.698Z'
+  'npm:tunnel-agent:20170305':
+    - express-cdn > jpegtran-bin > bin-build > download > caw > tunnel-agent:
+        patched: '2020-05-04T19:14:52.698Z'
+    - express-cdn > optipng-bin > bin-build > download > caw > tunnel-agent:
+        patched: '2020-05-04T19:14:52.698Z'
+    - express-cdn > jpegtran-bin > bin-wrapper > download > caw > tunnel-agent:
+        patched: '2020-05-04T19:14:52.698Z'
+    - express-cdn > optipng-bin > bin-wrapper > download > caw > tunnel-agent:
+        patched: '2020-05-04T19:14:52.698Z'
