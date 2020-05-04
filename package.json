@@ -9,6 +9,7 @@
         "build": "tsc --listFiles",
         "bundle:dev": "cd frontend && npx webpack --mode development",
         "bundle:prod": "cd frontend && npx webpack --mode production",
+        "cdn": "ts-node src/uploadStaticBucket.ts",
         "coverage": "codecov",
         "start": "NODE_ENV=PRODUCTION node dist/index.js",
         "test": "nyc --reporter=lcov --reporter=text mocha -r ts-node/register src/test/**/*.test.ts",
@@ -37,11 +38,13 @@
         "webpack-cli": "^3.3.11"
     },
     "dependencies": {
+        "aws-sdk": "^2.668.0",
         "compression": "^1.7.4",
         "cookie-parser": "^1.4.5",
         "cors": "^2.8.5",
         "dotenv": "^8.2.0",
         "express": "^4.17.1",
+        "express-cdn": "^0.4.0",
         "node-fetch": "^2.6.0",
         "typescript": "^3.8.2"
     }

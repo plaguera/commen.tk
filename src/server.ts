@@ -31,12 +31,7 @@ class Server {
 			origin: true,
 			preflightContinue: false
 		};
-		console.log(process.cwd());
 		this.express.use(cors(options));
-		this.express.use(
-			'/',
-			express.static(path.join(process.cwd(), 'public'), { maxAge: '1d' })
-		);
 	}
 
 	middleware() {
@@ -49,6 +44,13 @@ class Server {
 
 	routes() {
 		this.express.use('/', routes);
+	}
+
+	static() {
+		this.express.use(
+			'/',
+			express.static(path.join(process.cwd(), 'public'), { maxAge: '1d' })
+		);
 	}
 }
 
