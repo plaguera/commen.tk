@@ -31,8 +31,8 @@ class Server {
 			origin: true,
 			preflightContinue: false
 		};
-		this.express.use(cors(options));
 		console.log(process.cwd());
+		this.express.use(cors(options));
 		this.express.use(
 			'/',
 			express.static(path.join(process.cwd(), 'public'))
@@ -40,10 +40,10 @@ class Server {
 	}
 
 	middleware() {
-		this.express.use(compression());
 		this.express.use(cookieParser(process.env.COOKIE_SECRET));
 		this.express.use(express.json());
 		this.express.use(express.urlencoded({ extended: true }));
+		this.express.use(compression());
 		this.express.set('trust proxy', 1);
 	}
 

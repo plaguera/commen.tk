@@ -7,7 +7,7 @@ import chaiHttp from 'chai-http';
 const { expect } = chai;
 chai.use(chaiHttp);
 
-describe('GET /api/users/user', () => {
+describe('GET /users/user', () => {
 
 	var server = express.listen(8000);
 
@@ -18,7 +18,7 @@ describe('GET /api/users/user', () => {
 	it('should get any user', (done) => {
 		let user = 'plaguera';
 		chai.request(server)
-			.get(`/api/users/${user}`)
+			.get(`/users/${user}`)
 			.end((err, res) => {
 				expect(res).to.have.status(200);
 				expect(res.body).to.have.property('user');
