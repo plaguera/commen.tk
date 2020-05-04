@@ -6,6 +6,5 @@ node_modules/
 public/
 
 .env
-.log
-
 .gitignore
+.log

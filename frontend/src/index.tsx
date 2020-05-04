@@ -2,7 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Widget from './Widget';
 import * as serviceWorker from './serviceWorker';
-import { PageAttributes, parse } from './page-attributes';
+import { parse } from './page-attributes';
+import { URL_CDN } from './request';
 
 export function loadTheme(theme: string) {
 	return new Promise(resolve => {
@@ -10,7 +11,7 @@ export function loadTheme(theme: string) {
 		link.rel = 'stylesheet';
 		link.setAttribute('crossorigin', 'anonymous');
 		link.onload = resolve;
-		link.href = `${PageAttributes.base_url}themes/${theme}.css`;
+		link.href = `${URL_CDN}themes/${theme}.css`;
 		document.head.appendChild(link);
 	});
 }

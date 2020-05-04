@@ -8,6 +8,7 @@ const s3 = new AWS.S3({
     accessKeyId: process.env.AWS_ACCESS_KEY_ID,
     secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
 });
+//var cloudfront = new AWS.CloudFront();
 
 const isDirectory = (file: string) => fs.statSync(file).isDirectory();
 const getDirectories = (file: string) => fs.readdirSync(file).map(name => path.join(file, name)).filter(isDirectory);
@@ -37,6 +38,7 @@ function uploadFileToS3(fileName: string, key: string) {
     // Setting up S3 upload parameters
     const params = {
         Bucket: process.env.AWS_BUCKET_NAME || '',
+        Expires: new Date(),
         Key: key, // File name you want to save as in S3
         Body: fileContent
     };

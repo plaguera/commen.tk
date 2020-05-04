@@ -2,8 +2,6 @@ import compression from 'compression';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import express from 'express';
-import path from 'path';
-
 import routes from './routes';
 
 class Server {
@@ -44,13 +42,6 @@ class Server {
 
 	routes() {
 		this.express.use('/', routes);
-	}
-
-	static() {
-		this.express.use(
-			'/',
-			express.static(path.join(process.cwd(), 'public'), { maxAge: '1d' })
-		);
 	}
 }
 

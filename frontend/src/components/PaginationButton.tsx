@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { PaginationButtonProps } from '../props';
-import { PageAttributes } from '../page-attributes';
+import { URL_API } from '../request';
 
 class PaginationButton extends React.Component<PaginationButtonProps, {}> {
 
@@ -32,7 +32,7 @@ class PaginationButton extends React.Component<PaginationButtonProps, {}> {
         else {
             return (
                 <div className="pagination-wrapper">
-                    <a href={PageAttributes.base_url + 'authorize/'}>
+                    <a href={URL_API + 'authorize/'}>
                         <button className='pagination-button'>
                             <div className='pagination-button-items'>
                                 {this.props.hiddenItems} hidden item{this.props.hiddenItems > 1 ? 's' : ''}
