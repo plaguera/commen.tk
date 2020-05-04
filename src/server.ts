@@ -35,7 +35,7 @@ class Server {
 		this.express.use(cors(options));
 		this.express.use(
 			'/',
-			express.static(path.join(process.cwd(), 'public'))
+			express.static(path.join(process.cwd(), 'public'), { maxAge: '1d' })
 		);
 	}
 
