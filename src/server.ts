@@ -1,3 +1,4 @@
+import compression from 'compression';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import express from 'express';
@@ -39,6 +40,7 @@ class Server {
 	}
 
 	middleware() {
+		this.express.use(compression());
 		this.express.use(cookieParser(process.env.COOKIE_SECRET));
 		this.express.use(express.json());
 		this.express.use(express.urlencoded({ extended: true }));

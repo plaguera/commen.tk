@@ -6,7 +6,7 @@
 A very simple widget that uses Github issues and their comments to provide any page with a comment section linked with Github.
 
 ## Usage
- * Go to [coomen.tk](https://commen.tk/)
+ * Go to [commen.tk](https://commen.tk/)
  * Generate the script tag you want with the form below.
  * Paste it wherever you want the widget to appear in your webpage.
  * The form below will only show public repos but feel free to use private repos as well.
