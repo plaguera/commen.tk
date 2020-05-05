@@ -32,24 +32,24 @@ files.forEach((file: string) => {
 
 
 function uploadFileToS3(fileName: string, key: string) {
-    // Read content from the file
     const fileContent = fs.readFileSync(fileName);
-    const re = /(?:\.([^.]+))?$/;
-    var contentType = re.exec(fileName)![1];
-    if (contentType && contentType === 'js') contentType = 'javascript';
 
-    // Setting up S3 upload parameters
     const params = {
         Bucket: process.env.AWS_BUCKET_NAME || '',
         Expires: new Date(),
-        Metadata: {
-            'Content-Type': 'text/' + contentType
-        },
-        Key: key, // File name you want to save as in S3
+        Key: key,
         Body: fileContent
     };
 
-    // Uploading files to the bucket
+    const re = /(?:\.([^.]+))?$/;
+    var contentType = re.exec(fileName)![1];
+    if (contentType)
+        switch(contentType) {
+            case 'js': params['ContentType'] = 'application/javascript'; break;
+            case 'css': params['ContentType'] = 'text/css'; break;
+            default: break;
+        }
+
     s3.upload(params, (err: Error, data: any) => {
         if (err) throw err;
         console.log(`✅ File uploaded successfully. ${data.Location}`);
