@@ -34,7 +34,7 @@ export interface WidgetProps {
 
 export interface WidgetState {
     comments: CommentProps[];
-    user: UserProps;
+    user?: UserProps;
     totalCount: number;
     hiddenItems: number;
     cursor: string;

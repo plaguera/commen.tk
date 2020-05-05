@@ -12,11 +12,7 @@ class Widget extends React.Component<WidgetProps, WidgetState> {
 		super(props);
 		this.state = {
 			comments: [],
-			user: {
-				url: '',
-				login: '',
-				avatarUrl: ''
-			},
+			user: undefined,
 			totalCount: 0,
 			hiddenItems: 0,
 			cursor: ''
@@ -78,10 +74,10 @@ class Widget extends React.Component<WidgetProps, WidgetState> {
 			<div className='widget-wrapper'>
 				<Header commentCount={this.state.totalCount} url={this.issueUrl()} />
 				<div className='timeline-wrapper'>
-					<PaginationButton hiddenItems={this.state.hiddenItems} onClick={this.nextComments.bind(this)} user={this.state.user}/>
+					<PaginationButton hiddenItems={this.state.hiddenItems} onClick={this.nextComments.bind(this)} user={this.state.user!}/>
 					<Timeline {...this.state.comments} />
 				</div>
-				<Editor user={this.state.user} onComment={this.comment.bind(this)} />
+				<Editor user={this.state.user!} onComment={this.comment.bind(this)} />
 			</div>
 		);
 	}
