@@ -16,6 +16,7 @@ export class UserController extends Controller {
             UserController.sendResponse(res, 200, { data: { viewer: undefined } })
         else {
             let token = req.params.id ? req.signedCookies.token || process.env.DEFAULT_GITHUB_TOKEN : req.signedCookies.token;
+            res.set('Cache-Control', 'max-age=600');
             query(data, token).then(api => UserController.sendResponse(res, api.status, api.data));
         }
     }

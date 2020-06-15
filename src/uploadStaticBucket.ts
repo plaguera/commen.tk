@@ -36,7 +36,7 @@ function uploadFileToS3(fileName: string, key: string) {
 
     const params = {
         Bucket: process.env.AWS_BUCKET_NAME || '',
-        Expires: new Date(),
+        //Expires: new Date(),
         Key: key,
         Body: fileContent
     };
