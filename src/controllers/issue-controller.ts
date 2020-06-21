@@ -16,7 +16,7 @@ export class IssueController extends Controller {
 					}
                     totalCount
                     nodes {
-                      body
+                      bodyHTML
                       id
                       authorAssociation
                       author {
