@@ -13,10 +13,15 @@ export function parse(script: HTMLScriptElement | SVGScriptElement | null) {
 		if (tokens) {
 			result.user = tokens[0];
 			result.repo = tokens[1];
-			result.number = parseInt(tokens[2]);
+			if (tokens.length > 2)
+				result.number = parseInt(tokens[2]);
+			else
+				result.number = -1;
 		}
 		if (theme) result.theme = theme;
 		if (pageSize) result.pageSize = parseInt(pageSize);
 	}
 	return result;
 }
+
+//export const attrs = parse();
