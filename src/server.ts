@@ -2,8 +2,9 @@ import compression from 'compression';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import express from 'express';
+import fs from 'fs';
+import { InstallationController } from './controllers/installation-controller';
 import routes from './routes';
-
 class Server {
 	public express: express.Application;
 
@@ -12,6 +13,7 @@ class Server {
 		this.middleware();
 		this.enableCors();
 		this.routes();
+		this.installationController();
 	}
 
 	enableCors() {
@@ -42,6 +44,13 @@ class Server {
 
 	routes() {
 		this.express.use('/', routes);
+	}
+
+	installationController() {
+		InstallationController.init(
+			parseInt(process.env.GITHUB_APP_IDENTIFIER || ''),
+			fs.readFileSync(process.env.GITHUB_APP_PRIVATE_KEY_PATH || '').toString()
+		);
 	}
 }
 

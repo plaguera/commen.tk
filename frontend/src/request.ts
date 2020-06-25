@@ -1,5 +1,5 @@
-export const URL_CDN = 'https://cdn.commen.tk/';
-export const URL_API = 'https://api.commen.tk/';
+export const URL_CDN = process.env.NODE_ENV != 'development' ? 'https://cdn.commen.tk/' : 'http://localhost:8080/';
+export const URL_API = process.env.NODE_ENV != 'development' ? 'https://api.commen.tk/' : 'http://localhost:80/';
 
 export async function get(path: string) {
 	const options: RequestInit = {

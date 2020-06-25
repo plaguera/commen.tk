@@ -2,82 +2,33 @@ import { Request, Response } from 'express';
 import { Controller } from './controller';
 import { query } from '../request';
 import { InstallationController } from './installation-controller';
+import { RepositoryController } from './repository-controller';
 
 export class IssueController extends Controller {
-	static get(req: Request, res: Response) {
-		IssueController.token(req).then(token => {
-			IssueController.processIssueName(req.params.user, req.params.repo, req.params.name, token).then(() => {
-				let pageSize = req.query.pagesize ? Math.min(100, Math.max(1, parseInt(req.query.pagesize))) : 10;
-				let cursor = req.query.cursor ? ', before: "' + req.query.cursor + '"' : '';
-				let data = `{
-					repository(name: "${req.params.repo}", owner: "${req.params.user}") {
-					createdAt
-					issue(number: ${req.params.issuenumber}) {
-						comments(last: ${pageSize}${cursor}) {
-							pageInfo {
-								startCursor
-							}
-							totalCount
-							nodes {
-								bodyHTML
-								id
-								authorAssociation
-								author {
-									avatarUrl
-									login
-									url
-								}
-								createdAt
-								url
-								viewerDidAuthor
-							}
-						}
-					}
-					}
-				}`;
-				query(data, token).then((api) =>
-					IssueController.sendResponse(res, api.status, api.data)
-				);
-			});
-		});
-	}
 
-	static async token(req: Request) {
-		return req.signedCookies.token ?? await InstallationController.accessToken(req.params.user, req.params.repo);
-	}
-	static issueId(req: Request, res: Response) {
+	static get(owner: string, repo: string, number: number, token: string) {
 		let data = `{
-            repository(name: "${req.params.repo}", owner: "${req.params.user}") {
-              issue(number: ${req.params.issuenumber}) {
+            repository(name: "${repo}", owner: "${owner}") {
+              issue(number: ${number}) {
                 id
               }
             }
           }`;
-		return query(data, req.signedCookies.token);
-	}
-
-	static repoId(owner: string, repo: string, token:string) {
-		let data = `{
-            repository(name: "${repo}", owner: "${owner}") {
-				id
-            }
-        }`;
 		return query(data, token);
 	}
 
-	static post(req: Request, res: Response) {
-		IssueController.issueId(req, res).then((id) => {
-			let data = `mutation {
-							__typename
-							addComment(input: {subjectId: "${id.data.repository.issue.id}", body: "${req.body.body}"}) {
+	static post(repoid: string, name: string, token: string) {
+		let data = `mutation {
+						__typename
+						createIssue(input: {repositoryId: "${repoid}", title: "${name}"}) {
 							clientMutationId
+							issue {
+								id
+								number
 							}
-						}`;
-
-			query(data, req.signedCookies.token).then((api) => {
-				IssueController.sendResponse(res, api.status, api.data);
-			});
-		});
+						}
+					}`;
+		return query(data, token);
 	}
 
 	static searchIssueName(owner: string, repo: string, name: string, token: string) {
@@ -86,7 +37,7 @@ export class IssueController extends Controller {
 				issueCount
 				nodes {
 					... on Issue {
-						id
+						number
 						repository {
 							id
 						}
@@ -97,22 +48,16 @@ export class IssueController extends Controller {
 		return query(data, token);
 	}
 
-	static createIssue(repoid: string, name: string, token: string) {
-		let data = `mutation {
-						__typename
-						createIssue(input: {repositoryId: "${repoid}", title: "${name}"}) {
-							clientMutationId
-						}
-					}`;
-		return query(data, token);
-	}
-
-	static async processIssueName(owner: string, repo: string, name: string, token: string) {
-		let search = (await IssueController.searchIssueName(owner, repo, name, token)).data.search;
-		console.log(search);
-		if (search.issueCount == 0) {
-			let repoId = await IssueController.repoId(owner, repo, token);
-			this.createIssue(repoId.data.repository.id, name, token);
+	static async processIssueName(req: Request, res: Response) {
+		let token = await InstallationController.accessToken(req.params.owner, req.params.repo);
+		let search = await IssueController.searchIssueName(req.params.owner, req.params.repo, req.params.name, token);
+		console.log(search.data.search);
+		if (search.data.search.issueCount == 0) {
+			let repo = await RepositoryController.get(req.params.owner, req.params.repo, token);
+			let issue = await IssueController.post(repo.data.repository.id, req.params.name, token);
+			IssueController.sendResponse(res, issue.status, issue.data);
+		} else {
+			IssueController.sendResponse(res, search.status, search.data);
 		}
 	}
 }
