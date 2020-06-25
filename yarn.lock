@@ -201,19 +201,6 @@
     jsonwebtoken "^8.3.0"
     lru-cache "^5.1.1"
 
-"@octokit/auth-app@^2.4.7":
-  version "2.4.7"
-  resolved "https://registry.yarnpkg.com/@octokit/auth-app/-/auth-app-2.4.7.tgz#a036755c2f801d1414a50fad304050e8cbf2898f"
-  integrity sha512-qCHtVsrbk1SeokGWv6jeVkkpjqSBwAoor2VymBlETzrJgvM4I69sp8Zf8c/sAY8qf4/VLzK0/Ql1kJx0pb3CAg==
-  dependencies:
-    "@octokit/request" "^5.3.0"
-    "@octokit/request-error" "^2.0.0"
-    "@octokit/types" "^5.0.0"
-    "@types/lru-cache" "^5.1.0"
-    lru-cache "^5.1.1"
-    universal-github-app-jwt "^1.0.1"
-    universal-user-agent "^5.0.0"
-
 "@octokit/endpoint@^6.0.1":
   version "6.0.3"
   resolved "https://registry.yarnpkg.com/@octokit/endpoint/-/endpoint-6.0.3.tgz#dd09b599662d7e1b66374a177ab620d8cdf73487"
@@ -232,7 +219,7 @@
     deprecation "^2.0.0"
     once "^1.4.0"
 
-"@octokit/request@^5.0.0", "@octokit/request@^5.3.0":
+"@octokit/request@^5.0.0":
   version "5.4.5"
   resolved "https://registry.yarnpkg.com/@octokit/request/-/request-5.4.5.tgz#8df65bd812047521f7e9db6ff118c06ba84ac10b"
   integrity sha512-atAs5GAGbZedvJXXdjtKljin+e2SltEs48B3naJjqWupYl2IUBbB/CJisyjbNHcKpHzb3E+OYEZ46G8eakXgQg==
@@ -325,18 +312,6 @@
     "@types/body-parser" "*"
     "@types/express-serve-static-core" "*"
     "@types/serve-static" "*"
-
-"@types/jsonwebtoken@^8.3.3":
-  version "8.5.0"
-  resolved "https://registry.yarnpkg.com/@types/jsonwebtoken/-/jsonwebtoken-8.5.0.tgz#2531d5e300803aa63279b232c014acf780c981c5"
-  integrity sha512-9bVao7LvyorRGZCw0VmH/dr7Og+NdjYSsKAxB43OQoComFbBgsEpoR9JW6+qSq/ogwVBg8GI2MfAlk4SYI4OLg==
-  dependencies:
-    "@types/node" "*"
-
-"@types/lru-cache@^5.1.0":
-  version "5.1.0"
-  resolved "https://registry.yarnpkg.com/@types/lru-cache/-/lru-cache-5.1.0.tgz#57f228f2b80c046b4a1bd5cac031f81f207f4f03"
-  integrity sha512-RaE0B+14ToE4l6UqdarKPnXwVDuigfFv+5j9Dze/Nqr23yyuqdNvzcZi3xB+3Agvi5R4EOgAksfv3lXX4vBt9w==
 
 "@types/mime@*":
   version "2.0.1"
@@ -2972,7 +2947,7 @@ json5@^2.1.2:
   dependencies:
     minimist "^1.2.5"
 
-jsonwebtoken@^8.3.0, jsonwebtoken@^8.5.1:
+jsonwebtoken@^8.3.0:
   version "8.5.1"
   resolved "https://registry.yarnpkg.com/jsonwebtoken/-/jsonwebtoken-8.5.1.tgz#00e71e0b8df54c2121a1f26137df2280673bcc0d"
   integrity sha512-XjwVfRS6jTMsqYs0EsuJ4LGxXV14zQybNd4L2r0UvbVnSF9Af8x7p5MzbJ90Ioz/9TI41/hTCvznF/loiSzn8w==
@@ -4966,14 +4941,6 @@ unique-string@^1.0.0:
   integrity sha1-nhBXzKhRq7kzmPizOuGHuZyuwRo=
   dependencies:
     crypto-random-string "^1.0.0"
-
-universal-github-app-jwt@^1.0.1:
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/universal-github-app-jwt/-/universal-github-app-jwt-1.0.2.tgz#9a7305e44b2a0eb565d83d11682eebe5be8bde8b"
-  integrity sha512-bJ3hVBdPREry3vob+JBOjXkO76QAQkYTIJvQ62Ja7XBSrKv6v6gHaRBWADddvS0HiLF0Q6lCK1kg4ZJrj/Kl9g==
-  dependencies:
-    "@types/jsonwebtoken" "^8.3.3"
-    jsonwebtoken "^8.5.1"
 
 universal-user-agent@^5.0.0:
   version "5.0.0"

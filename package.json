@@ -39,7 +39,6 @@
     },
     "dependencies": {
         "@octokit/app": "^4.2.0",
-        "@octokit/auth-app": "^2.4.7",
         "aws-sdk": "^2.669.0",
         "compression": "^1.7.4",
         "cookie-parser": "^1.4.5",
