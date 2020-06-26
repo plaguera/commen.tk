@@ -53,7 +53,6 @@ class Widget extends React.Component<WidgetProps, WidgetState> {
 	comments() {
 		request.get(this.commentsRequestUri())
 			.then(data => {
-				console.log(data);
 				this.setState({ comments: data.repository.issue.comments.nodes });
 				this.setState({ totalCount: data.repository.issue.comments.totalCount });
 				this.setState({ hiddenItems: this.state.totalCount - this.state.comments.length });
@@ -71,6 +70,8 @@ class Widget extends React.Component<WidgetProps, WidgetState> {
 				this.setState({ hiddenItems: this.state.totalCount - this.state.comments.length });
 				this.setState({ cursor: data.repository.issue.comments.pageInfo.startCursor });
 			})
+			// Required for Preact to set state properly
+			.finally(() => { this.setState({ hiddenItems: this.state.totalCount - this.state.comments.length }); })
 			.catch(console.error);
 	}
 

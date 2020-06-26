@@ -14,9 +14,8 @@ export async function post(path: string, data?: object) {
 
 	let url = path.includes('https://') ? path : BASE_API_URL + path;
 	let res = await fetch(url, options);
-	let json = undefined;
-	if (res && res.headers.get('content-type')?.includes('application/json')) json = await res.json();
-	return new ServerResponse(res, json);
+	if (res.headers.get('content-type')?.includes('application/json')) return await res.json();
+	return res;
 }
 
 export async function httpRequest(url: string, options: object) {

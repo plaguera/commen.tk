@@ -1,7 +1,8 @@
 import { Request, Response, CookieOptions } from 'express';
 import { Controller } from './controller';
-import * as request from '../request';
 import crypto from 'crypto';
+import fetch from 'node-fetch';
+import { post } from '../request';
 
 const OAUTH_URL = 'https://github.com/login/oauth/';
 const URL_AUTH = 'authorize';
@@ -33,10 +34,10 @@ export class AuthController extends Controller {
 			`?client_id=${CLIENT_ID}` +
 			`&client_secret=${CLIENT_SECRET}` +
 			`&code=${code}`;
-		let accessToken = await request.post(accessTokenUrl);
+			console.log(accessTokenUrl);
+		let at = (await post(accessTokenUrl)).access_token;
 		let referer = AuthController.referers[<string>req.query.state];
-
-		console.log('AT - ' + accessToken['access_token']);
+		console.log('AT - ' + at);
 		console.log('REF - ' + referer);
 
 		console.log(process.env.NODE_ENV)
@@ -51,7 +52,7 @@ export class AuthController extends Controller {
 					secure: true,
 					signed: true
 				};
-				res.cookie('token', accessToken['access_token'], options);
+				res.cookie('token', at, options);
 			}
 		} else if (process.env.NODE_ENV === 'DEVELOPMENT') {
 			let cookie = req.cookies.token;
@@ -62,7 +63,7 @@ export class AuthController extends Controller {
 					maxAge: 24 * 60 * 60 * 1000,
 					signed: true
 				};
-				res.cookie('token', accessToken['access_token'], options);
+				res.cookie('token', at, options);
 			}
 		}
 		res.redirect(referer);

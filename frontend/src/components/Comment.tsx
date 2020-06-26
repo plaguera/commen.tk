@@ -6,7 +6,6 @@ import CommentHeaderLabel from './CommentHeaderLabel';
 
 class Comment extends React.Component<CommentProps, {}> {
     render() {
-        console.log()
         let author = this.props.viewerDidAuthor ? ' isauthor' : '';
         return (
             <div className={'comment-wrapper' + author}>
