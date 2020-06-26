@@ -49,9 +49,8 @@ export class IssueController extends Controller {
 	}
 
 	static async processIssueName(req: Request, res: Response) {
-		let token = await InstallationController.accessToken(req.params.owner, req.params.repo);
+		let token = await InstallationController.installation_access_token(req, res);
 		let search = await IssueController.searchIssueName(req.params.owner, req.params.repo, req.params.name, token);
-		console.log(search.data.search);
 		if (search.data.search.issueCount == 0) {
 			let repo = await RepositoryController.get(req.params.owner, req.params.repo, token);
 			let issue = await IssueController.post(repo.data.repository.id, req.params.name, token);

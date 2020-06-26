@@ -1,7 +1,6 @@
 import { Request, Response } from 'express';
 import { Controller } from './controller';
 import { query } from '../request';
-import { InstallationController } from './installation-controller';
 import { IssueController } from './issue-controller';
 
 export const DEFAULT_PAGE_SIZE = 10;
@@ -11,7 +10,7 @@ export const MAX_PAGE_SIZE = 100;
 export class CommentController extends Controller {
 
 	static async get(req: Request, res: Response) {
-		let token = req.signedCookies.token ?? await InstallationController.accessToken(req.params.owner, req.params.repo);
+		let token = await Controller.token(req, res);
         let pageSize = req.query.pagesize ? Math.min(MAX_PAGE_SIZE, Math.max(MIN_PAGE_SIZE, parseInt(req.query.pagesize))) : DEFAULT_PAGE_SIZE;
 		let cursor = req.query.cursor ? ', before: "' + req.query.cursor + '"' : '';
 		let data = `{
@@ -41,11 +40,11 @@ export class CommentController extends Controller {
 			}
 		}`;
 		let queryres = await query(data, token);
-		CommentController.sendResponse(res, queryres.status, queryres.data)
+		Controller.sendResponse(res, queryres.status, queryres.data)
 	}
 
 	static async post(req: Request, res: Response) {
-        let token = req.signedCookies.token ?? await InstallationController.accessToken(req.params.owner, req.params.repo);
+        let token = await Controller.token(req, res);
         let id = await IssueController.get(req.params.owner, req.params.repo, parseInt(req.params.number), token);
         let data = `mutation {
             __typename
@@ -54,6 +53,6 @@ export class CommentController extends Controller {
             }
         }`;
         let queryres = await query(data, token);
-		CommentController.sendResponse(res, queryres.status, queryres.data);
+		Controller.sendResponse(res, queryres.status, queryres.data);
 	}
 }

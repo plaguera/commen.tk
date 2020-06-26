@@ -17,10 +17,11 @@ describe('GET /comments/user/repo/issue', () => {
 
 	it('should get any public issue', (done) => {
         let user = 'plaguera';
-        let repo = 'commen.tk';
+        let repo = 'tfm-testing';
         let issue = 1;
 		chai.request(server)
 			.get(`/comments/${user}/${repo}/${issue}`)
+			.set('authorization', `token ${process.env.TESTING_GITHUB_TOKEN}`)
 			.end((err, res) => {
 				expect(res).to.have.status(200);
 				expect(res.body).to.have.property('repository');

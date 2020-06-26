@@ -19,7 +19,8 @@ describe('GET /users/user', () => {
 		let user = 'plaguera';
 		chai.request(server)
 			.get(`/users/${user}`)
-			.end((err, res) => {
+			.set('authorization', `token ${process.env.TESTING_GITHUB_TOKEN}`)
+			.then(res => {
 				expect(res).to.have.status(200);
 				expect(res.body).to.have.property('user');
 				expect(res.body.user).to.have.property('login');
@@ -28,6 +29,6 @@ describe('GET /users/user', () => {
 				expect(res.body.user.login).to.equals(user);
 				expect(res.body.user.url).to.equals(`https://github.com/${user}`);
 				done();
-			});
+			}).catch(console.error);
 	});
 });
