@@ -11,7 +11,7 @@ export class CommentController extends Controller {
 
 	static async get(req: Request, res: Response) {
 		let token = await Controller.token(req, res);
-        let pageSize = req.query.pagesize ? Math.min(MAX_PAGE_SIZE, Math.max(MIN_PAGE_SIZE, parseInt(req.query.pagesize))) : DEFAULT_PAGE_SIZE;
+        let pageSize = req.query.pagesize ? Math.min(MAX_PAGE_SIZE, Math.max(MIN_PAGE_SIZE, parseInt(<string>req.query.pagesize))) : DEFAULT_PAGE_SIZE;
 		let cursor = req.query.cursor ? ', before: "' + req.query.cursor + '"' : '';
 		let data = `{
 			repository(name: "${req.params.repo}", owner: "${req.params.owner}") {
