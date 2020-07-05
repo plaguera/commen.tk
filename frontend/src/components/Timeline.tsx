@@ -7,9 +7,10 @@ class Timeline extends React.Component<CommentProps[], {}> {
         let comments = [];
         for (let i in this.props)
             comments.push(this.props[i]);
+        // <Comment key={i} {...comment}/>
         return (
             <div className="timeline">
-                {comments.map((comment, i) => <Comment key={i} {...comment}/>)}
+                {comments.map((comment, i) => <Comment {...comment}/>)} 
             </div>
         );
     }

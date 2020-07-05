@@ -1,7 +1,8 @@
 import { Request, Response, CookieOptions } from 'express';
 import { Controller } from './controller';
-import * as request from '../request';
 import crypto from 'crypto';
+import fetch from 'node-fetch';
+import { post } from '../request';
 
 const OAUTH_URL = 'https://github.com/login/oauth/';
 const URL_AUTH = 'authorize';
@@ -33,17 +34,17 @@ export class AuthController extends Controller {
 			`?client_id=${CLIENT_ID}` +
 			`&client_secret=${CLIENT_SECRET}` +
 			`&code=${code}`;
-		let accessToken = await request.post(accessTokenUrl);
+			console.log(accessTokenUrl);
+		let at = (await post(accessTokenUrl)).access_token;
 		let referer = AuthController.referers[<string>req.query.state];
-
-		console.log('AT - ' + accessToken['access_token']);
+		console.log('AT - ' + at);
 		console.log('REF - ' + referer);
 
-		let cookie = req.cookies.token;
 		console.log(process.env.NODE_ENV)
-		if (cookie === undefined) {
-			console.log('Create Cookie');
-			if (process.env.NODE_ENV === 'PRODUCTION') {
+		if (process.env.NODE_ENV === 'PRODUCTION') {
+			let cookie = req.signedCookies.token;
+			if (cookie === undefined) {
+				console.log('CREATE COOKIE - ACCESS TOKEN');
 				let options : CookieOptions = {
 					httpOnly: true,
 					maxAge: 24 * 60 * 60 * 1000,
@@ -51,16 +52,19 @@ export class AuthController extends Controller {
 					secure: true,
 					signed: true
 				};
-				res.cookie('token', accessToken['access_token'], options);
-			} else if (process.env.NODE_ENV === 'DEVELOPMENT') {
+				res.cookie('token', at, options);
+			}
+		} else if (process.env.NODE_ENV === 'DEVELOPMENT') {
+			let cookie = req.cookies.token;
+			if (cookie === undefined) {
+				console.log('CREATE COOKIE - ACCESS TOKEN');
 				let options : CookieOptions = {
 					httpOnly: true,
 					maxAge: 24 * 60 * 60 * 1000,
 					signed: true
 				};
-				res.cookie('token', accessToken['access_token'], options);
+				res.cookie('token', at, options);
 			}
-			
 		}
 		res.redirect(referer);
 		delete AuthController.referers[<string>req.query.state];

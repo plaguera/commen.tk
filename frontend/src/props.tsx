@@ -7,7 +7,7 @@ export interface UserProps {
 export interface CommentProps {
     url: string;
     key: string;
-    body: string;
+    bodyHTML: string;
     createdAt: string;
     author: UserProps;
     authorAssociation: string;
@@ -25,15 +25,17 @@ export interface PaginationButtonProps {
 }
 
 export interface WidgetProps {
-    user: string;
+    owner: string;
     repo: string;
-    number: number;
+    issuename: string;
+    issuenumber: number;
     theme: string;
     pageSize: number;
 }
 
 export interface WidgetState {
     comments: CommentProps[];
+    issue: number;
     user?: UserProps;
     totalCount: number;
     hiddenItems: number;

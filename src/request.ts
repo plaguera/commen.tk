@@ -1,4 +1,5 @@
 import fetch from 'node-fetch';
+import { ServerResponse } from './server-response';
 
 const BASE_API_URL = 'https://api.github.com/';
 
@@ -17,6 +18,12 @@ export async function post(path: string, data?: object) {
 	return res;
 }
 
+export async function httpRequest(url: string, options: object) {
+	let res = await fetch(url, options)//.catch(console.error);
+	let json = await res.json();
+	return new ServerResponse(res, json);
+}
+
 export async function query(data: string, token: string) {
 	const options = {
 		headers: {
@@ -27,12 +34,9 @@ export async function query(data: string, token: string) {
 			query: data
 		})
 	};
-	let res = await fetch('https://api.github.com/graphql', options);
-	let json = await res.json();
-	return {
-		url: res.url,
-		status: res.status,
-		statusText: res.statusText,
-		data: json.data
-	};
+
+	let res = await fetch('https://api.github.com/graphql', options).catch(console.error);
+	let json = undefined;
+	if (res && res.headers.get('content-type')?.includes('application/json')) json = await res.json();
+	return new ServerResponse(res, json);
 }

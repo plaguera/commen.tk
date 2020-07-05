@@ -1,66 +1,62 @@
 import { Request, Response } from 'express';
 import { Controller } from './controller';
 import { query } from '../request';
+import { InstallationController } from './installation-controller';
+import { RepositoryController } from './repository-controller';
 
 export class IssueController extends Controller {
-	static get(req: Request, res: Response) {
-		let pageSize = req.query.pagesize ? Math.min(100, Math.max(1, parseInt(req.query.pagesize))) : 10;
-		let cursor = req.query.cursor ? ', before: "' + req.query.cursor + '"' : '';
-		let data = `{
-            repository(name: "${req.params.repo}", owner: "${req.params.user}") {
-              createdAt
-              issue(number: ${req.params.issuenumber}) {
-                comments(last: ${pageSize}${cursor}) {
-					pageInfo {
-						startCursor
-					}
-                    totalCount
-                    nodes {
-                      body
-                      id
-                      authorAssociation
-                      author {
-                        avatarUrl
-                        login
-                        url
-                      }
-                      createdAt
-                      url
-                      viewerDidAuthor
-                    }
-                }
-              }
-            }
-          }`;
-		let token = req.signedCookies.token ?? process.env.DEFAULT_GITHUB_TOKEN;
-		query(data, token).then((api) =>
-			IssueController.sendResponse(res, api.status, api.data)
-		);
-	}
 
-	static id(req: Request, res: Response) {
+	static get(owner: string, repo: string, number: number, token: string) {
 		let data = `{
-            repository(name: "${req.params.repo}", owner: "${req.params.user}") {
-              issue(number: ${req.params.issuenumber}) {
+            repository(name: "${repo}", owner: "${owner}") {
+              issue(number: ${number}) {
                 id
               }
             }
           }`;
-		return query(data, req.signedCookies.token);
+		return query(data, token);
 	}
 
-	static post(req: Request, res: Response) {
-		IssueController.id(req, res).then((id) => {
-			let data = `mutation {
-							__typename
-							addComment(input: {subjectId: "${id.data.repository.issue.id}", body: "${req.body.body}"}) {
+	static post(repoid: string, name: string, token: string) {
+		let data = `mutation {
+						__typename
+						createIssue(input: {repositoryId: "${repoid}", title: "${name}"}) {
 							clientMutationId
+							issue {
+								id
+								number
 							}
-						}`;
+						}
+					}`;
+		return query(data, token);
+	}
 
-			query(data, req.signedCookies.token).then((api) => {
-				IssueController.sendResponse(res, api.status, api.data);
-			});
-		});
+	static searchIssueName(owner: string, repo: string, name: string, token: string) {
+		let data = `{
+			search(query: "'${name}' in:title repo:${owner}/${repo}", type: ISSUE, last: 1) {
+				issueCount
+				nodes {
+					... on Issue {
+						number
+						repository {
+							id
+						}
+					}
+				}
+			}
+		}`;
+		return query(data, token);
+	}
+
+	static async processIssueName(req: Request, res: Response) {
+		let token = await InstallationController.installation_access_token(req, res);
+		let search = await IssueController.searchIssueName(req.params.owner, req.params.repo, req.params.name, token);
+		if (search.data.search.issueCount == 0) {
+			let repo = await RepositoryController.get(req.params.owner, req.params.repo, token);
+			let issue = await IssueController.post(repo.data.repository.id, req.params.name, token);
+			IssueController.sendResponse(res, issue.status, issue.data);
+		} else {
+			IssueController.sendResponse(res, search.status, search.data);
+		}
 	}
 }

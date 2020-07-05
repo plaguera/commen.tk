@@ -12,6 +12,7 @@ class Widget extends React.Component<WidgetProps, WidgetState> {
 		super(props);
 		this.state = {
 			comments: [],
+			issue: this.props.issuenumber,
 			user: undefined,
 			totalCount: 0,
 			hiddenItems: 0,
@@ -19,14 +20,28 @@ class Widget extends React.Component<WidgetProps, WidgetState> {
 		}
 	}
 
+	async issue() {
+		if (this.state.issue == -1) {
+			let name = '';
+			switch(this.props.issuename) {
+				case 'url': name = window.location.href; break;
+				case 'title': name = document.title; break;
+				default: break;
+			}
+			let res = await request.get(`issuenumber/${this.props.owner}/${this.props.repo}/${name}`).catch(console.error);
+			this.setState({ issue: res.search.nodes[0].number })
+			return res;
+		}
+	}
+
 	issueUrl() {
-		return `https://github.com/${this.props.user}/${this.props.repo}/issues/${this.props.number}`;
+		return `https://github.com/${this.props.owner}/${this.props.repo}/issues/${this.state.issue}`;
 	}
 
 	commentsRequestUri(cursor?: string) {
 		if (cursor)
-			return `comments/${this.props.user}/${this.props.repo}/${this.props.number}?pagesize=${this.props.pageSize}&cursor=${cursor}`;
-		return `comments/${this.props.user}/${this.props.repo}/${this.props.number}?pagesize=${this.props.pageSize}`;
+			return `comments/${this.props.owner}/${this.props.repo}/${this.state.issue}?pagesize=${this.props.pageSize}&cursor=${cursor}`;
+		return `comments/${this.props.owner}/${this.props.repo}/${this.state.issue}?pagesize=${this.props.pageSize}`;
 	}
 
 	comment(text: string) {
@@ -55,6 +70,8 @@ class Widget extends React.Component<WidgetProps, WidgetState> {
 				this.setState({ hiddenItems: this.state.totalCount - this.state.comments.length });
 				this.setState({ cursor: data.repository.issue.comments.pageInfo.startCursor });
 			})
+			// Required for Preact to set state properly
+			.finally(() => { this.setState({ hiddenItems: this.state.totalCount - this.state.comments.length }); })
 			.catch(console.error);
 	}
 
@@ -65,8 +82,10 @@ class Widget extends React.Component<WidgetProps, WidgetState> {
 	}
 
 	componentDidMount() {
-		this.user();
-		this.comments();
+		this.issue().then(() => {
+			this.user();
+			this.comments();
+		});
 	}
 
 	render() {

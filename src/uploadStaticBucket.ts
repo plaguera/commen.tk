@@ -34,9 +34,11 @@ files.forEach((file: string) => {
 function uploadFileToS3(fileName: string, key: string) {
     const fileContent = fs.readFileSync(fileName);
 
+    var today = new Date();
+    var onehourfromnow = new Date(today.getTime() + (60 * 60 * 1000));
     const params = {
         Bucket: process.env.AWS_BUCKET_NAME || '',
-        //Expires: new Date(),
+        Expires: today,
         Key: key,
         Body: fileContent
     };
