@@ -1,7 +1,7 @@
 [![Build Status](https://travis-ci.com/plaguera/commen.tk.svg?branch=master)](https://travis-ci.com/plaguera/commen.tk)
 [![codecov](https://codecov.io/gh/plaguera/commen.tk/branch/master/graph/badge.svg)](https://codecov.io/gh/plaguera/commen.tk)
 [![Known Vulnerabilities](https://snyk.io/test/github/plaguera/commen.tk/badge.svg?targetFile=package.json)](https://snyk.io/test/github/plaguera/commen.tk?targetFile=package.json)
-![Website](https://img.shields.io/website?url=https%3A%2F%commen.tk)
+![Website](https://img.shields.io/website?url=https%3A%2F%2Fcommen.tk)
 ![API](https://img.shields.io/website?url=https%3A%2F%2Fapi.commen.tk)
 ![CDN](https://img.shields.io/website?url=https%3A%2F%2Fcdn.commen.tk)
 
