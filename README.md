@@ -1,8 +1,8 @@
 [![Build Status](https://travis-ci.com/plaguera/commen.tk.svg?branch=master)](https://travis-ci.com/plaguera/commen.tk)
 [![codecov](https://codecov.io/gh/plaguera/commen.tk/branch/master/graph/badge.svg)](https://codecov.io/gh/plaguera/commen.tk)
 [![Known Vulnerabilities](https://snyk.io/test/github/plaguera/commen.tk/badge.svg?targetFile=package.json)](https://snyk.io/test/github/plaguera/commen.tk?targetFile=package.json)
-![Website](https://img.shields.io/website?url=https%3A%2F%2Fcommen.tk)
-![CDN](https://img.shields.io/website?url=https%3A%2F%2Fcdn.commen.tk)
+![Website](https://img.shields.io/website?label=commen.tk&url=https%3A%2F%2Fcommen.tk)
+![CDN](https://img.shields.io/website?label=CDN&url=https%3A%2F%2Fcdn.commen.tk%2F)
 
 # commen.tk
 A very simple widget that uses GitHub Issues and their comments to provide any page with a comment section linked with GitHub.
