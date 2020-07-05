@@ -14,15 +14,7 @@ export class Controller {
 		} else if (req.headers.authorization) {
 			return req.headers.authorization.substring(6);
 		} else {
-			return await InstallationController.installation_access_token(req, res);
-		}
-	}
-
-	static async installation_token(req: Request, res: Response) {
-		if (req.signedCookies.installation_token) {
-			return req.signedCookies.installation_token;
-		} else {
-			return await InstallationController.installation_access_token(req, res);
+			return await InstallationController.installation_access_token(req, res).catch(console.error);
 		}
 	}
 }

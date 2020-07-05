@@ -9,8 +9,8 @@ export function parse(script: HTMLScriptElement | SVGScriptElement | null) {
 	};
 	if (script) {
 		let tokens = script.getAttribute('repo')?.valueOf().split('/');
-		let name = script.getAttribute('issuename')?.valueOf() || '';
-		let number = script.getAttribute('issuenumber')?.valueOf() || '';
+		let name = script.getAttribute('issue-name')?.valueOf() || '';
+		let number = script.getAttribute('issue-number')?.valueOf() || '';
 		let theme = script.getAttribute('theme')?.valueOf() || '';
 		let pageSize = script.getAttribute('page-size')?.valueOf() || '';
 		

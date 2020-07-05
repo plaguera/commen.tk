@@ -38,7 +38,7 @@ function uploadFileToS3(fileName: string, key: string) {
     var onehourfromnow = new Date(today.getTime() + (60 * 60 * 1000));
     const params = {
         Bucket: process.env.AWS_BUCKET_NAME || '',
-        Expires: onehourfromnow,
+        Expires: today,
         Key: key,
         Body: fileContent
     };

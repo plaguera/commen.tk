@@ -22,6 +22,7 @@ export class InstallationController {
 				accept: 'application/vnd.github.machine-man-preview+json',
 			}
 		};
+		
 		const result = await fetch(url, options);
 		const installationId = (await result.json()).id;
 		const installationAccessToken = await InstallationController.app.getInstallationAccessToken({ installationId });
