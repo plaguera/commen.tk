@@ -24,7 +24,8 @@ class Widget extends React.Component<WidgetProps, WidgetState> {
 		if (this.state.issue == -1) {
 			let name = '';
 			switch(this.props.issuename) {
-				case 'url': name = window.location.href; break;
+				case 'hostname': name = window.location.hostname; break;
+				case 'pathname': name = window.location.pathname; break;
 				case 'title': name = document.title; break;
 				default: break;
 			}
