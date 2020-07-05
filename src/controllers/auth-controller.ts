@@ -1,7 +1,6 @@
 import { Request, Response, CookieOptions } from 'express';
 import { Controller } from './controller';
 import crypto from 'crypto';
-import fetch from 'node-fetch';
 import { post } from '../request';
 
 const OAUTH_URL = 'https://github.com/login/oauth/';
@@ -40,32 +39,7 @@ export class AuthController extends Controller {
 		console.log('AT - ' + at);
 		console.log('REF - ' + referer);
 
-		console.log(process.env.NODE_ENV)
-		if (process.env.NODE_ENV === 'PRODUCTION') {
-			let cookie = req.signedCookies.token;
-			if (cookie === undefined) {
-				console.log('CREATE COOKIE - ACCESS TOKEN');
-				let options : CookieOptions = {
-					httpOnly: true,
-					maxAge: 24 * 60 * 60 * 1000,
-					sameSite: 'none',
-					secure: true,
-					signed: true
-				};
-				res.cookie('token', at, options);
-			}
-		} else if (process.env.NODE_ENV === 'DEVELOPMENT') {
-			let cookie = req.cookies.token;
-			if (cookie === undefined) {
-				console.log('CREATE COOKIE - ACCESS TOKEN');
-				let options : CookieOptions = {
-					httpOnly: true,
-					maxAge: 24 * 60 * 60 * 1000,
-					signed: true
-				};
-				res.cookie('token', at, options);
-			}
-		}
+		Controller.checkCookie(req, res, 'token', at, 24 * 60 * 60 * 1000);
 		res.redirect(referer);
 		delete AuthController.referers[<string>req.query.state];
 	}
