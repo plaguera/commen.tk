@@ -2,9 +2,10 @@ require('dotenv').config();
 import express from './server'
 import fs from 'fs';
 import https from 'https';
+import log from './logger';
 
-console.log(process.env.NODE_ENV);
-console.log(process.cwd());
+log.debug('NODE_ENV', process.env.NODE_ENV);
+log.debug('CWD\t', process.cwd());
 let port = process.env.PORT || '8000';
 switch (process.env.NODE_ENV) {
     case 'DEVELOPMENT': httpServer(); break;

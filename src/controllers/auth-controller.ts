@@ -2,6 +2,7 @@ import { Request, Response, CookieOptions } from 'express';
 import { Controller } from './controller';
 import crypto from 'crypto';
 import { post } from '../request';
+import log from '../logger';
 
 const OAUTH_URL = 'https://github.com/login/oauth/';
 const URL_AUTH = 'authorize';
@@ -33,11 +34,10 @@ export class AuthController extends Controller {
 			`?client_id=${CLIENT_ID}` +
 			`&client_secret=${CLIENT_SECRET}` +
 			`&code=${code}`;
-			console.log(accessTokenUrl);
 		let at = (await post(accessTokenUrl)).access_token;
 		let referer = AuthController.referers[<string>req.query.state];
-		console.log('AT - ' + at);
-		console.log('REF - ' + referer);
+		log.debug('AT - ' + at);
+		log.debug('REF - ' + referer);
 
 		Controller.checkCookie(req, res, 'token', at, 24 * 60 * 60 * 1000);
 		res.redirect(referer);

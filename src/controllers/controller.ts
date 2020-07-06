@@ -1,5 +1,6 @@
 import { Request, Response, CookieOptions } from 'express';
 import { InstallationController } from './installation-controller';
+import log from '../logger';
 
 export class Controller {
 	static sendResponse(res: Response, status: number, data: any) {
@@ -30,8 +31,8 @@ export class Controller {
 					signed: true
 				};
 				res.cookie(name, value, options);
-				console.log(`Created Cookie [${name}]`);
-			} else console.log(`Cookie Exists [${name}]`);
+				log.debug(`Created Cookie [${name}]`);
+			} else log.debug(`Cookie Exists [${name}]`);
 		} else if (process.env.NODE_ENV === 'DEVELOPMENT') {
 			let cookie = req.signedCookies[name];
 			if (cookie === undefined) {
@@ -42,8 +43,8 @@ export class Controller {
 					signed: true
 				};
 				res.cookie(name, value, options);
-				console.log(`Created Cookie [${name}]`);
-			} else console.log(`Cookie Exists [${name}]`);
+				log.debug(`Created Cookie [${name}]`);
+			} else log.debug(`Cookie Exists [${name}]`);
 		}
 	}
 }

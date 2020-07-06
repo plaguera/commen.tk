@@ -4,6 +4,7 @@ import cors from 'cors';
 import express from 'express';
 import fs from 'fs';
 import { InstallationController } from './controllers/installation-controller';
+import morgan from 'morgan';
 import routes from './routes';
 class Server {
 	public express: express.Application;
@@ -39,6 +40,7 @@ class Server {
 		this.express.use(express.json());
 		this.express.use(express.urlencoded({ extended: true }));
 		this.express.use(compression());
+		this.express.use(morgan('combined'));
 		this.express.set('trust proxy', 1);
 	}
 
