@@ -15,6 +15,7 @@ export class CommentController extends Controller {
 				repository(name: $repo, owner: $owner) {
 					createdAt
 					issue(number: $number) {
+						id
 						comments(last: $pagesize${cursor}) {
 							pageInfo {
 								startCursor
