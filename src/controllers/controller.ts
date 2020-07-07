@@ -39,6 +39,20 @@ export class Controller {
 	}
 
 	/**
+	 * Check whether @req has an installation access token cookie.
+	 * If it doesn't exist, a new installation access token cookie is created and sent with @res
+	 * @param req Request
+	 * @param res Response
+	 */
+	static async installationToken(req: Request, res: Response) {
+		if (req.signedCookies.installation_token) {
+			return req.signedCookies.installation_token;
+		} else {
+			return await InstallationController.installation_access_token(req, res).catch(console.error);
+		}
+	}
+
+	/**
 	 * Check if @name cookie exists in @req, if it does, do nothing.
 	 * If it doesn't create @name cookie with @value and @maxAge in @res and send it.
 	 * Development builds don't use HTTPS, thus cookies can't have the @secure attribute, without @secure, 'Samesite: none' can't be used.
@@ -84,7 +98,7 @@ export class Controller {
 			if (!dontSend) Controller.sendResponse(res, 200, result);
 			return result;
 		} catch (error) {
-			console.log('GraphQL Query FAIL', error.message);
+			console.log('GraphQL Query FAIL:', error.message);
 			Controller.sendResponse(res, error.status, error.message);
 		}
 	}

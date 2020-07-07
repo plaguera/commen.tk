@@ -17,7 +17,7 @@ routes.route('/comments/:owner/:repo/:issue').get(CommentController.get);
 routes.route('/comments/:owner/:repo/:issue').post(CommentController.post);
 routes.route('/comments/:id').delete(CommentController.delete);
 
-routes.route('/issuenumber/:owner/:repo/:name').get(IssueController.processIssueName);
+routes.route('/issues/:owner/:repo/:name').get(IssueController.processIssueName);
 routes.route('/issues/:owner/:repo').post(IssueController.post);
 routes.route('/issues/:repoid').post(IssueController.post);
 routes.route('/issues/:id').delete(IssueController.delete);
