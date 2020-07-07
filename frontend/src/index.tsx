@@ -10,7 +10,7 @@ try {
 	let script = document.currentScript;
 	if (script && script.parentElement) {
 		var tmp = document.createElement('div');
-		tmp.className = 'commen.tk';
+		tmp.className = 'commen-tk';
 		let attrs = new ScriptAttributes(script).toJSON();
 		loadTheme(attrs.theme).then(() => {
 			ReactDOM.render(<Widget {...attrs} />, tmp);
