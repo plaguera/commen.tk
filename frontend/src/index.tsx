@@ -2,26 +2,15 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Widget from './Widget';
 import * as serviceWorker from './serviceWorker';
-import { parse } from './page-attributes';
-import { URL_CDN } from './request';
+import { loadTheme, ScriptAttributes } from './util';
+import env from './environment';
 
-export function loadTheme(theme: string) {
-	return new Promise(resolve => {
-		const link = document.createElement('link');
-		link.rel = 'stylesheet';
-		link.setAttribute('crossorigin', 'anonymous');
-		link.onload = resolve;
-		link.href = `${URL_CDN}themes/${theme}.css`;
-		document.head.appendChild(link);
-	});
-}
-
-console.log(process.env.NODE_ENV);
+console.log(env.node_env);
 let script = document.currentScript;
 if (script && script.parentElement) {
 	var tmp = document.createElement('div');
-	tmp.className = 'commen-tk';
-	let attrs = parse(script);
+	tmp.className = 'commen.tk';
+	let attrs = new ScriptAttributes(script).toJSON();
 	loadTheme(attrs.theme).then(() => {
 		ReactDOM.render(<Widget {...attrs} />, tmp);
 		if (script && script.parentElement) script.parentElement.replaceChild(tmp, script);

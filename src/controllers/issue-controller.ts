@@ -36,6 +36,9 @@ export class IssueController extends Controller {
 					issue {
 						id
 						number
+						repository {
+							id
+						}
 					}
 				}
 			}`,
@@ -88,7 +91,7 @@ export class IssueController extends Controller {
 		if (search.issueCount == 0) {
 			req.params.repoid = await RepositoryController.get(req, res);
 			req.body.title = req.params.name;
-			issue = IssueController.post(req, res);
+			issue = (await IssueController.post(req, res)).createIssue.issue;
 		} else {
 			issue = search.nodes[0];
 		}

@@ -26,7 +26,7 @@ export class CommentController extends Controller {
 								id
 								authorAssociation
 								author {
-									avatarUrl
+									avatarUrl(size: 80)
 									login
 									url
 								}
