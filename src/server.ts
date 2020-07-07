@@ -2,10 +2,10 @@ import compression from 'compression';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import express from 'express';
-import fs from 'fs';
 import { InstallationController } from './controllers/installation-controller';
 import morgan from 'morgan';
 import routes from './routes';
+import env from './environment';
 
 /**
  * Express Webserver with custom routes, middleware and cors support.
@@ -70,8 +70,8 @@ class Server {
 	 */
 	installationController() {
 		InstallationController.init(
-			parseInt(process.env.GITHUB_APP_IDENTIFIER || ''),
-			process.env.GITHUB_APP_PRIVATE_KEY || fs.readFileSync(process.env.GITHUB_APP_PRIVATE_KEY_PATH || '').toString()
+			env.github_app.identifier,
+			env.github_app.private_key
 		);
 	}
 }

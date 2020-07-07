@@ -1,3 +1,5 @@
+import fs from 'fs';
+
 const env = {
 	cwd: process.cwd(),
 	development: process.env.NODE_ENV?.toLowerCase() === 'development',
@@ -11,8 +13,8 @@ const env = {
 		url_access_token: 'https://github.com/login/oauth/access_token',
 	},
 	github_app: {
-		identifier: process.env.GITHUB_APP_IDENTIFIER,
-		private_key_path: process.env.GITHUB_APP_PRIVATE_KEY_PATH
+		identifier: parseInt(process.env.GITHUB_APP_IDENTIFIER || ''),
+		private_key: process.env.GITHUB_APP_PRIVATE_KEY || fs.readFileSync(process.env.GITHUB_APP_PRIVATE_KEY_PATH || '').toString()
 	},
 	page_size: {
 		min: 1,

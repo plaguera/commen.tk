@@ -17,7 +17,6 @@ export class InstallationController {
 	static installationIds: object = {}
 
 	static init(id: number, key: string) {
-		log.warn(key);
 		InstallationController.app = new App({
 			id: id,
 			privateKey: key
