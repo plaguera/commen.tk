@@ -4,10 +4,11 @@ require('dotenv').config();
 import express from '../server' 
 import chai from 'chai';
 import chaiHttp from 'chai-http';
+import log from '../logger';
 const { expect } = chai;
 chai.use(chaiHttp);
 
-describe('GET /users/user', () => {
+describe('/users', () => {
 
 	var server = express.listen(8000);
 
@@ -15,8 +16,8 @@ describe('GET /users/user', () => {
 		server.close();
 	});
 
-	it('should get any user', (done) => {
-		let user = 'plaguera';
+	it('should get a specific user', (done) => {
+		let user = 'commen-tk';
 		chai.request(server)
 			.get(`/users/${user}`)
 			.set('authorization', `token ${process.env.TESTING_GITHUB_TOKEN}`)
@@ -28,6 +29,23 @@ describe('GET /users/user', () => {
 				expect(res.body.user).to.have.property('avatarUrl');
 				expect(res.body.user.login).to.equals(user);
 				expect(res.body.user.url).to.equals(`https://github.com/${user}`);
+				done();
+			}).catch(console.error);
+	});
+
+	it('should get the viewer', (done) => {
+		let viewer = 'commen-tk';
+		chai.request(server)
+			.get('/user')
+			.set('authorization', `token ${process.env.TESTING_GITHUB_TOKEN}`)
+			.then(res => {
+				expect(res).to.have.status(200);
+				expect(res.body).to.have.property('viewer');
+				expect(res.body.viewer).to.have.property('login');
+				expect(res.body.viewer).to.have.property('url');
+				expect(res.body.viewer).to.have.property('avatarUrl');
+				expect(res.body.viewer.login).to.equals(viewer);
+				expect(res.body.viewer.url).to.equals(`https://github.com/${viewer}`);
 				done();
 			}).catch(console.error);
 	});

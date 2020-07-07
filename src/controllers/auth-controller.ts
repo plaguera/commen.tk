@@ -3,12 +3,7 @@ import { Controller } from './controller';
 import crypto from 'crypto';
 import { post } from '../request';
 import log from '../logger';
-
-const OAUTH_URL = 'https://github.com/login/oauth/';
-const URL_AUTH = 'authorize';
-const URL_ACCT = 'access_token';
-const CLIENT_ID = process.env[`${process.env.NODE_ENV}_CLIENT_ID`];
-const CLIENT_SECRET = process.env[`${process.env.NODE_ENV}_CLIENT_SECRET`];
+import env from '../environment';
 
 /**
  * Controller in charge of oauth process.
@@ -28,9 +23,8 @@ export class AuthController extends Controller {
 		let state = crypto.randomBytes(64).toString('hex');
 		AuthController.referers[state] = req.headers.referer;
 		let redirect_url =
-			OAUTH_URL +
-			URL_AUTH +
-			`?client_id=${CLIENT_ID}` +
+			env.oauth.url_authorize +
+			`?client_id=${env.oauth.client_id}` +
 			`&scope=repo` +
 			`&state=${state}`;
 		res.redirect(redirect_url);
@@ -45,10 +39,9 @@ export class AuthController extends Controller {
 	static async access_token(req: Request, res: Response) {
 		let code = req.query.code;
 		let accessTokenUrl =
-			OAUTH_URL +
-			URL_ACCT +
-			`?client_id=${CLIENT_ID}` +
-			`&client_secret=${CLIENT_SECRET}` +
+			env.oauth.url_access_token +
+			`?client_id=${env.oauth.client_id}` +
+			`&client_secret=${env.oauth.client_secret}` +
 			`&code=${code}`;
 		let at = (await post(accessTokenUrl)).access_token;
 		let referer = AuthController.referers[<string>req.query.state];

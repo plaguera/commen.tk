@@ -26,7 +26,7 @@ export class UserController extends Controller {
             };
         } else {
             query = {
-                query: `query GETviewer ($body: String!) {
+                query: `query GETviewer {
                     viewer {
                         login,
                         url,
