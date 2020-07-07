@@ -75,19 +75,17 @@ export class Controller {
 		}
 	}
 
-	static async graphql(req: Request, res: Response, query: RequestParameters) {
+	static async graphql(req: Request, res: Response, query: RequestParameters, dontSend: boolean = false): Promise<any> {
 		let token = await Controller.token(req, res);
-		query.headers!.authorization = `token ${token}`;
+		if (query.headers) query.headers.authorization = `token ${token}`;
+		else query.headers = { authorization: `token ${token}` };
 		try {
-			const result = await graphql(query);
-			Controller.sendResponse(res, 200, result);
+			const result = await graphql<any>(query);
+			if (!dontSend) Controller.sendResponse(res, 200, result);
+			return result;
 		} catch (error) {
-			Controller.sendResponse(res, error.status, error.message);
 			console.log('GraphQL Query FAIL', error.message);
+			Controller.sendResponse(res, error.status, error.message);
 		}
 	}
-}
-
-interface Query {
-	headers: {};
 }

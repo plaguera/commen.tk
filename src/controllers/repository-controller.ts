@@ -1,5 +1,4 @@
 import { Controller } from './controller';
-import { query } from '../request';
 
 /**
  * Controller in charge of repository requests.
@@ -16,7 +15,8 @@ export class RepositoryController extends Controller {
             repository(name: "${repo}", owner: "${owner}") {
 				id
             }
-        }`;
-		return query(data, token);
+		}`;
+		// TODO : FIX THIS
+		//return query(data, token);
 	}
 }

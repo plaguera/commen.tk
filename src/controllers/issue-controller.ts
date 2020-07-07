@@ -1,20 +1,26 @@
 import { Request, Response } from 'express';
 import { Controller } from './controller';
-import { query } from '../request';
 import { InstallationController } from './installation-controller';
 import { RepositoryController } from './repository-controller';
+import { RequestParameters } from '@octokit/graphql/dist-types/types';
 
 export class IssueController extends Controller {
 
-	static get(owner: string, repo: string, number: number, token: string) {
-		let data = `{
-            repository(name: "${repo}", owner: "${owner}") {
-              issue(number: ${number}) {
-                id
-              }
-            }
-          }`;
-		return query(data, token);
+	static async get(req: Request, res: Response) {
+		let query: RequestParameters = {
+			query: `query issueID ($repo: String!, $owner: String!, $number: Int!) {
+				repository(name: $repo, owner: $owner) {
+					issue(number: $number) {
+						id
+					}
+				}
+			}`,
+			owner: req.params.owner,
+			repo: req.params.repo,
+			number: parseInt(req.params.issue)
+		};
+		const result = await Controller.graphql(req, res, query, true);
+		return result.repository.issue.id;
 	}
 
 	static post(repoid: string, name: string, token: string) {
@@ -28,7 +34,8 @@ export class IssueController extends Controller {
 							}
 						}
 					}`;
-		return query(data, token);
+					// TODO : FIX THIS
+		//return query(data, token);
 	}
 
 	static searchIssueName(owner: string, repo: string, name: string, token: string) {
@@ -45,18 +52,19 @@ export class IssueController extends Controller {
 				}
 			}
 		}`;
-		return query(data, token);
+		// TODO : FIX THIS
+		//return query(data, token);
 	}
 
 	static async processIssueName(req: Request, res: Response) {
 		let token = await InstallationController.installation_access_token(req, res);
 		let search = await IssueController.searchIssueName(req.params.owner, req.params.repo, req.params.name, token);
-		if (search.data.search.issueCount == 0) {
+		/*if (search.data.search.issueCount == 0) {
 			let repo = await RepositoryController.get(req.params.owner, req.params.repo, token);
 			let issue = await IssueController.post(repo.data.repository.id, req.params.name, token);
 			IssueController.sendResponse(res, issue.status, issue.data);
 		} else {
 			IssueController.sendResponse(res, search.status, search.data);
-		}
+		}*/
 	}
 }

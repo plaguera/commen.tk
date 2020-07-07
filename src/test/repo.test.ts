@@ -4,12 +4,14 @@ require('dotenv').config();
 import express from '../server' 
 import chai from 'chai';
 import chaiHttp from 'chai-http';
+import log from '../logger';
 const { expect } = chai;
 chai.use(chaiHttp);
 
 describe('GET /comments/user/repo/issue', () => {
 
 	var server = express.listen(8001);
+	var commentId = '';
 
 	after(function () {
 		server.close();
@@ -18,7 +20,7 @@ describe('GET /comments/user/repo/issue', () => {
 	it('should get any public issue', (done) => {
         let user = 'plaguera';
         let repo = 'tfm-testing';
-        let issue = 1;
+		let issue = 1;
 		chai.request(server)
 			.get(`/comments/${user}/${repo}/${issue}`)
 			.set('authorization', `token ${process.env.TESTING_GITHUB_TOKEN}`)
@@ -31,6 +33,32 @@ describe('GET /comments/user/repo/issue', () => {
                 expect(res.body.repository.issue.comments).to.have.property('pageInfo');
                 expect(res.body.repository.issue.comments).to.have.property('totalCount');
                 expect(res.body.repository.issue.comments).to.have.property('nodes');
+				done();
+			});
+	});
+
+	it('should post a comment in an issue', (done) => {
+        let user = 'plaguera';
+        let repo = 'tfm-testing';
+		let issue = 1;
+		chai.request(server)
+			.post(`/comments/${user}/${repo}/${issue}`)
+			.set('authorization', `token ${process.env.TESTING_GITHUB_TOKEN}`)
+			.set('content-type', 'application/json')
+			.send({ body: 'Comment generated during testing' })
+			.end((err, res) => {
+				commentId = res.body.addComment.commentEdge.node.id;
+				expect(res).to.have.status(200);
+				done();
+			});
+	});
+
+	it('should delete a comment in an issue', (done) => {
+		chai.request(server)
+			.delete(`/comments/${commentId}`)
+			.set('authorization', `token ${process.env.TESTING_GITHUB_TOKEN}`)
+			.end((err, res) => {
+				expect(res).to.have.status(200);
 				done();
 			});
 	});

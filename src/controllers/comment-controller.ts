@@ -1,58 +1,82 @@
 import { Request, Response } from 'express';
 import { Controller } from './controller';
-import { query } from '../request';
 import { IssueController } from './issue-controller';
-
-export const DEFAULT_PAGE_SIZE = 10;
-export const MIN_PAGE_SIZE = 1;
-export const MAX_PAGE_SIZE = 100;
+import env from '../environment';
+import { clamp } from '../util';
+import { RequestParameters } from '@octokit/graphql/dist-types/types';
 
 export class CommentController extends Controller {
 
 	static async get(req: Request, res: Response) {
-		let token = await Controller.token(req, res);
-        let pageSize = req.query.pagesize ? Math.min(MAX_PAGE_SIZE, Math.max(MIN_PAGE_SIZE, parseInt(<string>req.query.pagesize))) : DEFAULT_PAGE_SIZE;
+		let pageSize = req.query.pagesize ? clamp(parseInt(<string>req.query.pagesize), env.page_size.min, env.page_size.max) : env.page_size.default;
 		let cursor = req.query.cursor ? ', before: "' + req.query.cursor + '"' : '';
-		let data = `{
-			repository(name: "${req.params.repo}", owner: "${req.params.owner}") {
-			createdAt
-			issue(number: ${req.params.number}) {
-				comments(last: ${pageSize}${cursor}) {
-					pageInfo {
-						startCursor
-					}
-					totalCount
-					nodes {
-						bodyHTML
-						id
-						authorAssociation
-						author {
-							avatarUrl
-							login
-							url
+		let query: RequestParameters = {
+			query: `query GETissueComments ($repo: String!, $owner: String!, $number: Int!, $pagesize: Int!) {
+				repository(name: $repo, owner: $owner) {
+					createdAt
+					issue(number: $number) {
+						comments(last: $pagesize${cursor}) {
+							pageInfo {
+								startCursor
+							}
+							totalCount
+							nodes {
+								bodyHTML
+								id
+								authorAssociation
+								author {
+									avatarUrl
+									login
+									url
+								}
+								createdAt
+								url
+								viewerDidAuthor
+							}
 						}
-						createdAt
-						url
-						viewerDidAuthor
 					}
 				}
-			}
-			}
-		}`;
-		let queryres = await query(data, token);
-		Controller.sendResponse(res, queryres.status, queryres.data)
+			}`,
+			owner: req.params.owner,
+			repo: req.params.repo,
+			number: parseInt(req.params.issue),
+			pagesize: pageSize
+		};
+		Controller.graphql(req, res, query);
 	}
 
 	static async post(req: Request, res: Response) {
-        let token = await Controller.token(req, res);
-        let id = await IssueController.get(req.params.owner, req.params.repo, parseInt(req.params.number), token);
-        let data = `mutation {
-            __typename
-            addComment(input: {subjectId: "${id.data.repository.issue.id}", body: "${req.body.body}"}) {
-            clientMutationId
-            }
-        }`;
-        let queryres = await query(data, token);
-		Controller.sendResponse(res, queryres.status, queryres.data);
+		let id: any = req.params.issue;
+		if (!isNaN(Number(id)))
+			id = await IssueController.get(req, res);
+		let query: RequestParameters = {
+			query: `mutation POSTissueComment ($id: String!, $body: String!) {
+				__typename
+				addComment(input: {subjectId: $id, body: $body}) {
+					clientMutationId
+					commentEdge {
+						node {
+							id
+						}
+					}
+				}
+			}`,
+			id: id,
+			body: req.body.body
+		};
+		Controller.graphql(req, res, query);
+	}
+
+	static async delete(req: Request, res: Response) {
+		let query: RequestParameters = {
+			query: `mutation DELETEissueComment ($id: String!) {
+				__typename
+				deleteIssueComment(input: {id: $id}) {
+					clientMutationId
+				}
+			}`,
+			id: req.params.id
+		};
+		Controller.graphql(req, res, query);
 	}
 }
