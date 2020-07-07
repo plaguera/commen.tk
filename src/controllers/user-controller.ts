@@ -25,7 +25,7 @@ export class UserController extends Controller {
                 id: req.params.id
             };
         } else {
-            if (!req.signedCookies.access_token) {
+            if (!(req.signedCookies.access_token || req.headers.authorization)) {
                 Controller.sendResponse(res, 200, { viewer: undefined });
                 return;
             }
