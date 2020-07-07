@@ -38,6 +38,10 @@ export class Controller {
 		}
 	}
 
+	static async hasCredentials(req: Request, res: Response) {
+		return req.signedCookies.token || req.signedCookies.installation_token || req.headers.authorization;
+	}
+
 	/**
 	 * Check whether @req has an installation access token cookie.
 	 * If it doesn't exist, a new installation access token cookie is created and sent with @res

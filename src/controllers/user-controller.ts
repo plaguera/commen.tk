@@ -25,6 +25,10 @@ export class UserController extends Controller {
                 id: req.params.id
             };
         } else {
+            if (!Controller.hasCredentials(req, res)) {
+                Controller.sendResponse(res, 200, { viewer: undefined });
+                return;
+            }
             query = {
                 query: `query GETviewer {
                     viewer {
@@ -36,8 +40,5 @@ export class UserController extends Controller {
             };
         }
         Controller.graphql(req, res, query);
-        // TODO : Check behaviour of viewer when no token
-        //if (!req.params.id && !req.signedCookies.token)
-            //Controller.sendResponse(res, 200, { data: { viewer: undefined } })
     }
 }
