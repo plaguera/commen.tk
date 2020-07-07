@@ -12,8 +12,9 @@ routes.route('/').get((req, res) => res.status(200).send(indexHTML));
 routes.route('/user').get(UserController.get)
 routes.route('/users/:id').get(UserController.get);
 routes.route('/issuenumber/:owner/:repo/:name').get(IssueController.processIssueName);
-routes.route('/comments/:owner/:repo/:number').get(CommentController.get);
-routes.route('/comments/:owner/:repo/:number').post(CommentController.post);
+routes.route('/comments/:owner/:repo/:issue').get(CommentController.get);
+routes.route('/comments/:owner/:repo/:issue').post(CommentController.post);
+routes.route('/comments/:id').delete(CommentController.delete);
 routes.route('/authorize').get(AuthController.authorize);
 routes.route('/oauth/redirect').get(AuthController.access_token);
 

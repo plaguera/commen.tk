@@ -15,7 +15,7 @@
         "start:fg": "NODE_ENV=PRODUCTION node dist/index.js",
         "start:bg": "NODE_ENV=PRODUCTION nohup node dist/index.js > output.log &",
         "stop": "lsof -ti :443 | xargs --no-run-if-empty kill -9",
-        "test": "nyc --reporter=lcov --reporter=text mocha -r ts-node/register src/test/**/*.test.ts",
+        "test": "mocha -r ts-node/register src/test/**/*.test.ts",
         "watch": "concurrently \"yarn watch:front\" \"yarn watch:back\"",
         "watch:front": "cd frontend && npx webpack --mode development --watch",
         "watch:back": "NODE_ENV=DEVELOPMENT nodemon src/index.ts"

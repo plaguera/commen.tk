@@ -23,20 +23,3 @@ export async function httpRequest(url: string, options: object) {
 	let json = await res.json();
 	return new ServerResponse(res, json);
 }
-
-export async function query(data: string, token: string) {
-	const options = {
-		headers: {
-			authorization: 'token ' + token
-		},
-		method: 'POST',
-		body: JSON.stringify({
-			query: data
-		})
-	};
-
-	let res = await fetch('https://api.github.com/graphql', options).catch(console.error);
-	let json = undefined;
-	if (res && res.headers.get('content-type')?.includes('application/json')) json = await res.json();
-	return new ServerResponse(res, json);
-}

@@ -1,6 +1,5 @@
 import { Request, Response } from 'express';
 import { Controller } from './controller';
-import { query } from '../request';
 
 /**
  * Controller in charge of user and viewer requests.
@@ -25,8 +24,9 @@ export class UserController extends Controller {
         else {
             res.set('Cache-Control', 'max-age=600');
             let token = await Controller.token(req, res);
-            let queryres = await query(data, token);
-            UserController.sendResponse(res, queryres.status, queryres.data);
+            // TODO : FIX THIS
+            //let queryres = await query(data, token);
+            //UserController.sendResponse(res, queryres.status, queryres.data);
         }
     }
     
