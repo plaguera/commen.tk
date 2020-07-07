@@ -1,13 +1,16 @@
 import { Request, Response } from 'express';
 import { Controller } from './controller';
-import { InstallationController } from './installation-controller';
 import { RepositoryController } from './repository-controller';
 import { RequestParameters } from '@octokit/graphql/dist-types/types';
 import log from '../logger';
 
 export class IssueController extends Controller {
 
+	static issueIds = {};
+
 	static async get(req: Request, res: Response) {
+		if (IssueController.issueIds[`${req.params.owner}/${req.params.repo}/${req.params.issue}`])
+			return IssueController.issueIds[`${req.params.owner}/${req.params.repo}/${req.params.issue}`];
 		let query: RequestParameters = {
 			query: `query GETissueID ($repo: String!, $owner: String!, $number: Int!) {
 				repository(name: $repo, owner: $owner) {
@@ -21,6 +24,7 @@ export class IssueController extends Controller {
 			number: parseInt(req.params.issue)
 		};
 		const result = await Controller.graphql(req, res, query, true);
+		IssueController.issueIds[`${req.params.owner}/${req.params.repo}/${req.params.issue}`] = result.repository.issue.id;
 		return result.repository.issue.id;
 	}
 
