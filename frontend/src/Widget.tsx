@@ -12,7 +12,7 @@ class Widget extends React.Component<WidgetProps, WidgetState> {
 		super(props);
 		this.state = {
 			comments: [],
-			issue: this.props.issuenumber,
+			issue: this.props.issueNumber,
 			user: undefined,
 			totalCount: 0,
 			hiddenItems: 0,
@@ -23,14 +23,14 @@ class Widget extends React.Component<WidgetProps, WidgetState> {
 	async issue() {
 		if (this.state.issue == -1) {
 			let name = '';
-			switch(this.props.issuename) {
+			switch (this.props.issueName) {
 				case 'hostname': name = window.location.hostname; break;
 				case 'pathname': name = window.location.pathname; break;
 				case 'title': name = document.title; break;
 				default: break;
 			}
-			let res = await request.get(`issuenumber/${this.props.owner}/${this.props.repo}/${name}`).catch(console.error);
-			this.setState({ issue: res.search.nodes[0].number })
+			let res = await request.get(`issues/${this.props.owner}/${this.props.repo}/${name}`).catch(console.error);
+			this.setState({ issue: res.number })
 			return res;
 		}
 	}
@@ -83,10 +83,13 @@ class Widget extends React.Component<WidgetProps, WidgetState> {
 	}
 
 	componentDidMount() {
-		this.issue().then(() => {
-			this.user();
-			this.comments();
-		});
+		this.load();
+	}
+
+	async load() {
+		await this.issue();
+		await this.user();
+		await this.comments();
 	}
 
 	render() {
@@ -94,7 +97,7 @@ class Widget extends React.Component<WidgetProps, WidgetState> {
 			<div className='widget-wrapper'>
 				<Header commentCount={this.state.totalCount} url={this.issueUrl()} />
 				<div className='timeline-wrapper'>
-					<PaginationButton hiddenItems={this.state.hiddenItems} onClick={this.nextComments.bind(this)} user={this.state.user!}/>
+					<PaginationButton hiddenItems={this.state.hiddenItems} onClick={this.nextComments.bind(this)} user={this.state.user!} />
 					<Timeline {...this.state.comments} />
 				</div>
 				<Editor user={this.state.user!} onComment={this.comment.bind(this)} />

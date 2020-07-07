@@ -1,13 +1,14 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 import Widget from './Widget';
+import { WidgetProps } from './props';
 
 test('renders learn react link', () => {
-	let data = {
+	let data: WidgetProps = {
 		owner: "plaguera",
 		repo: "tfm-testing",
-		issuename: '',
-		issuenumber: 1,
+		issueName: '',
+		issueNumber: 1,
 		theme: 'light',
 		pageSize: 10
 	}

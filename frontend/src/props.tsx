@@ -27,8 +27,8 @@ export interface PaginationButtonProps {
 export interface WidgetProps {
     owner: string;
     repo: string;
-    issuename: string;
-    issuenumber: number;
+    issueName: string;
+    issueNumber: number;
     theme: string;
     pageSize: number;
 }

@@ -19,7 +19,7 @@ export class UserController extends Controller {
                     user(login: $id) {
                         login,
                         url,
-                        avatarUrl
+                        avatarUrl(size: 80)
                     }
                 }`,
                 id: req.params.id
@@ -30,7 +30,7 @@ export class UserController extends Controller {
                     viewer {
                         login,
                         url,
-                        avatarUrl
+                        avatarUrl(size: 80)
                     }
                 }`
             };

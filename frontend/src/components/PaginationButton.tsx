@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { PaginationButtonProps } from '../props';
-import { URL_API } from '../request';
+import env from '../environment';
 
 class PaginationButton extends React.Component<PaginationButtonProps, {}> {
 
@@ -32,7 +32,7 @@ class PaginationButton extends React.Component<PaginationButtonProps, {}> {
         else {
             return (
                 <div className="pagination-wrapper">
-                    <a href={URL_API + 'authorize/'}>
+                    <a href={env.url_api + 'authorize/'}>
                         <button className='pagination-button'>
                             <div className='pagination-button-items'>
                                 {this.props.hiddenItems} hidden item{this.props.hiddenItems > 1 ? 's' : ''}

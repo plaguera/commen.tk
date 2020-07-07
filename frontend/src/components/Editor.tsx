@@ -4,7 +4,7 @@ import Markdown from 'react-markdown';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import Avatar from './Avatar';
 import { EditorProps, EditorState } from '../props';
-import { URL_API } from '../request';
+import env from '../environment';
 
 class Editor extends React.Component<EditorProps, EditorState> {
 
@@ -84,7 +84,7 @@ class Editor extends React.Component<EditorProps, EditorState> {
                             </TabPanel>
                         </Tabs>
                         <div className="editor-buttons">
-                            <a className="btn btn-primary" href={URL_API + 'authorize/'}>
+                            <a className="btn btn-primary" href={env.url_api + 'authorize/'}>
                                 Sign In
                             </a>
                         </div>
