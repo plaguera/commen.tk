@@ -3,20 +3,35 @@ import AWS from 'aws-sdk';
 import fs from 'fs';
 import path from 'path';
 
-const DIRECTORY_TO_UPLOAD = 'public';
-const s3 = new AWS.S3({
-    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
-});
-//var cloudfront = new AWS.CloudFront();
-
+/**
+ * Is @file a directory
+ * @param file 
+ */
 const isDirectory = (file: string) => fs.statSync(file).isDirectory();
+
+/**
+ * Returns the list of directories in @file
+ * @param file 
+ */
 const getDirectories = (file: string) => fs.readdirSync(file).map(name => path.join(file, name)).filter(isDirectory);
 
+/**
+ * Is @file a file
+ * @param file 
+ */
 const isFile = (file: string) => fs.statSync(file).isFile();
+
+/**
+ * Returns the list of files in @file
+ * @param file 
+ */
 const getFiles = (file: string) => fs.readdirSync(file).map(name => path.join(file, name)).filter(isFile);
 
-const getFilesRecursively = (file: string) => {
+/**
+ * Returns the list of files (full path) in @file and its subdirectories.
+ * @param file 
+ */
+function getFilesRecursively(file: string) {
     let dirs = getDirectories(file);
     let files = dirs
         .map(dir => getFilesRecursively(dir)) // go through each directory
@@ -24,13 +39,12 @@ const getFilesRecursively = (file: string) => {
     return files.concat(getFiles(file));
 };
 
-console.log(process.cwd());
-var files = getFilesRecursively(DIRECTORY_TO_UPLOAD);
-files.forEach((file: string) => {
-    uploadFileToS3(file, file.replace(DIRECTORY_TO_UPLOAD + '/', ''))
-});
-
-
+/**
+ * Upload @fileName file to S3 bucket and use @key as its bucket path and name.
+ * Content-Type metadata is set for Javascript and CSS files so that browsers can use them properly.
+ * @param fileName 
+ * @param key 
+ */
 function uploadFileToS3(fileName: string, key: string) {
     const fileContent = fs.readFileSync(fileName);
 
@@ -52,8 +66,23 @@ function uploadFileToS3(fileName: string, key: string) {
             default: break;
         }
 
+    const s3 = new AWS.S3({
+        accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+        secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
+    });
+
     s3.upload(params, (err: Error, data: any) => {
         if (err) throw err;
         console.log(`✅ File uploaded successfully. ${data.Location}`);
     });
 };
+
+const DIRECTORY_TO_UPLOAD = 'public';
+
+/**
+ * Recursively get the files in @DIRECTORY_TO_UPLOAD and upload them to S3 Bucket.
+ * Key of every file is its relative path to @DIRECTORY_TO_UPLOAD
+ */
+getFilesRecursively(DIRECTORY_TO_UPLOAD).forEach((file: string) => {
+    uploadFileToS3(file, file.replace(DIRECTORY_TO_UPLOAD + '/', ''))
+});
