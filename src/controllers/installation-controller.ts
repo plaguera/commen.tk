@@ -13,8 +13,8 @@ export class InstallationController {
 
 	static app: App;
 	static jwt: ExpirableValue<string>;
-	static tokens: object = {};
-	static installationIds: object = {}
+	static tokens = {};
+	static installationIds = {}
 
 	static init(id: number, key: string) {
 		InstallationController.app = new App({
@@ -28,7 +28,7 @@ export class InstallationController {
 	static checkJWT() {
 		const now = new Date().getTime();
 		if (InstallationController.jwt.expires < now) {
-			log.debug('Generated new JWT');
+			//log.debug('Generated new JWT');
 			var tenminutesfromnow = new Date(now + (10 * 60 * 1000)).getTime();
 			InstallationController.jwt.value = InstallationController.app.getSignedJsonWebToken();
 			InstallationController.jwt.expires = tenminutesfromnow;
@@ -38,12 +38,12 @@ export class InstallationController {
 	static async getIAT(installationId: number) {
 		const now = new Date().getTime();
 		if (!InstallationController.tokens[installationId] || InstallationController.tokens[installationId].expires < now) {
-			log.debug('Requested Installation Access Token');
+			//log.debug('Requested Installation Access Token');
 			const installationAccessToken = await InstallationController.app.getInstallationAccessToken({ installationId });
 			const onehourfromnow = new Date(now + (60 * 60 * 1000));
 			InstallationController.tokens[installationId] = { token: installationAccessToken, expires: onehourfromnow }
 		}
-		log.debug('Installation Access Tokens', InstallationController.tokens);
+		//log.debug('Installation Access Tokens', InstallationController.tokens);
 		return InstallationController.tokens[installationId].token;
 	}
 
@@ -51,7 +51,7 @@ export class InstallationController {
 		if (InstallationController.installationIds[`${owner}/${repo}`])
 			return InstallationController.installationIds[`${owner}/${repo}`];
 		let url = `https://api.github.com/repos/${owner}/${repo}/installation`;
-		log.debug('Installation ID URL', url);
+		//log.debug('Installation ID URL', url);
 		const options = {
 			headers: {
 				authorization: `Bearer ${InstallationController.jwt.value}`,
@@ -61,7 +61,7 @@ export class InstallationController {
 		const result = await fetch(url, options);
 		const id = (await result.json()).id;
 		InstallationController.installationIds[`${owner}/${repo}`] = id;
-		log.debug('Requested Installation ID', id);
+		//log.debug('Requested Installation ID', id);
 		return id;
 	}
 
