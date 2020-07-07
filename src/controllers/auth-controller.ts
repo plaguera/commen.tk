@@ -4,6 +4,7 @@ import env from '../environment';
 import { Request, Response } from 'express';
 import log from '../logger';
 import fetch, { RequestInit } from 'node-fetch';
+import url from 'url';
 
 /**
  * Controller in charge of oauth process.
@@ -63,6 +64,15 @@ export class AuthController extends Controller {
 				//log.debug('Referer:', referer);
 				delete AuthController.referers[<string>req.query.state];
 			}).catch(console.error);
+	}
 
+	static logout(req: Request, res: Response) {
+		res.clearCookie('access_token');
+		let returnUrl = url.format({
+			protocol: req.protocol,
+			host: req.get('host'),
+			pathname: req.originalUrl,
+		});
+		res.redirect(returnUrl);
 	}
 }

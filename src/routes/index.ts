@@ -24,5 +24,6 @@ routes.route('/issues/:id').delete(IssueController.delete);
 
 routes.route('/authorize').get(AuthController.authorize);
 routes.route('/oauth/redirect').get(AuthController.access_token);
+routes.route('/logout').get(AuthController.logout);
 
 export default routes;
