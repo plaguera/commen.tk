@@ -17,23 +17,23 @@ export class UserController extends Controller {
             query = {
                 query: `query GETuser ($id: String!) {
                     user(login: $id) {
-                        login,
-                        url,
+                        login
+                        url
                         avatarUrl(size: 80)
                     }
                 }`,
                 id: req.params.id
             };
         } else {
-            if (!Controller.hasCredentials(req, res)) {
+            if (!req.signedCookies.access_token) {
                 Controller.sendResponse(res, 200, { viewer: undefined });
                 return;
             }
             query = {
                 query: `query GETviewer {
                     viewer {
-                        login,
-                        url,
+                        login
+                        url
                         avatarUrl(size: 80)
                     }
                 }`

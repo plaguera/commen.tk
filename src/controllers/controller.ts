@@ -27,8 +27,8 @@ export class Controller {
 	 * @param res Response
 	 */
 	static async token(req: Request, res: Response) {
-		if (req.signedCookies.token) {
-			return req.signedCookies.token;
+		if (req.signedCookies.access_token) {
+			return req.signedCookies.access_token;
 		} else if (req.signedCookies.installation_token) {
 			return req.signedCookies.installation_token;
 		} else if (req.headers.authorization) {
@@ -36,10 +36,6 @@ export class Controller {
 		} else {
 			return await InstallationController.installation_access_token(req, res).catch(console.error);
 		}
-	}
-
-	static async hasCredentials(req: Request, res: Response) {
-		return req.signedCookies.token || req.signedCookies.installation_token || req.headers.authorization;
 	}
 
 	/**
