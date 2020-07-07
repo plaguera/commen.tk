@@ -1,8 +1,9 @@
-import { Request, Response } from 'express';
 import { Controller } from './controller';
 import crypto from 'crypto';
-import log from '../logger';
 import env from '../environment';
+import { Request, Response } from 'express';
+import log from '../logger';
+import fetch, { RequestInit } from 'node-fetch';
 
 /**
  * Controller in charge of oauth process.
@@ -35,7 +36,7 @@ export class AuthController extends Controller {
 	 * @param req Request contains code and state
 	 * @param res Response stores access token cookie
 	 */
-	static async access_token(req: Request, res: Response) {
+	static access_token(req: Request, res: Response) {
 		let code = req.query.code;
 		let url =
 			env.oauth.url_access_token +
@@ -49,15 +50,19 @@ export class AuthController extends Controller {
 			},
 			method: 'POST'
 		};
-		let result = await fetch(url, options);
-		let json = await result.json();
-		let access_token = json.access_token;
-		Controller.checkCookie(req, res, 'access_token', access_token, 24 * 60 * 60 * 1000);
-		//log.debug('Access Token:', access_token);
 
-		let referer = AuthController.referers[<string>req.query.state];
-		res.redirect(referer);
-		//log.debug('Referer:', referer);
-		delete AuthController.referers[<string>req.query.state];
+		fetch(url, options)
+			.then(res => res.json())
+			.then(json => {
+				let access_token = json.access_token;
+				Controller.checkCookie(req, res, 'access_token', access_token, 24 * 60 * 60 * 1000);
+				//log.debug('Access Token:', access_token);
+
+				let referer = AuthController.referers[<string>req.query.state];
+				res.redirect(referer);
+				//log.debug('Referer:', referer);
+				delete AuthController.referers[<string>req.query.state];
+			}).catch(console.error);
+
 	}
 }
