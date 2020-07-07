@@ -21,6 +21,8 @@ const env = {
 		max: 100,
 		default: 10
 	},
+	cookie_secret: process.env.COOKIE_SECRET,
+	github_testing_token: process.env.TESTING_GITHUB_TOKEN,
 	port: process.env.PORT || '8000',
 	url_api: 'https://api.github.com/',
 	url_graphql: 'https://api.github.com/graphql'

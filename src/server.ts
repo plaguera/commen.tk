@@ -50,7 +50,7 @@ class Server {
 	 * Adds all necessary middleware to the server.
 	 */
 	middleware() {
-		this.express.use(cookieParser(process.env.COOKIE_SECRET));
+		this.express.use(cookieParser(env.cookie_secret));
 		this.express.use(express.json());
 		this.express.use(express.urlencoded({ extended: true }));
 		this.express.use(compression());

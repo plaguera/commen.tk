@@ -3,12 +3,13 @@ import express from './server'
 import fs from 'fs';
 import https from 'https';
 import log from './logger';
+import env from './environment';
 
-log.debug('NODE_ENV', process.env.NODE_ENV);
-log.debug('CWD\t', process.cwd());
-let port = process.env.PORT || '8000';
+log.debug('NODE_ENV', env.node_env);
+log.debug('CWD\t', env.cwd);
+let port = env.port || '8000';
 
-switch (process.env.NODE_ENV) {
+switch (env.node_env) {
     case 'DEVELOPMENT': httpServer(); break;
     case 'PRODUCTION': httpsServer(); break;
 }
