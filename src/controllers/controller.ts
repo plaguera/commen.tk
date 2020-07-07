@@ -65,7 +65,7 @@ export class Controller {
 	static checkCookie(req: Request, res: Response, name: string, value: string, maxAge: number) {
 		let cookie = req.signedCookies[name];
 		if (cookie !== undefined) {
-			log.debug(`Cookie Exists [${name}]`);
+			//log.debug(`Cookie Exists [${name}]`);
 			return;
 		}
 
@@ -86,7 +86,7 @@ export class Controller {
 			};
 		}
 		res.cookie(name, value, options);
-		log.debug(`Created Cookie [${name}]`);
+		//log.debug(`Created Cookie [${name}]`);
 	}
 
 	static async graphql(req: Request, res: Response, query: RequestParameters, dontSend: boolean = false): Promise<any> {
