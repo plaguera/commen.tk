@@ -71,7 +71,7 @@ class Server {
 	installationController() {
 		InstallationController.init(
 			parseInt(process.env.GITHUB_APP_IDENTIFIER || ''),
-			fs.readFileSync(process.env.GITHUB_APP_PRIVATE_KEY_PATH || '').toString()
+			process.env.GITHUB_APP_PRIVATE_KEY || fs.readFileSync(process.env.GITHUB_APP_PRIVATE_KEY_PATH || '').toString()
 		);
 	}
 }
