@@ -6,7 +6,15 @@ import fs from 'fs';
 import { InstallationController } from './controllers/installation-controller';
 import morgan from 'morgan';
 import routes from './routes';
+
+/**
+ * Express Webserver with custom routes, middleware and cors support.
+ */
 class Server {
+
+	/**
+	 * Express Server Object
+	 */
 	public express: express.Application;
 
 	constructor() {
@@ -17,6 +25,9 @@ class Server {
 		this.installationController();
 	}
 
+	/**
+	 * Enables CORS requests in the server with the selected headers and methods.
+	 */
 	enableCors() {
 		const options: cors.CorsOptions = {
 			allowedHeaders: [
@@ -35,6 +46,9 @@ class Server {
 		this.express.use(cors(options));
 	}
 
+	/**
+	 * Adds all necessary middleware to the server.
+	 */
 	middleware() {
 		this.express.use(cookieParser(process.env.COOKIE_SECRET));
 		this.express.use(express.json());
@@ -44,10 +58,16 @@ class Server {
 		this.express.set('trust proxy', 1);
 	}
 
+	/**
+	 * Adds all the routes in './routes' to the server.
+	 */
 	routes() {
 		this.express.use('/', routes);
 	}
 
+	/**
+	 * Sets up the @InstallationController for use in production.
+	 */
 	installationController() {
 		if (process.env.NODE_ENV === 'DEVELOPMENT') return;
 		InstallationController.init(
