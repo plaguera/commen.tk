@@ -3,6 +3,7 @@ import { graphql } from '@octokit/graphql';
 import { InstallationController } from './installation-controller';
 import log from '../logger';
 import { RequestParameters } from '@octokit/graphql/dist-types/types';
+import env from '../environment';
 
 /**
  * Base class for server controllers
@@ -48,31 +49,30 @@ export class Controller {
 	 * @param maxAge Cookie Time to Live in milliseconds
 	 */
 	static checkCookie(req: Request, res: Response, name: string, value: string, maxAge: number) {
-		if (process.env.NODE_ENV === 'PRODUCTION') {
-			let cookie = req.signedCookies[name];
-			if (cookie === undefined) {
-				let options: CookieOptions = {
-					//httpOnly: true,
-					maxAge: maxAge,
-					sameSite: 'none',
-					secure: true,
-					signed: true
-				};
-				res.cookie(name, value, options);
-				log.debug(`Created Cookie [${name}]`);
-			} else log.debug(`Cookie Exists [${name}]`);
-		} else if (process.env.NODE_ENV === 'DEVELOPMENT') {
-			let cookie = req.signedCookies[name];
-			if (cookie === undefined) {
-				let options: CookieOptions = {
-					httpOnly: true,
-					maxAge: maxAge,
-					signed: true
-				};
-				res.cookie(name, value, options);
-				log.debug(`Created Cookie [${name}]`);
-			} else log.debug(`Cookie Exists [${name}]`);
+		let cookie = req.signedCookies[name];
+		if (cookie !== undefined) {
+			log.debug(`Cookie Exists [${name}]`);
+			return;
 		}
+
+		let options: CookieOptions;
+		if (env.production) {
+			options = {
+				//httpOnly: true,
+				maxAge: maxAge,
+				sameSite: 'none',
+				secure: true,
+				signed: true
+			};
+		} else {
+			options = {
+				httpOnly: true,
+				maxAge: maxAge,
+				signed: true
+			};
+		}
+		res.cookie(name, value, options);
+		log.debug(`Created Cookie [${name}]`);
 	}
 
 	static async graphql(req: Request, res: Response, query: RequestParameters, dontSend: boolean = false): Promise<any> {
