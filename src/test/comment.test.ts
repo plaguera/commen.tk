@@ -4,6 +4,7 @@ require('dotenv').config();
 import express from '../server' 
 import chai from 'chai';
 import chaiHttp from 'chai-http';
+import env from '../environment';
 import log from '../logger';
 const { expect } = chai;
 chai.use(chaiHttp);
@@ -23,7 +24,7 @@ describe('/comments', () => {
 		let issue = 2;
 		chai.request(server)
 			.get(`/comments/${user}/${repo}/${issue}`)
-			.set('authorization', `token ${process.env.TESTING_GITHUB_TOKEN}`)
+			.set('authorization', `token ${env.github_testing_token}`)
 			.end((err, res) => {
 				expect(res).to.have.status(200);
 				expect(res.body).to.have.property('repository');
@@ -43,7 +44,7 @@ describe('/comments', () => {
 		let issue = 2;
 		chai.request(server)
 			.post(`/comments/${user}/${repo}/${issue}`)
-			.set('authorization', `token ${process.env.TESTING_GITHUB_TOKEN}`)
+			.set('authorization', `token ${env.github_testing_token}`)
 			.set('content-type', 'application/json')
 			.send({ body: 'Comment generated during testing' })
 			.end((err, res) => {
@@ -56,7 +57,7 @@ describe('/comments', () => {
 	it('should delete a comment in an issue', (done) => {
 		chai.request(server)
 			.delete(`/comments/${commentId}`)
-			.set('authorization', `token ${process.env.TESTING_GITHUB_TOKEN}`)
+			.set('authorization', `token ${env.github_testing_token}`)
 			.end((err, res) => {
 				expect(res).to.have.status(200);
 				done();

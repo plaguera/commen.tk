@@ -4,6 +4,7 @@ require('dotenv').config();
 import express from '../server' 
 import chai from 'chai';
 import chaiHttp from 'chai-http';
+import env from '../environment';
 import log from '../logger';
 const { expect } = chai;
 chai.use(chaiHttp);
@@ -20,7 +21,7 @@ describe('/users', () => {
 		let user = 'commen-tk';
 		chai.request(server)
 			.get(`/users/${user}`)
-			.set('authorization', `token ${process.env.TESTING_GITHUB_TOKEN}`)
+			.set('authorization', `token ${env.github_testing_token}`)
 			.then(res => {
 				expect(res).to.have.status(200);
 				expect(res.body).to.have.property('user');
@@ -37,7 +38,7 @@ describe('/users', () => {
 		let viewer = 'commen-tk';
 		chai.request(server)
 			.get('/user')
-			.set('authorization', `token ${process.env.TESTING_GITHUB_TOKEN}`)
+			.set('authorization', `token ${env.github_testing_token}`)
 			.then(res => {
 				expect(res).to.have.status(200);
 				expect(res.body).to.have.property('viewer');
