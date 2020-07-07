@@ -66,10 +66,9 @@ class Server {
 	}
 
 	/**
-	 * Sets up the @InstallationController for use in production.
+	 * Sets up the @InstallationController
 	 */
 	installationController() {
-		if (process.env.NODE_ENV === 'DEVELOPMENT') return;
 		InstallationController.init(
 			parseInt(process.env.GITHUB_APP_IDENTIFIER || ''),
 			fs.readFileSync(process.env.GITHUB_APP_PRIVATE_KEY_PATH || '').toString()
