@@ -8,7 +8,7 @@ import log from '../logger';
 const { expect } = chai;
 chai.use(chaiHttp);
 
-describe('GET /comments/user/repo/issue', () => {
+describe('/comments', () => {
 
 	var server = express.listen(8001);
 	var commentId = '';
@@ -17,10 +17,10 @@ describe('GET /comments/user/repo/issue', () => {
 		server.close();
 	});
 
-	it('should get any public issue', (done) => {
-        let user = 'plaguera';
+	it('should get any public issue\'s comments', (done) => {
+        let user = 'commen-tk';
         let repo = 'tfm-testing';
-		let issue = 1;
+		let issue = 2;
 		chai.request(server)
 			.get(`/comments/${user}/${repo}/${issue}`)
 			.set('authorization', `token ${process.env.TESTING_GITHUB_TOKEN}`)
@@ -38,9 +38,9 @@ describe('GET /comments/user/repo/issue', () => {
 	});
 
 	it('should post a comment in an issue', (done) => {
-        let user = 'plaguera';
+        let user = 'commen-tk';
         let repo = 'tfm-testing';
-		let issue = 1;
+		let issue = 2;
 		chai.request(server)
 			.post(`/comments/${user}/${repo}/${issue}`)
 			.set('authorization', `token ${process.env.TESTING_GITHUB_TOKEN}`)
