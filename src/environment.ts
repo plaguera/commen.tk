@@ -14,7 +14,7 @@ const env = {
 	},
 	github_app: {
 		identifier: parseInt(process.env.GITHUB_APP_IDENTIFIER || ''),
-		private_key: process.env.GITHUB_APP_PRIVATE_KEY || fs.readFileSync(process.env.GITHUB_APP_PRIVATE_KEY_PATH || '').toString()
+		private_key: (process.env.GITHUB_APP_PRIVATE_KEY || '').replace(/\\n/gm, '\n') || fs.readFileSync(process.env.GITHUB_APP_PRIVATE_KEY_PATH || '').toString()
 	},
 	page_size: {
 		min: 1,
