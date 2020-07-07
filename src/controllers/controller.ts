@@ -1,6 +1,8 @@
 import { Request, Response, CookieOptions } from 'express';
+import { graphql } from '@octokit/graphql';
 import { InstallationController } from './installation-controller';
 import log from '../logger';
+import { RequestParameters } from '@octokit/graphql/dist-types/types';
 
 /**
  * Base class for server controllers
@@ -49,7 +51,7 @@ export class Controller {
 		if (process.env.NODE_ENV === 'PRODUCTION') {
 			let cookie = req.signedCookies[name];
 			if (cookie === undefined) {
-				let options : CookieOptions = {
+				let options: CookieOptions = {
 					//httpOnly: true,
 					maxAge: maxAge,
 					sameSite: 'none',
@@ -62,7 +64,7 @@ export class Controller {
 		} else if (process.env.NODE_ENV === 'DEVELOPMENT') {
 			let cookie = req.signedCookies[name];
 			if (cookie === undefined) {
-				let options : CookieOptions = {
+				let options: CookieOptions = {
 					httpOnly: true,
 					maxAge: maxAge,
 					signed: true
@@ -72,4 +74,20 @@ export class Controller {
 			} else log.debug(`Cookie Exists [${name}]`);
 		}
 	}
+
+	static async graphql(req: Request, res: Response, query: RequestParameters) {
+		let token = await Controller.token(req, res);
+		query.headers!.authorization = `token ${token}`;
+		try {
+			const result = await graphql(query);
+			Controller.sendResponse(res, 200, result);
+		} catch (error) {
+			Controller.sendResponse(res, error.status, error.message);
+			console.log('GraphQL Query FAIL', error.message);
+		}
+	}
+}
+
+interface Query {
+	headers: {};
 }
