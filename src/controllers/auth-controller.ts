@@ -4,7 +4,6 @@ import env from '../environment';
 import { Request, Response } from 'express';
 import log from '../logger';
 import fetch, { RequestInit } from 'node-fetch';
-import url from 'url';
 
 /**
  * Controller in charge of oauth process.

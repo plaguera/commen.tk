@@ -11,7 +11,7 @@ chai.use(chaiHttp);
 
 describe('/users', () => {
 
-	var server = express.listen(8000);
+	var server = express.listen(8004);
 
 	after(function () {
 		server.close();
@@ -30,6 +30,16 @@ describe('/users', () => {
 				expect(res.body.user).to.have.property('avatarUrl');
 				expect(res.body.user.login).to.equals(user);
 				expect(res.body.user.url).to.equals(`https://github.com/${user}`);
+				done();
+			}).catch(console.error);
+	});
+
+	it('should fail to get a specific user, bad credentials', (done) => {
+		let user = 'commen-tk';
+		chai.request(server)
+			.get(`/users/${user}`)
+			.then(res => {
+				expect(res).to.have.status(401);
 				done();
 			}).catch(console.error);
 	});

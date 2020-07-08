@@ -1,7 +1,7 @@
-export {};
+export { };
 
 require('dotenv').config();
-import express from '../server' 
+import express from '../server'
 import chai from 'chai';
 import chaiHttp from 'chai-http';
 import env from '../environment';
@@ -11,7 +11,7 @@ chai.use(chaiHttp);
 
 describe('/issues', () => {
 
-	var server = express.listen(8002);
+	var server = express.listen(8003);
 	var issueId = '';
 
 	after(function () {
@@ -19,8 +19,8 @@ describe('/issues', () => {
 	});
 
 	it('should create a new issue', (done) => {
-        let owner = 'commen-tk';
-        let repo = 'tfm-testing';
+		let owner = 'commen-tk';
+		let repo = 'tfm-testing';
 		chai.request(server)
 			.post(`/issues/${owner}/${repo}`)
 			.set('authorization', `token ${env.github_testing_token}`)
@@ -44,7 +44,7 @@ describe('/issues', () => {
 	});
 
 	it('should translate an issue name to its number', (done) => {
-        let owner = 'commen-tk';
+		let owner = 'commen-tk';
 		let repo = 'tfm-testing';
 		let name = 'Issue #2';
 		chai.request(server)
@@ -55,6 +55,27 @@ describe('/issues', () => {
 				expect(res.body).to.have.property('number');
 				expect(res.body.number).to.equals(2);
 				done();
+			});
+	});
+
+	it('should create a new issue using cached repo id', (done) => {
+		let owner = 'commen-tk';
+		let repo = 'tfm-testing';
+		chai.request(server)
+			.post(`/issues/${owner}/${repo}`)
+			.set('authorization', `token ${env.github_testing_token}`)
+			.set('content-type', 'application/json')
+			.send({ title: 'Issue generated during testing' })
+			.end((err, res) => {
+				issueId = res.body.createIssue.issue.id;
+				expect(res).to.have.status(200);
+				chai.request(server)
+					.delete(`/issues/${issueId}`)
+					.set('authorization', `token ${env.github_testing_token}`)
+					.end((err, res) => {
+						expect(res).to.have.status(200);
+						done();
+					});
 			});
 	});
 });
