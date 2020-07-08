@@ -89,7 +89,7 @@ class Widget extends React.Component<WidgetProps, WidgetState> {
 	}
 
 	componentDidMount() {
-		this.issue().then(() => this.user()).then(() => this.comments()).then(() => console.log(this.state.user));
+		this.issue().then(() => this.user()).then(() => this.comments());
 	}
 
 	render() {

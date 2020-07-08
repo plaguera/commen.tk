@@ -3,10 +3,8 @@ import ReactDOM from 'react-dom';
 import Widget from './Widget';
 import * as serviceWorker from './serviceWorker';
 import { loadTheme, ScriptAttributes } from './util';
-import env from './environment';
 
 try {
-	console.log(env.node_env);
 	let script = document.currentScript;
 	if (script && script.parentElement) {
 		var tmp = document.createElement('div');
