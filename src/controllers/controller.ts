@@ -15,7 +15,7 @@ export class Controller {
 	 * @param status Status Code
 	 * @param data Payload
 	 */
-	static sendResponse(res: Response, status: number, data: any) {
+	static sendResponse(res: Response, status: number, data?: any) {
 		res.status(status).send(data);
 	}
 

@@ -40,7 +40,7 @@ class Editor extends React.Component<EditorProps, EditorState> {
                             <TabList>
                                 <Tab>Write</Tab>
                                 <Tab onClick={this.handleClick.bind(this)}>Preview</Tab>
-                                <OptionButton />
+                                <OptionButton onLogout={this.props.onLogout} />
                             </TabList>
 
                             <TabPanel>
@@ -72,7 +72,6 @@ class Editor extends React.Component<EditorProps, EditorState> {
                             <TabList>
                                 <Tab>Write</Tab>
                                 <Tab disabled>Preview</Tab>
-                                <OptionButton />
                             </TabList>
 
                             <TabPanel>

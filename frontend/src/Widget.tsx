@@ -76,6 +76,12 @@ class Widget extends React.Component<WidgetProps, WidgetState> {
 			.catch(console.error);
 	}
 
+	logout() {
+		request.get('logout')
+			.then(() => { this.comments(); this.user(); })
+			.catch(console.error);
+	}
+
 	user() {
 		request.get('user')
 			.then(data => this.setState({ user: data.viewer }))
@@ -100,7 +106,7 @@ class Widget extends React.Component<WidgetProps, WidgetState> {
 					<PaginationButton hiddenItems={this.state.hiddenItems} onClick={this.nextComments.bind(this)} user={this.state.user!} />
 					<Timeline {...this.state.comments} />
 				</div>
-				<Editor user={this.state.user!} onComment={this.comment.bind(this)} />
+				<Editor user={this.state.user!} onComment={this.comment.bind(this)} onLogout={this.logout.bind(this)} />
 			</div>
 		);
 	}
