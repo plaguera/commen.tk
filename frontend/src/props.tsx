@@ -42,6 +42,10 @@ export interface WidgetState {
     cursor: string;
 }
 
+export interface OptionButtonState {
+    show: boolean;
+}
+
 export interface EditorProps {
     user: UserProps;
     onComment: (text: string) => void;

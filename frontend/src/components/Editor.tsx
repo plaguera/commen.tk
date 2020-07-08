@@ -3,6 +3,7 @@ import Markdown from 'react-markdown';
 
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import Avatar from './Avatar';
+import OptionButton from './OptionButton';
 import { EditorProps, EditorState } from '../props';
 import env from '../environment';
 
@@ -39,6 +40,7 @@ class Editor extends React.Component<EditorProps, EditorState> {
                             <TabList>
                                 <Tab>Write</Tab>
                                 <Tab onClick={this.handleClick.bind(this)}>Preview</Tab>
+                                <OptionButton />
                             </TabList>
 
                             <TabPanel>
@@ -70,9 +72,7 @@ class Editor extends React.Component<EditorProps, EditorState> {
                             <TabList>
                                 <Tab>Write</Tab>
                                 <Tab disabled>Preview</Tab>
-                                <div className='btn-options'>
-                                <svg aria-label="Show options" className="octicon octicon-kebab-horizontal" viewBox="0 0 16 16" version="1.1" width="16" height="16" role="img"><path d="M8 9a1.5 1.5 0 100-3 1.5 1.5 0 000 3zM1.5 9a1.5 1.5 0 100-3 1.5 1.5 0 000 3zm13 0a1.5 1.5 0 100-3 1.5 1.5 0 000 3z"></path></svg>
-                                </div>
+                                <OptionButton />
                             </TabList>
 
                             <TabPanel>
