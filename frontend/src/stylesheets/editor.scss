@@ -14,13 +14,6 @@
 		box-sizing: border-box;
 		.react-tabs {
 			-webkit-tap-highlight-color: transparent;
-			.btn-options {
-				float: right;
-				padding: 8px;
-				svg:hover {
-					fill: rgb(3, 102, 214);
-				}
-			}
 			.editor-textarea,
 			.editor-preview {
 				margin: 10px;
