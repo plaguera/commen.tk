@@ -42,13 +42,14 @@ export interface WidgetState {
     cursor: string;
 }
 
-export interface OptionButtonState {
-    show: boolean;
+export interface OptionButtonProps{
+    onLogout: () => void;
 }
 
 export interface EditorProps {
     user: UserProps;
     onComment: (text: string) => void;
+    onLogout: () => void;
 }
 
 export interface EditorState {

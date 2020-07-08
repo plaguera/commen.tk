@@ -67,12 +67,23 @@ export class AuthController extends Controller {
 	}
 
 	static logout(req: Request, res: Response) {
-		res.clearCookie('access_token');
-		let returnUrl = url.format({
-			protocol: req.protocol,
-			host: req.get('host'),
-			pathname: req.originalUrl,
-		});
-		res.redirect(returnUrl);
+		let options = {};
+		if (env.production) {
+			options = {
+				//httpOnly: true,
+				maxAge: 24 * 60 * 60 * 1000,
+				sameSite: 'none',
+				secure: true,
+				signed: true
+			};
+		} else {
+			options = {
+				httpOnly: true,
+				maxAge: 24 * 60 * 60 * 1000,
+				signed: true
+			};
+		}
+		res.clearCookie('access_token', options);
+		Controller.sendResponse(res, 200, 'Logout successful');
 	}
 }
