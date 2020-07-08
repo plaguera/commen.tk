@@ -8,7 +8,7 @@ const routes = Router();
 
 const indexHTML = '<!DOCTYPE html><html lang="en"><head><meta charset="utf-8" /><title>API commen.tk</title><meta name="description" content="API for commen.tk" /><meta name="author" content="plaguera" /></head><body><h1 style="font-family: Arial, Helvetica, sans-serif;">API is <strong style="color: green;">UP</strong></h1></body></html>';
 
-routes.route('/').get((req, res) => res.status(200).send(indexHTML));
+routes.route('/').all((req, res) => res.status(200).send(indexHTML));
 
 routes.route('/user').get(UserController.get)
 routes.route('/users/:id').get(UserController.get);
