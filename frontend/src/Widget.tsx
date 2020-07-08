@@ -89,13 +89,7 @@ class Widget extends React.Component<WidgetProps, WidgetState> {
 	}
 
 	componentDidMount() {
-		this.load();
-	}
-
-	async load() {
-		await this.issue();
-		await this.user();
-		await this.comments();
+		this.issue().then(() => this.user()).then(() => this.comments()).then(() => console.log(this.state.user));
 	}
 
 	render() {

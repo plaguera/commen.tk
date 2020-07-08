@@ -71,7 +71,6 @@ export class AuthController extends Controller {
 		if (env.production) {
 			options = {
 				//httpOnly: true,
-				maxAge: 24 * 60 * 60 * 1000,
 				sameSite: 'none',
 				secure: true,
 				signed: true
@@ -79,7 +78,6 @@ export class AuthController extends Controller {
 		} else {
 			options = {
 				httpOnly: true,
-				maxAge: 24 * 60 * 60 * 1000,
 				signed: true
 			};
 		}
