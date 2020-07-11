@@ -23,7 +23,7 @@ describe('/comments', () => {
 		let repo = 'tfm-testing';
 		let issue = 2;
 		chai.request(server)
-			.get(`/comments/${user}/${repo}/${issue}?pagesize=10`)
+			.get(`/issues/${user}/${repo}/${issue}/comments?pagesize=10`)
 			.set('authorization', `token ${env.github_testing_token}`)
 			.end((err, res) => {
 				expect(res).to.have.status(200);
@@ -43,7 +43,7 @@ describe('/comments', () => {
 		let repo = 'tfm-testing';
 		let issue = 2;
 		chai.request(server)
-			.post(`/comments/${user}/${repo}/${issue}`)
+			.post(`/issues/${user}/${repo}/${issue}/comments`)
 			.set('authorization', `token ${env.github_testing_token}`)
 			.set('content-type', 'application/json')
 			.send({ body: 'Comment generated during testing' })
@@ -69,7 +69,7 @@ describe('/comments', () => {
 		let repo = 'tfm-testing';
 		let issue = 2;
 		chai.request(server)
-			.post(`/comments/${user}/${repo}/${issue}`)
+			.post(`/issues/${user}/${repo}/${issue}/comments`)
 			.set('authorization', `token ${env.github_testing_token}`)
 			.set('content-type', 'application/json')
 			.send({ body: 'Comment generated during testing' })

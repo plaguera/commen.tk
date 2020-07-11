@@ -4,6 +4,7 @@ import { IssueController } from './issue-controller';
 import env from '../environment';
 import { clamp } from '../util';
 import { RequestParameters } from '@octokit/graphql/dist-types/types';
+import log from '../logger';
 
 export class CommentController extends Controller {
 
