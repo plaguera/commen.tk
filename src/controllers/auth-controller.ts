@@ -56,11 +56,8 @@ export class AuthController extends Controller {
 			.then(json => {
 				let access_token = json.access_token;
 				Controller.checkCookie(req, res, 'access_token', access_token, 24 * 60 * 60 * 1000);
-				//log.debug('Access Token:', access_token);
-
 				let referer = AuthController.referers[<string>req.query.state];
 				res.redirect(referer);
-				//log.debug('Referer:', referer);
 				delete AuthController.referers[<string>req.query.state];
 			}).catch(console.error);
 	}

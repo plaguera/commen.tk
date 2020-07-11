@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Widget from './Widget';
+import Widget from './components/Widget';
 import { loadTheme, replaceScript } from './util';
 import env from './environment';
 

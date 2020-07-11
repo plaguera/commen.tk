@@ -41,7 +41,7 @@ describe('/users', () => {
 			.then(res => {
 				expect(res).to.have.status(401);
 				done();
-			}).catch(console.error);
+			}).catch();
 	});
 
 	it('should get the viewer', (done) => {
