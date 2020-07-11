@@ -12,9 +12,18 @@ class DetailsMenu extends Component {
 
 	componentDidMount() {
 		document.addEventListener("mousedown", this.handleClickOutside);
+		document.addEventListener("focusout", this.handleClickOutside);
 	}
+
 	componentWillUnmount() {
 		document.removeEventListener("mousedown", this.handleClickOutside);
+		document.removeEventListener("focusout", this.handleClickOutside);
+	}
+
+	componentDidUpdate() {
+		if (this.ref.current) {
+			this.ref.current.removeAttribute('open');
+		}
 	}
 
 	render() {
