@@ -24,11 +24,21 @@ export interface PaginationButtonProps {
     onClick: () => void;
 }
 
-export interface WidgetProps {
+export interface Attributes {
+    repo: string;
     issue: {
         name: string,
         number: number,
-        url: string
+    };
+    theme: string;
+    pageSize: number;
+
+}
+
+export interface WidgetProps {
+    issue: {
+        name: string,
+        number: number
     };
 }
 
@@ -58,15 +68,4 @@ export interface EditorProps {
 
 export interface EditorState {
     text: string;
-}
-
-export interface Attributes {
-    repo: string;
-    issue: {
-        name: string,
-        number: number,
-    };
-    theme: string;
-    pageSize: number;
-
 }
