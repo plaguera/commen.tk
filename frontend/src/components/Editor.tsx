@@ -3,8 +3,8 @@ import Markdown from 'react-markdown';
 
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import Avatar from './Avatar';
-import OptionButton from './OptionButton';
 import { EditorProps, EditorState } from '../props';
+import DetailsMenu from './DetailsMenu';
 import env from '../environment';
 
 class Editor extends React.Component<EditorProps, EditorState> {
@@ -40,7 +40,9 @@ class Editor extends React.Component<EditorProps, EditorState> {
                             <TabList>
                                 <Tab>Write</Tab>
                                 <Tab onClick={this.handleClick.bind(this)}>Preview</Tab>
-                                <OptionButton onLogout={this.props.onSignout} />
+                                <DetailsMenu>
+                                    <button className='btn-danger' onClick={this.props.onSignout}>Sign out</button>
+                                </DetailsMenu>
                             </TabList>
 
                             <TabPanel>

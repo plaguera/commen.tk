@@ -45,8 +45,15 @@ class Widget extends React.Component<WidgetProps, WidgetState> {
 		this.setState({ issue: { ...this.state.issue, url: data.url } });
 	}
 
+	setCommentStates(data: any) {
+		this.setState({ comments: data.repository.issue.comments.nodes });
+		this.setState({ totalCount: data.repository.issue.comments.totalCount });
+		this.setState({ hiddenItems: data.repository.issue.comments.totalCount - data.repository.issue.comments.nodes.length });
+		this.setState({ cursor: data.repository.issue.comments.pageInfo.startCursor });
+	}
+
 	updateCommentStates(data: any) {
-		this.setState({ comments: this.state.cursor ? data.repository.issue.comments.nodes.concat(this.state.comments) : data.repository.issue.comments.nodes });
+		this.setState({ comments: data.repository.issue.comments.nodes.concat(this.state.comments) });
 		this.setState({ totalCount: data.repository.issue.comments.totalCount });
 		this.setState({ hiddenItems: data.repository.issue.comments.totalCount - data.repository.issue.comments.nodes.length - this.state.comments.length });
 		this.setState({ cursor: data.repository.issue.comments.pageInfo.startCursor });
@@ -54,13 +61,25 @@ class Widget extends React.Component<WidgetProps, WidgetState> {
 
 	comments() {
 		agent.Issues
+			.comments()
+			.then(data => this.setCommentStates(data))
+	}
+
+	nextComments() {
+		agent.Issues
 			.comments(this.state.cursor)
 			.then(data => this.updateCommentStates(data))
 	}
 
-	comment(text: string) {
+	createComment(text: string) {
 		agent.Comments
 			.create(text)
+			.then(() => this.comments());
+	}
+
+	deleteComment(id: string) {
+		agent.Comments
+			.delete(id)
 			.then(() => this.comments());
 	}
 
@@ -88,10 +107,10 @@ class Widget extends React.Component<WidgetProps, WidgetState> {
 			<div className='widget-wrapper'>
 				<Header commentCount={this.state.totalCount} url={this.state.issue.url} />
 				<div className='timeline-wrapper'>
-					<PaginationButton hiddenItems={this.state.hiddenItems} onClick={this.comments.bind(this)} user={this.state.viewer!} />
-					<Timeline {...this.state.comments} />
+					<PaginationButton hiddenItems={this.state.hiddenItems} onClick={this.nextComments.bind(this)} user={this.state.viewer!} />
+					<Timeline comments={this.state.comments} onCommentDelete={this.deleteComment.bind(this)} />
 				</div>
-				<Editor viewer={this.state.viewer!} onComment={this.comment.bind(this)} onSignout={this.signout.bind(this)} />
+				<Editor viewer={this.state.viewer!} onComment={this.createComment.bind(this)} onSignout={this.signout.bind(this)} />
 			</div>
 		);
 	}

@@ -39,7 +39,7 @@ class Server {
 				'Authorization'
 			],
 			credentials: true,
-			methods: 'GET,POST',
+			methods: 'GET,POST,PUT,DELETE',
 			origin: true,
 			preflightContinue: false
 		};

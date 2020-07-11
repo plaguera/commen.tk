@@ -77,6 +77,17 @@
 					}
 				}
 			}
+			details {
+				summary {
+					padding-bottom: 0;
+					padding-left: 8px;
+					padding-top: 4px;
+					padding-right: 4px;
+				}
+				.details-menu {
+					left: -41px;
+				}
+			}
 		}
 		.comment-body {
 			color: $comment-body_color;

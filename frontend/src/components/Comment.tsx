@@ -1,10 +1,22 @@
 import * as React from 'react';
-import ReactHtmlParser from 'react-html-parser'; 
+import ReactHtmlParser from 'react-html-parser';
 import Avatar from './Avatar';
 import { CommentProps } from '../props';
 import CommentHeaderLabel from './CommentHeaderLabel';
+import DetailsMenu from './DetailsMenu';
+import agent from '../agent';
 
 class Comment extends React.Component<CommentProps, {}> {
+
+    constructor(props: CommentProps) {
+        super(props);
+        this.onDelete = this.onDelete.bind(this);
+    }
+
+    onDelete() {
+        this.props.onDelete(this.props.id);
+    }
+
     render() {
         let author = this.props.viewerDidAuthor ? ' isauthor' : '';
         return (
@@ -24,9 +36,18 @@ class Comment extends React.Component<CommentProps, {}> {
                         <div className='comment-header-labels'>
                             <CommentHeaderLabel authorAssociation={this.props.authorAssociation} />
                         </div>
+                        {
+                            this.props.viewerDidAuthor ? (
+                                <DetailsMenu>
+                                    <button className='btn-danger' onClick={this.onDelete}>Delete</button>
+                                </DetailsMenu>
+                            ) : (
+                                    null
+                                )
+                        }
                     </div>
                     <div className='comment-body'>
-                        { ReactHtmlParser(this.props.bodyHTML) }
+                        {ReactHtmlParser(this.props.bodyHTML)}
                     </div>
                 </div>
             </div>

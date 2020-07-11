@@ -11,6 +11,7 @@ export interface CommentProps {
     createdAt: string;
     id: string;
     key: string;
+    onDelete: (id: string) => void;
     url: string;
     viewerDidAuthor: boolean;
 }
@@ -53,10 +54,6 @@ export interface WidgetState {
     hiddenItems: number;
     cursor?: string;
     viewer?: UserProps;
-}
-
-export interface OptionButtonProps {
-    onLogout: () => void;
 }
 
 export interface EditorProps {
