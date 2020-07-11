@@ -1,6 +1,6 @@
 import { ScriptAttributes } from "./util";
 
-const env = {
+var env = {
 	attributes: ScriptAttributes.toJSON(document.currentScript),
 	cwd: process.cwd(),
 	development: process.env.NODE_ENV?.toLowerCase() === 'development',
