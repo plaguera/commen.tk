@@ -31,16 +31,16 @@ class Editor extends React.Component<EditorProps, EditorState> {
     }
 
     render() {
-        if (this.props.user) {
+        if (this.props.viewer) {
             return (
                 <div className='editor-wrapper'>
-                    <Avatar {...this.props.user}/>
+                    <Avatar {...this.props.viewer}/>
                     <div className="editor arrow-box">
                         <Tabs forceRenderTabPanel={true}>
                             <TabList>
                                 <Tab>Write</Tab>
                                 <Tab onClick={this.handleClick.bind(this)}>Preview</Tab>
-                                <OptionButton onLogout={this.props.onLogout} />
+                                <OptionButton onLogout={this.props.onSignout} />
                             </TabList>
 
                             <TabPanel>

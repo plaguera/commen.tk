@@ -5,12 +5,13 @@ export interface UserProps {
 }
 
 export interface CommentProps {
-    url: string;
-    key: string;
-    bodyHTML: string;
-    createdAt: string;
     author: UserProps;
     authorAssociation: string;
+    bodyHTML: string;
+    createdAt: string;
+    id: string;
+    key: string;
+    url: string;
     viewerDidAuthor: boolean;
 }
 
@@ -48,22 +49,20 @@ export interface WidgetState {
         number: number;
         url: string;
     };
-    pagination: {
-        totalCount: number;
-        hiddenItems: number;
-        cursor: string;
-    }
+    totalCount: number;
+    hiddenItems: number;
+    cursor?: string;
     viewer?: UserProps;
 }
 
-export interface OptionButtonProps{
+export interface OptionButtonProps {
     onLogout: () => void;
 }
 
 export interface EditorProps {
-    user: UserProps;
+    viewer: UserProps;
     onComment: (text: string) => void;
-    onLogout: () => void;
+    onSignout: () => void;
 }
 
 export interface EditorState {

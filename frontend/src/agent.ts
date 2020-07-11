@@ -15,20 +15,20 @@ const requests = {
 
 const Comments = {
     create: (comment: string) =>
-        requests.post(`/issues/${env.attributes.repo}/${env.attributes.issue.number}/comments`, { body: comment }),
+        requests.post(`issues/${env.attributes.repo}/${env.attributes.issue.number}/comments`, { body: comment }),
     modify: (comment: string) =>
-        requests.put(`/issues/${env.attributes.repo}/${env.attributes.issue.number}/comments`, { body: comment }),
+        requests.put(`issues/${env.attributes.repo}/${env.attributes.issue.number}/comments`, { body: comment }),
     delete: (id: string) =>
-        requests.del(`/comments/${id}`)
+        requests.del(`comments/${id}`)
 };
 
 const page = (cursor?: string) => cursor ? `&cursor=${cursor}` : '';
 
 const Issues = {
     comments: (cursor?: string) =>
-        requests.get(`/issues/${env.attributes.repo}/${env.attributes.issue.number}/comments?pagesize=${env.attributes.pageSize}${page(cursor)}`),
+        requests.get(`issues/${env.attributes.repo}/${env.attributes.issue.number}/comments?pagesize=${env.attributes.pageSize}${page(cursor)}`),
     number: (name: string) =>
-        requests.get(`/issues/${env.attributes.repo}/${name}`)
+        requests.get(`issues/${env.attributes.repo}/${name}`)
 }
 
 const Users = {
