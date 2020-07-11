@@ -17,7 +17,7 @@
         "stop": "lsof -ti :443 | xargs --no-run-if-empty kill -9",
         "test": "nyc --reporter=lcov --reporter=text mocha -r ts-node/register src/test/**/*.test.ts",
         "watch": "concurrently \"yarn watch:front\" \"yarn watch:back\"",
-        "watch:front": "cd frontend && npx webpack --mode development --watch",
+        "watch:front": "concurrently \"cd frontend && npx webpack --mode development --watch\" \"http-server -p 8080 --cors public\" \"http-server -p 8081 ~/Code/TFM/client\"",
         "watch:back": "NODE_ENV=DEVELOPMENT nodemon src/index.ts"
     },
     "devDependencies": {
