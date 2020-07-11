@@ -75,7 +75,7 @@ class Widget extends React.Component<WidgetProps, WidgetState> {
 	user() {
 		agent.Users
 			.viewer()
-			.then(data => this.setState({ viewer: data.viewer }));
+			.then((data: any) => this.setState({ viewer: data.viewer }));
 	}
 
 	componentDidMount() {
@@ -87,9 +87,9 @@ class Widget extends React.Component<WidgetProps, WidgetState> {
 	render() {
 		return (
 			<div className='widget-wrapper'>
-				<Header commentCount={this.state.pagination.totalCount} url={this.props.issue.url} />
+				<Header commentCount={this.state.pagination.totalCount} url={this.state.issue.url} />
 				<div className='timeline-wrapper'>
-					<PaginationButton hiddenItems={this.state.pagination.hiddenItems} onClick={this.nextComments.bind(this)} user={this.state.viewer!} />
+					<PaginationButton hiddenItems={this.state.pagination.hiddenItems} onClick={this.comments.bind(this)} user={this.state.viewer!} />
 					<Timeline {...this.state.comments} />
 				</div>
 				<Editor user={this.state.viewer!} onComment={this.comment.bind(this)} onLogout={this.logout.bind(this)} />
