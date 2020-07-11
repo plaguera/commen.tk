@@ -25,21 +25,25 @@ export interface PaginationButtonProps {
 }
 
 export interface WidgetProps {
-    owner: string;
-    repo: string;
-    issueName: string;
-    issueNumber: number;
-    theme: string;
-    pageSize: number;
+    issue: {
+        name: string,
+        number: number,
+        url: string
+    };
 }
 
 export interface WidgetState {
     comments: CommentProps[];
-    issue: number;
-    user?: UserProps;
-    totalCount: number;
-    hiddenItems: number;
-    cursor: string;
+    issue: {
+        number: number;
+        url: string;
+    };
+    pagination: {
+        totalCount: number;
+        hiddenItems: number;
+        cursor: string;
+    }
+    viewer?: UserProps;
 }
 
 export interface OptionButtonProps{
@@ -54,4 +58,15 @@ export interface EditorProps {
 
 export interface EditorState {
     text: string;
+}
+
+export interface Attributes {
+    repo: string;
+    issue: {
+        name: string,
+        number: number,
+    };
+    theme: string;
+    pageSize: number;
+
 }

@@ -28,7 +28,7 @@ export class IssueController extends Controller {
 		return result.repository.issue.id;
 	}
 
-	static async post(req: Request, res: Response) {
+	static async post(req: Request, res: Response, dontSend: boolean = false) {
 		let repoid = req.params.repoid;
 		if (!repoid)
 			repoid = await RepositoryController.get(req, res);
@@ -40,6 +40,7 @@ export class IssueController extends Controller {
 					issue {
 						id
 						number
+						url
 						repository {
 							id
 						}
@@ -49,8 +50,8 @@ export class IssueController extends Controller {
 			id: repoid,
 			title: req.body.title
 		};
-		const result = await Controller.graphql(req, res, query);
-		return result.createIssue.issue.id;
+		const result = await Controller.graphql(req, res, query, dontSend);
+		return result.createIssue.issue;
 	}
 
 	static async delete(req: Request, res: Response) {
@@ -75,6 +76,7 @@ export class IssueController extends Controller {
 						... on Issue {
 							id
 							number
+							url
 							repository {
 								id
 							}
@@ -89,13 +91,13 @@ export class IssueController extends Controller {
 	}
 
 	static async processIssueName(req: Request, res: Response) {
-		let token = await Controller.installationToken(req, res);
+		//let token = await Controller.installationToken(req, res);
 		let search = await IssueController.searchIssueName(req, res);
 		let issue: any;
 		if (search.issueCount == 0) {
 			req.params.repoid = await RepositoryController.get(req, res);
 			req.body.title = req.params.name;
-			issue = (await IssueController.post(req, res)).createIssue.issue;
+			issue = await IssueController.post(req, res, true);
 		} else {
 			issue = search.nodes[0];
 		}

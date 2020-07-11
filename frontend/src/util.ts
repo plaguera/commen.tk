@@ -1,5 +1,6 @@
 import env from './environment';
-import { WidgetProps } from './props';
+import { WidgetProps, Attributes } from './props';
+import agent from './agent';
 
 export function loadTheme(theme: string) {
 	return new Promise(resolve => {
@@ -12,63 +13,63 @@ export function loadTheme(theme: string) {
 	});
 }
 
+export function replaceScript(script: HTMLScriptElement | SVGScriptElement | null, tmp: HTMLDivElement) {
+    if (script && script.parentElement) {
+        tmp.className = 'commen-tk';
+        script.parentElement.replaceChild(tmp, script);
+    }
+}
+
 export class ScriptAttributes {
 
-    script: HTMLScriptElement | SVGScriptElement;
+    private static themes = ['light', 'dark'];
+    private static script: HTMLScriptElement | SVGScriptElement;
 
-    themes = ['light', 'dark'];
-
-    constructor(script: HTMLScriptElement | SVGScriptElement) {
-        this.script = script;
-    }
-
-    toJSON(): WidgetProps {
-        let json: WidgetProps = {
-            owner: this.owner(),
-            repo: this.repo(),
-            issueName: this.issueName(),
-            issueNumber: this.issueNumber(),
-            theme: this.theme(),
-            pageSize: this.pageSize()
+    static toJSON(script: HTMLScriptElement | SVGScriptElement | null): Attributes {
+        if (!script) throw 'Script tag not found';
+        ScriptAttributes.script = script;
+        let json: Attributes = {
+            repo: ScriptAttributes.repo(),
+            issue: {
+                name: ScriptAttributes.issueName(),
+                number: ScriptAttributes.issueNumber()
+            },
+            theme: ScriptAttributes.theme(),
+            pageSize: ScriptAttributes.pageSize()
         }
         return json;
     }
 
-    private owner() {
-        let attr = this.script.getAttribute('repo');
-        if (attr)
-            return attr.valueOf().split('/')[0];
-        throw 'No [Owner] attribute present in script tag';
+    private static repo() {
+        let attr = ScriptAttributes.script.getAttribute('repo');
+        if (attr && attr.valueOf().match('\\w+\\/\\w+'))
+            return attr.valueOf();
+        throw 'No valid [Repo] attribute present in script tag';
     }
 
-    private repo() {
-        let attr = this.script.getAttribute('repo');
-        if (attr)
-            return attr.valueOf().split('/')[1];
-        throw 'No [Repo] attribute present in script tag';
-    }
-
-    private issueName() {
-        let name = this.script.getAttribute('issue-name');
-        let number = this.script.getAttribute('issue-number');
+    private static issueName() {
+        let name = ScriptAttributes.script.getAttribute('issue-name');
+        let number = ScriptAttributes.script.getAttribute('issue-number');
         if (name && !number)
             return name.valueOf();
+        if (!name && !number)
+            throw 'No [issue-name] or [issue-number] attributes present in script tag';
         return '';
     }
 
-    private issueNumber() {
-        let number = this.script.getAttribute('issue-number');
+    private static issueNumber() {
+        let number = ScriptAttributes.script.getAttribute('issue-number');
         if (number) {
             let issue = parseInt(number.valueOf());
             if (issue < 1)
-                throw 'No [Owner] attribute present in script tag';
+                throw 'No valid [issue-number] attribute present in script tag';
             return issue;
         }
         return -1;
     }
 
-    private theme() {
-        let attr = this.script.getAttribute('theme');
+    private static theme() {
+        let attr = ScriptAttributes.script.getAttribute('theme');
         if (attr) {
             let theme = attr.valueOf();
             if (this.themes.includes(theme))
@@ -78,8 +79,8 @@ export class ScriptAttributes {
         return 'light';
     }
 
-    private pageSize() {
-        let attr = this.script.getAttribute('page-size');
+    private static pageSize() {
+        let attr = ScriptAttributes.script.getAttribute('page-size');
         if (attr) {
             let pagesize = parseInt(attr.valueOf());
             if (pagesize < 1 || pagesize > 100)
