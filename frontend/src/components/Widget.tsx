@@ -17,6 +17,7 @@ class Widget extends React.Component<WidgetProps, WidgetState> {
 			cursor: undefined,
 			hiddenItems: 0,
 			issue: {
+				author: '',
 				number: this.props.issue.number,
 				url: this.props.issue.number != -1 ? `https://github.com/${env.attributes.repo}/issues/${this.props.issue.number}` : ''
 			},
@@ -46,6 +47,7 @@ class Widget extends React.Component<WidgetProps, WidgetState> {
 	}
 
 	setCommentStates(data: any) {
+		this.setState({ issue: { ...this.state.issue, author: data.repository.issue.author.login } });
 		this.setState({ comments: data.repository.issue.comments.nodes });
 		this.setState({ totalCount: data.repository.issue.comments.totalCount });
 		this.setState({ hiddenItems: data.repository.issue.comments.totalCount - data.repository.issue.comments.nodes.length });
@@ -108,7 +110,7 @@ class Widget extends React.Component<WidgetProps, WidgetState> {
 				<Header commentCount={this.state.totalCount} url={this.state.issue.url} />
 				<div className='timeline-wrapper'>
 					<PaginationButton hiddenItems={this.state.hiddenItems} onClick={this.nextComments.bind(this)} user={this.state.viewer!} />
-					<Timeline comments={this.state.comments} onCommentDelete={this.deleteComment.bind(this)} />
+					<Timeline comments={this.state.comments} onCommentDelete={this.deleteComment.bind(this)} issueAuthor={this.state.issue.author} />
 				</div>
 				<Editor viewer={this.state.viewer!} onComment={this.createComment.bind(this)} onSignout={this.signout.bind(this)} />
 			</div>

@@ -64,14 +64,15 @@
 					}
 				}
 			}
-			.comment-header-labels {
+			.comment-labels {
 				margin: auto;
 				margin-right: 0;
-				.comment-header-label {
+				.comment-label {
 					border: 1px solid $comment_border-color;
 					border-radius: 2em;
 					box-sizing: border-box;
 					color: $comment-header_color;
+					cursor: default;
 					font-size: 12px;
 					font-weight: normal;
 					line-height: 21px;
@@ -81,7 +82,6 @@
 					padding-left: 4px;
 					padding-right: 4px;
 					padding-top: 2px;
-					cursor: default;
 					&.strong {
 						font-weight: 600;
 					}
@@ -221,8 +221,8 @@
 					text-decoration-color: $isauthor--comment-header_color;
 				}
 			}
-			.comment-header-labels {
-				.comment-header-label {
+			.comment-labels {
+				.comment-label {
 					border-color: $isauthor--border-color;
 					color: $isauthor--comment-header_color;
 				}

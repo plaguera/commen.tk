@@ -10,14 +10,22 @@ export interface CommentProps {
     bodyHTML: string;
     createdAt: string;
     id: string;
+    issueAuthorDidAuthor: boolean;
     key: string;
     onDelete: (id: string) => void;
     url: string;
     viewerDidAuthor: boolean;
+    labels: CommentLabelsProps;
 }
 
-export interface CommentHeaderLabelProps {
+export interface CommentLabelProps {
+    tooltip: string;
+}
+
+export interface CommentLabelsProps {
+    issueAuthorDidAuthor: boolean;
     authorAssociation: string;
+    viewerDidAuthor: boolean;
 }
 
 export interface PaginationButtonProps {
@@ -47,6 +55,7 @@ export interface WidgetProps {
 export interface WidgetState {
     comments: CommentProps[];
     issue: {
+        author: string;
         number: number;
         url: string;
     };
@@ -64,4 +73,10 @@ export interface EditorProps {
 
 export interface EditorState {
     text: string;
+}
+
+export interface TimelineProps {
+    comments: CommentProps[];
+    issueAuthor: string;
+    onCommentDelete: (id: string) => void;
 }

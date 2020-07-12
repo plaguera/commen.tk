@@ -20,6 +20,12 @@ export function replaceScript(script: HTMLScriptElement | SVGScriptElement | nul
     }
 }
 
+export function lowerCaseExceptFirst(str: string) {
+    return str
+        .replace(/(\B)[^ ]*/g, match => (match.toLowerCase()))
+        .replace(/^[^ ]/g, match => (match.toUpperCase()));
+}
+
 export class ScriptAttributes {
 
     private static themes = ['light', 'dark'];
