@@ -36,7 +36,7 @@ class Comment extends React.Component<CommentProps, {}> {
                 <Avatar {...this.props.author} />
                 <div className='comment arrow-box'>
                     <div className='comment-header'>
-                        <div className='comment-header-text'>
+                        <h3 className='comment-header-text'>
                             <strong>
                                 <a className='author' href={this.props.author.url}>{this.props.author.login}</a>
                             </strong>
@@ -44,7 +44,7 @@ class Comment extends React.Component<CommentProps, {}> {
                             <a className='time-ago' title={formatDate(this.props.createdAt)} href={this.props.url}>
                                 {timeAgo(this.props.createdAt)}
                             </a>
-                        </div>
+                        </h3>
                         <CommentLabels {...this.props} />
                         {
                             this.props.viewerDidAuthor ? (
