@@ -46,16 +46,16 @@ class Comment extends React.Component<CommentProps, {}> {
                             </a>
                         </div>
                         <CommentLabels {...this.props} />
+                        {
+                            this.props.viewerDidAuthor ? (
+                                <DetailsMenu>
+                                    <button className='btn-danger' onClick={this.onDelete}>Delete</button>
+                                </DetailsMenu>
+                            ) : (
+                                    null
+                                )
+                        }
                     </div>
-                    {
-                        this.props.viewerDidAuthor ? (
-                            <DetailsMenu>
-                                <button className='btn-danger' onClick={this.onDelete}>Delete</button>
-                            </DetailsMenu>
-                        ) : (
-                                null
-                            )
-                    }
                     <div className='comment-body'>
                         {ReactHtmlParser(this.props.bodyHTML)}
                     </div>

@@ -21,7 +21,7 @@ class CommentLabels extends React.Component<CommentLabelsProps, {}> {
         let subject = this.props.viewerDidAuthor ? 'You are ' : 'This user is ';
         let assoc = (this.props.authorAssociation === 'OWNER' ? ' the ' : ' a ') + this.props.authorAssociation.toLowerCase().replace(/_/, ' ');
         return (
-            <CommentLabel tooltip={subject + assoc + ' of the ' + env.attributes.repo.split('/')[1] + ' repository'}>
+            <CommentLabel tooltip={subject + assoc + ' of ' + env.attributes.repo.split('/')[1]}>
                 {lowerCaseExceptFirst(this.props.authorAssociation.replace(/_/, ' '))}
             </CommentLabel>
         );
