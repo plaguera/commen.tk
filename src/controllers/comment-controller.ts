@@ -16,22 +16,26 @@ export class CommentController extends Controller {
 				repository(name: $repo, owner: $owner) {
 					createdAt
 					issue(number: $number) {
+						author {
+							login
+						}
 						id
+						viewerDidAuthor
 						comments(last: $pagesize${cursor}) {
 							pageInfo {
 								startCursor
 							}
 							totalCount
 							nodes {
-								bodyHTML
-								id
-								authorAssociation
 								author {
 									avatarUrl(size: 80)
 									login
 									url
 								}
+								authorAssociation
+								bodyHTML
 								createdAt
+								id
 								url
 								viewerDidAuthor
 							}

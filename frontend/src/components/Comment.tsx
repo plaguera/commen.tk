@@ -2,9 +2,9 @@ import * as React from 'react';
 import ReactHtmlParser from 'react-html-parser';
 import Avatar from './Avatar';
 import { CommentProps } from '../props';
-import CommentHeaderLabel from './CommentHeaderLabel';
+import CommentLabels from './CommentLabels';
 import DetailsMenu from './DetailsMenu';
-import agent from '../agent';
+import env from '../environment';
 
 class Comment extends React.Component<CommentProps, {}> {
 
@@ -17,8 +17,20 @@ class Comment extends React.Component<CommentProps, {}> {
         this.props.onDelete(this.props.id);
     }
 
+    tooltip(assoc: string, scope: string) {
+        switch (scope) {
+            case 'repo':
+                return `You are the ${assoc} of the ${env.attributes.repo.split('/')[1]} repository`;
+            case 'issue':
+                return `You are the ${assoc} of this issue`;
+            default:
+                return '';
+        }
+    }
+
     render() {
         let author = this.props.viewerDidAuthor ? ' isauthor' : '';
+        // authorAssociation={this.props.authorAssociation} issueAuthorDidAuthor={this.props.issueAuthorDidAuthor} viewerDidAuthor={this.props.viewerDidAuthor}
         return (
             <div className={'comment-wrapper' + author}>
                 <Avatar {...this.props.author} />
@@ -33,19 +45,17 @@ class Comment extends React.Component<CommentProps, {}> {
                                 {timeAgo(this.props.createdAt)}
                             </a>
                         </div>
-                        <div className='comment-header-labels'>
-                            <CommentHeaderLabel authorAssociation={this.props.authorAssociation} />
-                        </div>
-                        {
-                            this.props.viewerDidAuthor ? (
-                                <DetailsMenu>
-                                    <button className='btn-danger' onClick={this.onDelete}>Delete</button>
-                                </DetailsMenu>
-                            ) : (
-                                    null
-                                )
-                        }
+                        <CommentLabels {...this.props} />
                     </div>
+                    {
+                        this.props.viewerDidAuthor ? (
+                            <DetailsMenu>
+                                <button className='btn-danger' onClick={this.onDelete}>Delete</button>
+                            </DetailsMenu>
+                        ) : (
+                                null
+                            )
+                    }
                     <div className='comment-body'>
                         {ReactHtmlParser(this.props.bodyHTML)}
                     </div>
