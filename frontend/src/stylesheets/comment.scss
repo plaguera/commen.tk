@@ -3,15 +3,6 @@
 	border-bottom: $separator_color solid 2px;
 }
 
-@keyframes tooltip-appear {
-	0% {
-		opacity: 0;
-	}
-	100% {
-		opacity: 1;
-	}
-}
-
 .comment-wrapper,
 .comment-wrapper.isauthor {
 	display: flex;
@@ -78,73 +69,52 @@
 					line-height: 21px;
 					margin-left: 8px;
 					overflow-wrap: break-word;
-					padding-bottom: 2px;
-					padding-left: 4px;
-					padding-right: 4px;
-					padding-top: 2px;
+					padding-left: 7px;
+					padding-right: 7px;
 					&.strong {
 						font-weight: 600;
 					}
 					&.tooltip {
-						&[aria-label] {
-							&:before,
-							&:after {
-								opacity: 0;
-								pointer-events: none;
-								position: absolute;
-							}
-							&:before {
-								border: 6px solid transparent;
-								border-bottom-color: $tooltip-background-color;
-								color: $tooltip-background-color;
+						position: relative;
+						display: inline-block;
+						.tooltiptext {
+							visibility: hidden;
+							//max-width: 250px;
+							width: 120px;
+							text-align: center;
+							border-radius: 6px;
+							padding: 0.5em 0.75em;
+							//padding: 5px 0;
+							position: absolute;
+							z-index: 1;
+							top: 150%;
+							left: 50%;
+							margin-left: -67.5px;
+							//margin-left: -60px;
+							color: $tooltip-color;
+							background-color: $tooltip-background-color;
+							//white-space: nowrap;
+							&::after {
 								content: '';
-								height: 0;
-								top: 26px;
-								right: 55px;
-								left: auto;
-								width: 0;
-								z-index: 1000001;
-							}
-							&:after {
-								top: 38px;
-								right: -61px;
-								left: auto;
-								width: max-content;
-								max-width: 250px;
-								white-space: pre-line;
-								border-collapse: initial;
-								z-index: 1000000;
-								padding: .5em .75em;
-								font: normal normal 11px/1.5 -apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji;
-								-webkit-font-smoothing: subpixel-antialiased;
-								color: $tooltip-color;
-								text-align: center;
-								text-decoration: none;
-								text-shadow: none;
-								text-transform: none;
-								letter-spacing: normal;
-								word-wrap: break-word;
-								white-space: pre;
-								content: attr(aria-label);
-								background: $tooltip-background-color;
-								border-radius: 6px;
-							}
-							&:hover,
-							&:focus,
-							&:active {
-								&:before,
-								&:after {
-									animation: tooltip-appear 0.1s forwards ease-in;
-									animation-delay: 0.4s;
-									display: inline-block;
-									text-decoration: none;
-								}
-								&:after {
-									display: table-cell;
-								}
+								position: absolute;
+								bottom: 100%;
+								left: 50%;
+								margin-left: -5px;
+								border-width: 5px;
+								border-style: solid;
+								border-color: transparent transparent
+								$tooltip-background-color transparent;
 							}
 						}
+
+						&:hover .tooltiptext {
+							visibility: visible;
+						}
 					}
+					/*
+					animation: tooltip-appear 0.1s forwards ease-in;
+					animation-delay: 0.4s;
+					*/
 				}
 			}
 			details {
