@@ -3,12 +3,21 @@
 	border-bottom: $separator_color solid 2px;
 }
 
+@keyframes tooltip-appear {
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
+}
+
 .comment-wrapper,
 .comment-wrapper.isauthor {
 	display: flex;
 	.comment {
 		border-color: $comment_border-color;
-		border-radius: 3px;
+		border-radius: 6px;
 		margin: 10px;
 		color: $comment_color;
 		font-family: Arial, Helvetica, sans-serif;
@@ -22,8 +31,8 @@
 			background-color: $comment-header_background-color;
 			border-bottom: $comment-header_border-bottom-color 1px solid;
 			color: $comment-header_color;
-			border-top-left-radius: 3px;
-			border-top-right-radius: 3px;
+			border-top-left-radius: 6px;
+			border-top-right-radius: 6px;
 			padding: 10px;
 			display: flex;
 			.comment-header-text {
@@ -60,7 +69,7 @@
 				margin-right: 0;
 				.comment-header-label {
 					border: 1px solid $comment_border-color;
-					border-radius: 3px;
+					border-radius: 2em;
 					box-sizing: border-box;
 					color: $comment-header_color;
 					font-size: 12px;
@@ -72,8 +81,69 @@
 					padding-left: 4px;
 					padding-right: 4px;
 					padding-top: 2px;
+					cursor: default;
 					&.strong {
 						font-weight: 600;
+					}
+					&.tooltip {
+						&[aria-label] {
+							&:before,
+							&:after {
+								opacity: 0;
+								pointer-events: none;
+								position: absolute;
+							}
+							&:before {
+								border: 6px solid transparent;
+								border-bottom-color: $tooltip-background-color;
+								color: $tooltip-background-color;
+								content: '';
+								height: 0;
+								top: 26px;
+								right: 55px;
+								left: auto;
+								width: 0;
+								z-index: 1000001;
+							}
+							&:after {
+								top: 38px;
+								right: -61px;
+								left: auto;
+								width: max-content;
+								max-width: 250px;
+								white-space: pre-line;
+								border-collapse: initial;
+								z-index: 1000000;
+								padding: .5em .75em;
+								font: normal normal 11px/1.5 -apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji;
+								-webkit-font-smoothing: subpixel-antialiased;
+								color: $tooltip-color;
+								text-align: center;
+								text-decoration: none;
+								text-shadow: none;
+								text-transform: none;
+								letter-spacing: normal;
+								word-wrap: break-word;
+								white-space: pre;
+								content: attr(aria-label);
+								background: $tooltip-background-color;
+								border-radius: 6px;
+							}
+							&:hover,
+							&:focus,
+							&:active {
+								&:before,
+								&:after {
+									animation: tooltip-appear 0.1s forwards ease-in;
+									animation-delay: 0.4s;
+									display: inline-block;
+									text-decoration: none;
+								}
+								&:after {
+									display: table-cell;
+								}
+							}
+						}
 					}
 				}
 			}
