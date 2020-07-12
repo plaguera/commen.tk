@@ -27,6 +27,7 @@ details {
 		}
 		svg {
 			fill: $logout_svg-fill;
+			vertical-align: text-top;
 			&:hover {
 				fill: $logout_svg-fill-hover;
 			}
