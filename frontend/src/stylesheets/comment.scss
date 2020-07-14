@@ -78,44 +78,9 @@
 					overflow-wrap: break-word;
 					padding-left: 7px;
 					padding-right: 7px;
+					display: inline-block;
 					&.strong {
 						font-weight: 600;
-					}
-					&.tooltip {
-						position: relative;
-						display: inline-block;
-						.tooltiptext {
-							visibility: hidden;
-							//max-width: 250px;
-							width: 120px;
-							text-align: center;
-							border-radius: 6px;
-							padding: 0.5em 0.75em;
-							//padding: 5px 0;
-							position: absolute;
-							z-index: 1;
-							top: 150%;
-							left: 50%;
-							margin-left: -67.5px;
-							//margin-left: -60px;
-							color: $tooltip-color;
-							background-color: $tooltip-background-color;
-							//white-space: nowrap;
-							&::after {
-								content: '';
-								position: absolute;
-								bottom: 100%;
-								left: 50%;
-								margin-left: -5px;
-								border-width: 5px;
-								border-style: solid;
-								border-color: transparent transparent $tooltip-background-color transparent;
-							}
-						}
-
-						&:hover .tooltiptext {
-							visibility: visible;
-						}
 					}
 				}
 			}

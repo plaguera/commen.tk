@@ -5,9 +5,8 @@ import env from '../environment';
 class CommentLabel extends React.Component<CommentLabelProps, {}> {
     render() {
         return (
-
-            <div className='comment-label tooltip'>{this.props.children}
-                <span className='tooltiptext'>{this.props.tooltip}</span>
+            <div className='comment-label tooltipped tooltipped-below' aria-label={this.props.tooltip}>
+                {this.props.children}
             </div>
         );
     }
