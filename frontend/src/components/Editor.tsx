@@ -166,6 +166,25 @@ class Editor extends React.Component<EditorProps, EditorState> {
         textarea.focus();
     }
 
+    link() {
+        let textarea = this.textarea.current!;
+        let begin = textarea.selectionStart;
+        let end = textarea.selectionEnd;
+        if (!this.hasSelection()) {
+            let cursor = begin;
+            let tmp = '[](url)';
+            textarea.value = textarea.value.slice(0, cursor) + tmp + textarea.value.slice(cursor);
+            begin += 1;
+            end += 1;
+        } else {
+            textarea.value = textarea.value.slice(0, begin) + '[' + textarea.value.substring(begin, end) + '](url)' + textarea.value.slice(end);
+            begin += textarea.value.substring(begin, end).length + 3;
+            end += 6;
+        }
+        textarea.setSelectionRange(begin, end);
+        textarea.focus();
+    }
+
     readonly regex = {
         header: {
             char: '### ',
@@ -199,12 +218,12 @@ class Editor extends React.Component<EditorProps, EditorState> {
         },
         number: {
             char: '1. ',
-            regex: /[\n]?[\d]+[.][ ]([^\n]+)[\n]/g,
+            regex: /[\n]?[\d]+[.][ ]([^\n]+)[\n]?/g,
             surround: false
         },
         task: {
             char: '- [ ] ',
-            regex: /[\n]?[-][ ][\[][ ][\]][ ]([^\n]+)[\n]/g,
+            regex: /[\n]?[-][ ][\[][ ][\]][ ]([^\n]+)[\n]?/g,
             surround: false
         },
         mention: {
@@ -220,7 +239,7 @@ class Editor extends React.Component<EditorProps, EditorState> {
         italic: () => this.addMarkdownFormat(this.regex.italic),
         quote: () => this.addMarkdownFormatMultiline(this.regex.quote),
         code: () => this.addMarkdownFormat(this.regex.code),
-        link: () => console.log('Not yet implemented'),
+        link: () => this.link(),
         bullet: () => this.addMarkdownFormatMultiline(this.regex.bullet),
         number: () => this.addMarkdownFormatMultiline(this.regex.number),
         task: () => this.addMarkdownFormatMultiline(this.regex.task),
