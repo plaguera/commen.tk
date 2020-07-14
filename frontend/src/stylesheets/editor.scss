@@ -66,6 +66,20 @@
 				.textarea-wrapper {
 					margin: 8px;
 					margin-bottom: 0;
+					&:focus-within {
+						textarea {
+							background-color: white;
+							border-color: rgb(3, 102, 214);
+							box-shadow: 0 0 0 3px rgba(3, 102, 214, 0.3);
+							clip-path: inset(-8px -8px 0px -8px);
+						}
+						div {
+							background-color: white;
+							border-color: rgb(3, 102, 214);
+							box-shadow: 0 0 0 3px rgba(3, 102, 214, 0.3);
+							clip-path: inset(0px -8px -8px -8px);
+						}
+					}
 					textarea {
 						background-color: $editor-textarea_background-color;
 						color: $editor-textarea_color;
@@ -85,17 +99,12 @@
 						display: flex;
 						margin: 0;
 						width: 100%;
+						outline: none;
 						&:disabled {
 							cursor: no-drop;
 						}
-						&:focus {
-							background-color: white;
-							border-color: rgb(3, 102, 214);
-							box-shadow: 0 0 0 3px rgba(3, 102, 214, 0.3);
-							outline: none;
-						}
 					}
-					label {
+					div {
 						background-color: rgb(250, 251, 252);
 						border: 1px solid #e1e4e8;
 						color: rgb(88, 96, 105);
@@ -105,6 +114,11 @@
 						box-sizing: border-box;
 						display: flex;
 						padding: 7px 10px;
+						outline: none;
+						cursor: pointer;
+						input {
+							display: none;
+						}
 						span {
 							box-sizing: border-box;
 							line-height: 16px;
@@ -112,7 +126,6 @@
 							span {
 								box-sizing: border-box;
 								color: rgb(88, 96, 105);
-								cursor: default;
 								display: inline-block;
 								font-size: 13px;
 								font-weight: 400;

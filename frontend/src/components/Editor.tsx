@@ -11,6 +11,7 @@ class Editor extends React.Component<EditorProps, EditorState> {
 
     private textarea = React.createRef<HTMLTextAreaElement>();
     private commentBtn = React.createRef<HTMLButtonElement>();
+    private dragndrop = React.createRef<HTMLInputElement>();
 
     constructor(props: EditorProps) {
         super(props);
@@ -19,6 +20,7 @@ class Editor extends React.Component<EditorProps, EditorState> {
         }
         this.onComment = this.onComment.bind(this);
         this.handleChange = this.handleChange.bind(this);
+        this.handleFile = this.handleFile.bind(this);
     }
 
     handleClick(e: any) {
@@ -39,6 +41,10 @@ class Editor extends React.Component<EditorProps, EditorState> {
         let disabled = this.commentBtn.current?.hasAttribute('disabled');
         if (chars > 0 && disabled) this.commentBtn.current?.removeAttribute('disabled');
         else if (chars === 0 && !disabled) this.commentBtn.current?.setAttribute('disabled', 'true');
+    }
+
+    handleFile() {
+        this.dragndrop.current?.click();
     }
 
     insertAtCursor(value: string) {
@@ -156,13 +162,14 @@ class Editor extends React.Component<EditorProps, EditorState> {
                                     </div>
                                     <div className='textarea-wrapper'>
                                         <textarea placeholder="Leave a comment" id="textarea-comment" ref={this.textarea} onChange={this.handleChange}></textarea>
-                                        <label>
+                                        <div id='drag-n-drop' onClick={this.handleFile}>
+                                            <input type='file' ref={this.dragndrop} />
                                             <span>
                                                 <span>
                                                     Attach files by dragging &amp; dropping, selecting or pasting them.
+                                                </span>
                                             </span>
-                                            </span>
-                                        </label>
+                                        </div>
                                     </div>
                                 </div>
                             </TabPanel>
