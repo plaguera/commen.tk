@@ -6,6 +6,13 @@ import { EditorProps, EditorState } from '../props';
 import DetailsMenu from './DetailsMenu';
 import agent from '../agent';
 import env from '../environment';
+import { text } from 'express';
+
+interface EditorRegExp {
+    char: string;
+    regex: RegExp;
+    surround: boolean;
+}
 
 class Editor extends React.Component<EditorProps, EditorState> {
 
@@ -47,62 +54,178 @@ class Editor extends React.Component<EditorProps, EditorState> {
         this.dragndrop.current?.click();
     }
 
-    insertAtCursor(value: string) {
+    quote() {
         let textarea = this.textarea.current!;
-        if (textarea.selectionStart || textarea.selectionStart === 0) {
-            var startPos = textarea.selectionStart;
-            var endPos = textarea.selectionEnd;
-            textarea.value = textarea.value.substring(0, startPos)
-                + value
-                + textarea.value.substring(startPos, textarea.value.length);
+        let begin = textarea.selectionStart;
+        let end = textarea.selectionEnd;
+        if (textarea.value.length === 0) {
+            textarea.value = '> '
+        } else if (begin === end) {
+            textarea.value += textarea.value.slice(-1) === '\n' ? '\n> ' : '\n\n> '
         } else {
-            textarea.value += value;
+
         }
         textarea.focus();
     }
 
-    surroundCursor(value: string) {
+    hasSelection() {
         let textarea = this.textarea.current!;
         let begin = textarea.selectionStart;
         let end = textarea.selectionEnd;
-        if (textarea.selectionStart || textarea.selectionStart === 0) {
-            textarea.value = textarea.value.substring(0, begin)
-                + value + textarea.value.substring(begin, end) + value
-                + textarea.value.substring(end, textarea.value.length);
-        }
-        if (begin === end) {
-            begin -= value.length;
-            end = begin;
+        return begin !== end;
+    }
+
+    selectionMatches(selector: EditorRegExp) {
+        let textarea = this.textarea.current!;
+        let begin = textarea.selectionStart;
+        let end = textarea.selectionEnd;
+        let selection;
+        if (selector.surround) {
+            selection = textarea.value.substring(begin - selector.char.length, end + selector.char.length);
         } else {
-            begin += 1;
-            end += 1;
+            selection = textarea.value.substring(begin - selector.char.length, end);
+        }
+        return selection.match(selector.regex);
+    }
+
+    selectionMatchesMultiline(selector: EditorRegExp) {
+        let textarea = this.textarea.current!;
+        let begin = textarea.selectionStart;
+        let end = textarea.selectionEnd;
+        return textarea.value.substring(begin, end).match(selector.regex);
+    }
+
+    addMarkdownFormat(regex: EditorRegExp) {
+        let textarea = this.textarea.current!;
+        let begin = textarea.selectionStart;
+        let end = textarea.selectionEnd;
+        if (!this.hasSelection()) {
+            let cursor = begin;
+            if (regex.surround)
+                textarea.value = textarea.value.slice(0, cursor) + regex.char + regex.char + textarea.value.slice(cursor);
+            else
+                textarea.value = textarea.value.slice(0, cursor) + regex.char + textarea.value.slice(cursor);
+            begin += regex.char.length;
+            end += regex.char.length;
+        } else if (this.selectionMatches(regex)) {
+            if (regex.surround) {
+                textarea.value = textarea.value.slice(0, begin - regex.char.length) + textarea.value.substring(begin, end) + textarea.value.slice(end + regex.char.length);
+            } else {
+                textarea.value = textarea.value.slice(0, begin - regex.char.length) + textarea.value.substring(begin, end);
+            }
+            begin -= regex.char.length;
+            end -= regex.char.length;
+        } else {
+            if (regex.surround)
+                textarea.value = textarea.value.slice(0, begin) + regex.char + textarea.value.substring(begin, end) + regex.char + textarea.value.slice(end);
+            else
+                textarea.value = textarea.value.slice(0, begin) + regex.char + textarea.value.substring(begin, end) + textarea.value.slice(end);
+            begin += regex.char.length;
+            end += regex.char.length;
         }
         textarea.setSelectionRange(begin, end);
         textarea.focus();
     }
 
-    readonly markdownButtons = {
-        header: () => this.insertAtCursor('### '),
-        bold: () => this.surroundCursor('**'),
-        italic: () => this.surroundCursor('_'),
-        quote: () => this.insertAtCursor('>'),
-        code: () => this.surroundCursor('`'),
-        link: () => this.surroundCursor('_'),
-        bullet: () => this.surroundCursor('_'),
-        number: () => this.surroundCursor('_'),
-        task: () => this.surroundCursor('_'),
-        mention: () => this.insertAtCursor('@'),
+    addMarkdownFormatMultiline(regex: EditorRegExp) {
+        let textarea = this.textarea.current!;
+        let begin = textarea.selectionStart;
+        let end = textarea.selectionEnd;
+        if (!this.hasSelection()) {
+            let cursor = begin;
+            let length = textarea.value.length;
+            if (textarea.value.length === 0)
+                textarea.value = regex.char;
+            else if (textarea.value.substring(0, cursor).endsWith('\n\n'))
+                textarea.value = textarea.value.slice(0, cursor) + regex.char + textarea.value.slice(cursor);
+            else if (textarea.value.substring(0, cursor).endsWith('\n'))
+                textarea.value = textarea.value.slice(0, cursor) + '\n' + regex.char + textarea.value.slice(cursor);
+            else
+                textarea.value = textarea.value.slice(0, cursor) + '\n\n' + regex.char + textarea.value.slice(cursor);
+            begin += textarea.value.length - length;
+            end += textarea.value.length - length;
+        } else if (this.selectionMatchesMultiline(regex)) {
+            let selected = textarea.value.substring(begin, end);
+            let length = selected.length;
+            let tmp = selected.split(regex.char).join('');
+            textarea.value = textarea.value.slice(0, begin) + tmp + textarea.value.slice(end);
+            //begin -= length - tmp.length;
+            end -= length - tmp.length;
+        } else {
+            let match, re = /([^\n]+)[\n]?/g, tmp = '', length = 0;
+            while (match = re.exec(textarea.value.substring(begin, end))) {
+                tmp += regex.char + match[1] + '\n';
+                length += regex.char.length;
+            }
+            tmp = tmp.slice(0, -1);
+            textarea.value = textarea.value.slice(0, begin) + tmp + textarea.value.slice(end);
+            //begin -= regex.char.length;
+            end += length;
+        }
+        textarea.setSelectionRange(begin, end);
+        textarea.focus();
     }
 
-    /*
+    readonly regex = {
+        header: {
+            char: '### ',
+            regex: /[#][#][#][\s](.*)/,
+            surround: false
+        },
+        bold: {
+            char: '**',
+            regex: /[*][*](.*)[*][*]/,
+            surround: true
+        },
+        italic: {
+            char: '_',
+            regex: /[_](.*)[_]/,
+            surround: true
+        },
+        quote: {
+            char: '> ',
+            regex: /[\n]?[>][ ]([^\n]+)[\n]?/g,
+            surround: false
+        },
+        code: {
+            char: '`',
+            regex: /[`](.*)[`]/,
+            surround: true
+        },
+        bullet: {
+            char: '- ',
+            regex: /[\n]?[-][ ]([^\n]+)[\n]?/g,
+            surround: false
+        },
+        number: {
+            char: '1. ',
+            regex: /[\n]?[\d]+[.][ ]([^\n]+)[\n]/g,
+            surround: false
+        },
+        task: {
+            char: '- [ ] ',
+            regex: /[\n]?[-][ ][\[][ ][\]][ ]([^\n]+)[\n]/g,
+            surround: false
+        },
+        mention: {
+            char: '@',
+            regex: /[@](.*)/,
+            surround: false
+        }
+    }
 
-    <a href='https://guides.github.com/features/mastering-markdown/'>
-                                            <span>
-                                                <svg className="octicon octicon-markdown v-align-bottom" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M14.85 3H1.15C.52 3 0 3.52 0 4.15v7.69C0 12.48.52 13 1.15 13h13.69c.64 0 1.15-.52 1.15-1.15v-7.7C16 3.52 15.48 3 14.85 3zM9 11H7V8L5.5 9.92 4 8v3H2V5h2l1.5 2L7 5h2v6zm2.99.5L9.5 8H11V5h2v3h1.5l-2.51 3.5z"></path></svg>
-                                            </span>
-                                        </a>
-
-                                        */
+    readonly markdownButtons = {
+        header: () => this.addMarkdownFormat(this.regex.header),
+        bold: () => this.addMarkdownFormat(this.regex.bold),
+        italic: () => this.addMarkdownFormat(this.regex.italic),
+        quote: () => this.addMarkdownFormatMultiline(this.regex.quote),
+        code: () => this.addMarkdownFormat(this.regex.code),
+        link: () => console.log('Not yet implemented'),
+        bullet: () => this.addMarkdownFormatMultiline(this.regex.bullet),
+        number: () => this.addMarkdownFormatMultiline(this.regex.number),
+        task: () => this.addMarkdownFormatMultiline(this.regex.task),
+        mention: () => this.addMarkdownFormat(this.regex.mention),
+    }
 
     render() {
         if (this.props.viewer) {
@@ -163,11 +286,16 @@ class Editor extends React.Component<EditorProps, EditorState> {
                                     <div className='textarea-wrapper'>
                                         <textarea placeholder="Leave a comment" id="textarea-comment" ref={this.textarea} onChange={this.handleChange}></textarea>
                                         <div id='drag-n-drop' onClick={this.handleFile}>
-                                            <input type='file' ref={this.dragndrop} />
+                                            <input type='file' ref={this.dragndrop} accept=".gif,.jpeg,.jpg,.png,.docx,.gz,.log,.pdf,.pptx,.txt,.xlsx,.zip" />
                                             <span>
                                                 <span>
                                                     Attach files by dragging &amp; dropping, selecting or pasting them.
                                                 </span>
+                                            </span>
+                                            <span>
+                                                <a className='tooltipped tooltipped-above' aria-label='Styling with Markdown is supported' href='https://guides.github.com/features/mastering-markdown/' target='_blank'>
+                                                    <svg className="octicon octicon-markdown v-align-bottom" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M14.85 3H1.15C.52 3 0 3.52 0 4.15v7.69C0 12.48.52 13 1.15 13h13.69c.64 0 1.15-.52 1.15-1.15v-7.7C16 3.52 15.48 3 14.85 3zM9 11H7V8L5.5 9.92 4 8v3H2V5h2l1.5 2L7 5h2v6zm2.99.5L9.5 8H11V5h2v3h1.5l-2.51 3.5z"></path></svg>
+                                                </a>
                                             </span>
                                         </div>
                                     </div>

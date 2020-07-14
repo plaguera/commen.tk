@@ -116,6 +116,8 @@
 						padding: 7px 10px;
 						outline: none;
 						cursor: pointer;
+						justify-content: space-between;
+						z-index: 10;
 						input {
 							display: none;
 						}
@@ -132,14 +134,21 @@
 								line-height: 16px;
 							}
 							a {
+								box-sizing: border-box;
 								text-decoration: none;
+								line-height: 16px;
+								position: relative;
+								display: inline;
+								z-index: 100;
 								svg {
+									box-sizing: border-box;
 									fill: rgb(88, 96, 105);
+									vertical-align: text-top;
 								}
 								&:hover {
-									fill: #0366d6 !important;
-									outline-width: 0;
-									//text-decoration-color:rgb(3, 102, 214);
+									svg {
+										fill: #0366d6;
+									}
 								}
 							}
 						}
