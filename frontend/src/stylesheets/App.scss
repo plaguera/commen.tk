@@ -1,16 +1,12 @@
 @import './avatar';
 @import './comment';
-@import './editor';
 @import './header';
 @import './pagination';
-@import './tooltip';
-@import './dropdown';
+@import './misc/misc';
+@import './editor/editor';
 
 .commen-tk {
 	margin: 0;
-	/*font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto',
-		'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans',
-		'Helvetica Neue', sans-serif;*/
 	font: normal normal 11px/1.5 -apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;

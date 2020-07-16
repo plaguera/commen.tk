@@ -1,0 +1,32 @@
+.editor-preview {
+    margin: 16px 8px;
+    margin-bottom: 0;
+    position: relative;
+    box-sizing: border-box;
+    display: block;
+    .markdown-render {
+        //background-color: $markdown-render_background-color;
+        //border: $markdown-render_border-color 1px solid;
+        border-bottom: 1px solid #e1e4e8;
+        color: $markdown-render_color;
+        font-size: 14px;
+        line-height: 1.5;
+        min-height: 142px;
+        padding: 4px 4px 16px;
+        text-align: start;
+        * {
+            margin-top: 0 !important;
+            margin-bottom: 0 !important;
+        }
+        p {
+            display: block;
+            margin-block-start: 1em;
+            margin-block-end: 1em;
+            margin-inline-start: 0px;
+            margin-inline-end: 0px;
+        }
+        ul {
+            padding-left: 28px;
+        }
+    }
+}
