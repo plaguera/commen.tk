@@ -49,7 +49,7 @@ class Comment extends React.Component<CommentProps, {}> {
                         {
                             this.props.viewerDidAuthor ? (
                                 <DetailsMenu>
-                                    <button className='btn-danger' onClick={this.onDelete}>Delete</button>
+                                    <button className='dropdown-item dropdown-danger' onClick={this.onDelete}>Delete</button>
                                 </DetailsMenu>
                             ) : (
                                     null

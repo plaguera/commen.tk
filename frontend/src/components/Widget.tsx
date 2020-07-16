@@ -1,5 +1,5 @@
 import React from 'react';
-import Editor from './Editor';
+import Editor from './editor/Editor';
 import Header from './Header';
 import Timeline from './Timeline';
 import { WidgetState, WidgetProps } from '../props';
@@ -16,6 +16,7 @@ class Widget extends React.Component<WidgetProps, WidgetState> {
 			comments: [],
 			cursor: undefined,
 			hiddenItems: 0,
+			init: false,
 			issue: {
 				author: '',
 				number: this.props.issue.number,
@@ -94,17 +95,15 @@ class Widget extends React.Component<WidgetProps, WidgetState> {
 	user() {
 		agent.Users
 			.viewer()
-			.then((data: any) => this.setState({ viewer: data.viewer }));
+			.then((data: any) => { this.setState({ viewer: data.viewer }); this.setState({ init: true }); });
 	}
 
 	componentDidMount() {
-		this.checkIssueNumber().then(() => {
-			this.user();
-			this.comments();
-		});
+		this.checkIssueNumber().then(() => { this.user(); this.comments(); } );
 	}
 
 	render() {
+		if (!this.state.init) return (null);
 		return (
 			<div className='widget-wrapper'>
 				<Header commentCount={this.state.totalCount} url={this.state.issue.url} />
@@ -112,10 +111,9 @@ class Widget extends React.Component<WidgetProps, WidgetState> {
 					<PaginationButton hiddenItems={this.state.hiddenItems} onClick={this.nextComments.bind(this)} user={this.state.viewer!} />
 					<Timeline comments={this.state.comments} onCommentDelete={this.deleteComment.bind(this)} issueAuthor={this.state.issue.author} />
 				</div>
-				<Editor viewer={this.state.viewer!} onComment={this.createComment.bind(this)} onSignout={this.signout.bind(this)} />
+				<Editor viewer={this.state.viewer!} onComment={this.createComment.bind(this)} onSignOut={this.signout.bind(this)} />
 			</div>
 		);
 	}
 }
-
 export default Widget;
