@@ -17,14 +17,10 @@ details {
 	summary {
 		box-sizing:border-box;
 		float: right;
-		list-style-image: none;
-		list-style-position: outside;
-		list-style-type: none;
+		list-style: none outside none;
 		outline: none;
-		padding-left: 4px;
-		padding-right: 4px;
-		padding-top: 8px;
-		padding-bottom: 8px;
+		margin-left: 8px;
+		padding: 8px 4px;
 		&::-webkit-details-marker {
 			display: none;
 		}
@@ -55,7 +51,7 @@ details {
 	background-color: white;
 	background-clip: padding-box;
 	border: 1px solid #e1e4e8;
-	border-radius: 6px;
+	border-radius: $border-radius;
     box-shadow: 0 8px 24px rgba(149,157,165,.2);
     box-sizing:border-box;
     

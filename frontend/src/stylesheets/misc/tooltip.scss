@@ -28,7 +28,7 @@
 		pointer-events: none;
 		content: attr(aria-label);
 		background: #1b1f23;
-		border-radius: 6px;
+		border-radius: $border-radius;
 		opacity: 0;
 		font-size: 11px;
 	}

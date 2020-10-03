@@ -4,8 +4,6 @@
     }
     &-comment-count {
         color: $header_color;
-        font-size: 14px;
-        font-weight: 600;
         text-decoration: none solid $header_color;
         text-overflow: ellipsis;
         &:hover {

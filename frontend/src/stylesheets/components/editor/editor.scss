@@ -5,7 +5,7 @@
 	&.no-login {
 		background-color: #fffbdd;
 		border: 1px solid rgba(176, 136, 0, 0.2);
-		border-radius: 6px;
+		border-radius: $border-radius;
 		color: #24292e;
 		margin-top: 16px;
 		padding: 20px 16px;
@@ -18,16 +18,13 @@
         display: flex;
         .editor {
             background-color: $editor_background-color;
-            border-color: $editor_border-color;
             border-bottom-color: $editor_border-bottom-color;
             color: $editor_color;
-            border-radius: 6px;
+            border-radius: $border-radius;
             margin: 10px;
-            font-family: Arial, Helvetica, sans-serif;
             flex: 1;
-            border-style: solid;
-            border-width: 1px;
             box-sizing: border-box;
+            border: 1px solid $editor_border-color;
             .react-tabs {
                 -webkit-tap-highlight-color: transparent;
                 .editor-textarea,
@@ -36,20 +33,13 @@
                 }
                 
                 &__tab-list {
-                    border-bottom: $react-tabs-tab-list_border-bottom-color 1px
-                        solid;
-                    border-top-left-radius: 6px;
-                    border-top-right-radius: 6px;
+                    border-bottom: $react-tabs-tab-list_border-bottom-color 1px solid;
+                    border-top-left-radius: $border-radius;
+                    border-top-right-radius: $border-radius;
                     color: $react-tabs-tab-list_color;
-                    //padding: 10px;
-                    //padding-bottom: 0;
                     background-color: $react-tabs-tab-list_background-color;
-                    //padding-inline-start: 0;
                     margin: 0;
-                    padding-top: 8px;
-                    padding-bottom: 0;
-                    padding-left: 8px;
-                    padding-right: 16px;
+                    padding: 8px 16px 0 8px;
                 }
                 &__tab {
                     display: inline-block;
@@ -68,24 +58,17 @@
                     flex-basis: auto;
                     flex-grow: 1;
                     flex-shrink: 1;
-                    font-size: 14px;
-                    font-weight: 400;
                     height: 37px;
                     letter-spacing: normal;
                     line-height: 20px;
-                    padding-bottom: 8px;
-                    padding-left: 16px;
-                    padding-right: 16px;
-                    padding-top: 8px;
+                    padding: 8px 16px;
                     text-align: center;
-                    text-decoration-color: $react-tabs-tab-list-tab_color;
-                    text-decoration-line: none;
-                    text-decoration-style: solid;
+                    text-decoration: none solid $react-tabs-tab-list-tab_color;
                     &--selected {
                         background-color: $react-tabs-tab-list-tab-selected_background-color;
                         border-color: $react-tabs-tab-list-tab-selected_border-color;
                         color: $react-tabs-tab-list-tab-selected_color;
-                        border-radius: 6px 6px 0 0;
+                        border-radius: $border-radius $border-radius 0 0;
                     }
                     &--disabled {
                         cursor: no-drop;

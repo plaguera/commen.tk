@@ -1,3 +1,13 @@
+$background-color-light: #222;
+$background-color-dark: #181818;
+
+$color-light: #cdcdcd;
+$color-dark: #afafaf;
+
+$border-color: #343434;
+$author-border-color: #246;
+$author-border-bottom-color: #404040;
+
 $comment_background-color: #181818;
 $comment_border-color: #343434;
 $comment_border-bottom-color: #404040;
@@ -44,7 +54,7 @@ $markdown-render_color: #d2d2d2;
 //
 $separator_color: #383838;
 //
-$header_color: rgb(148, 148, 148);
+$header_color: #949494;
 //
 $pagination-wrapper_background-url: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="44" height="34" viewBox="0 0 44 34"><polyline points="0 21 22 8 44 21 44 26 22 13 0 26" fill="%23444"/></svg>');
 $pagination-button_background-color: rgb(24, 24, 24);
