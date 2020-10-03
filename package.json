@@ -41,7 +41,7 @@
         "webpack-cli": "^3.3.12"
     },
     "dependencies": {
-        "@octokit/app": "^4.2.0",
+        "@octokit/app": "^4.2.1",
         "@octokit/graphql": "^4.5.1",
         "aws-sdk": "^2.709.0",
         "compression": "^1.7.4",
