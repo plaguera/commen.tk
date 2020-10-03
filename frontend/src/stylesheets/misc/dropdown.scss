@@ -1,0 +1,188 @@
+@keyframes scale-in {
+    0% {
+        opacity: 0;
+        transform: scale(.5);
+    }
+    
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+details {
+	float: right;
+	position: relative;
+	box-sizing: border-box;
+	summary {
+		box-sizing:border-box;
+		float: right;
+		list-style: none outside none;
+		outline: none;
+		margin-left: 8px;
+		padding: 8px 4px;
+		&::-webkit-details-marker {
+			display: none;
+		}
+		svg {
+			fill: $logout_svg-fill;
+			vertical-align: text-top;
+			&:hover {
+				fill: $logout_svg-fill-hover;
+			}
+		}
+	}
+}
+
+// Requires a positioning class (e.g., `.dropdown-menu-w`) to determine which
+// way the menu should render from the element triggering it.
+.dropdown-menu {
+    animation: scale-in .15s cubic-bezier(.2,0,.13,1.5);
+	position: absolute;
+	top: 100%;
+	left: 0;
+	z-index: 100;
+	width: 160px;
+	padding-top: 4px;
+	padding-bottom: 4px;
+	// stylelint-disable-next-line primer/spacing
+	margin-top: 2px;
+	list-style: none;
+	background-color: white;
+	background-clip: padding-box;
+	border: 1px solid #e1e4e8;
+	border-radius: $border-radius;
+    box-shadow: 0 8px 24px rgba(149,157,165,.2);
+    box-sizing:border-box;
+    
+	&::before,
+	&::after {
+		position: absolute;
+		display: inline-block;
+		content: '';
+	}
+
+	&::before {
+		// stylelint-disable-next-line primer/borders
+		border: 8px solid transparent;
+		border-bottom-color: rgba(27, 31, 35, 0.15);
+	}
+
+	&::after {
+		// stylelint-disable-next-line primer/borders
+		border: 7px solid transparent;
+		border-bottom-color: #fff;
+	}
+
+	// stylelint-disable-next-line selector-max-type
+	> ul {
+		list-style: none;
+	}
+}
+
+.dropdown-menu-no-overflow {
+	width: auto;
+
+	.dropdown-item {
+		padding: 4px 16px;
+		overflow: visible;
+		text-overflow: inherit;
+	}
+}
+
+// Dropdown items (can be links or buttons)
+.dropdown-item {
+	display: block;
+	padding: 4px 8px 4px 16px;
+	overflow: hidden;
+	color: #24292e;
+	text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 14px;
+    outline: none;
+
+	&:focus,
+	&:hover {
+		color: white;
+		text-decoration: none;
+		background-color: #0366d6;
+		outline: none;
+
+		> .octicon {
+			color: inherit;
+			opacity: 1;
+		}
+	}
+
+	&.btn-link {
+		width: 100%;
+		text-align: left;
+	}
+}
+
+.dropdown-danger {
+	width: 100%;
+	text-align: left;
+	background: none;
+    border: 0;
+    color: $logout_btn-color;
+    text-decoration-color: $details_menu_button-text-decoration-color;
+    &:hover {
+        background-color: $logout_btn-background-color-hover;
+        color: $logout_btn-color-hover;
+    }
+}
+
+.dropdown-divider {
+	display: block;
+	height: 0;
+	margin: 8px 0;
+	border-top: 1px solid #e1e4e8;
+}
+
+.dropdown-menu-below {
+	right: 50%;
+	left: auto;
+	transform: translateX(50%);
+
+	&::before {
+		top: -16px;
+		right: 50%;
+		transform: translateX(50%);
+	}
+
+	&::after {
+		top: -14px;
+		right: 50%;
+		transform: translateX(50%);
+	}
+}
+
+.dropdown-menu-below-left {
+	right: -6px;
+	left: auto;
+
+	&::before {
+		top: -16px;
+		right: 9px;
+		left: auto;
+	}
+
+	&::after {
+		top: -14px;
+		right: 10px;
+		left: auto;
+	}
+}
+
+.dropdown-menu-below-right {
+	&::before {
+		top: -16px;
+		left: 9px;
+	}
+
+	&::after {
+		top: -14px;
+		left: 10px;
+	}
+}

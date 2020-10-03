@@ -54,6 +54,7 @@ export interface WidgetProps {
 
 export interface WidgetState {
     comments: CommentProps[];
+    init: boolean;
     issue: {
         author: string;
         number: number;

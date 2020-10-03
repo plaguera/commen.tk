@@ -1,0 +1,95 @@
+@import './markdown';
+@import './preview';
+
+.editor-wrapper {
+	&.no-login {
+		background-color: #fffbdd;
+		border: 1px solid rgba(176, 136, 0, 0.2);
+		border-radius: $border-radius;
+		color: #24292e;
+		margin-top: 16px;
+		padding: 20px 16px;
+		a.link {
+			color: #0366d6;
+			text-decoration: none;
+		}
+    }
+    &.login {
+        display: flex;
+        .editor {
+            background-color: $editor_background-color;
+            border-bottom-color: $editor_border-bottom-color;
+            color: $editor_color;
+            border-radius: $border-radius;
+            margin: 10px;
+            flex: 1;
+            box-sizing: border-box;
+            border: 1px solid $editor_border-color;
+            .react-tabs {
+                -webkit-tap-highlight-color: transparent;
+                .editor-textarea,
+                .editor-preview {
+                    margin-bottom: 0;
+                }
+                
+                &__tab-list {
+                    border-bottom: $react-tabs-tab-list_border-bottom-color 1px solid;
+                    border-top-left-radius: $border-radius;
+                    border-top-right-radius: $border-radius;
+                    color: $react-tabs-tab-list_color;
+                    background-color: $react-tabs-tab-list_background-color;
+                    margin: 0;
+                    padding: 8px 16px 0 8px;
+                }
+                &__tab {
+                    display: inline-block;
+                    border: 1px solid transparent;
+                    border-bottom: none;
+                    bottom: -1px;
+                    position: relative;
+                    list-style: none;
+                    padding: 6px 12px;
+                    cursor: pointer;
+                    align-items: flex-start;
+                    box-sizing: border-box;
+                    color: $react-tabs-tab-list-tab_color;
+                    cursor: pointer;
+                    display: inline-block;
+                    flex-basis: auto;
+                    flex-grow: 1;
+                    flex-shrink: 1;
+                    height: 37px;
+                    letter-spacing: normal;
+                    line-height: 20px;
+                    padding: 8px 16px;
+                    text-align: center;
+                    text-decoration: none solid $react-tabs-tab-list-tab_color;
+                    &--selected {
+                        background-color: $react-tabs-tab-list-tab-selected_background-color;
+                        border-color: $react-tabs-tab-list-tab-selected_border-color;
+                        color: $react-tabs-tab-list-tab-selected_color;
+                        border-radius: $border-radius $border-radius 0 0;
+                    }
+                    &--disabled {
+                        cursor: no-drop;
+                    }
+                    &:focus {
+                        outline: 0;
+                    }
+                }
+                &__tab-panel {
+                    display: none;
+                    &--selected {
+                        display: block;
+                    }
+                }
+            }
+            .editor-buttons {
+                box-sizing: border-box;
+                display: flex !important;
+                justify-content: flex-end !important;
+                padding: 10px;
+            }
+        }
+    }
+}

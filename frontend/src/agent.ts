@@ -22,6 +22,11 @@ const Comments = {
         requests.del(`comments/${id}`)
 };
 
+const GitHub = {
+    markdown: (markdown: string) =>
+        superagent.post('https://api.github.com/markdown').send({ text: markdown, mode: 'gfm' }).set('Content-Type', 'application/json').then((res: Response) => res.text).catch(console.error)
+}
+
 const page = (cursor?: string) => cursor ? `&cursor=${cursor}` : '';
 
 const Issues = {
@@ -44,6 +49,7 @@ const Actions = {
 export default {
     Actions,
     Comments,
+    GitHub,
     Issues,
     Users
 };
