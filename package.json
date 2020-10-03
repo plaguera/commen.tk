@@ -43,7 +43,7 @@
     "dependencies": {
         "@octokit/app": "^4.2.1",
         "@octokit/graphql": "^4.5.1",
-        "aws-sdk": "^2.709.0",
+        "aws-sdk": "^2.714.0",
         "compression": "^1.7.4",
         "cookie-parser": "^1.4.5",
         "cors": "^2.8.5",
