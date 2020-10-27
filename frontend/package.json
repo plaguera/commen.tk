@@ -7,7 +7,7 @@
         "@testing-library/react": "^9.3.2",
         "@testing-library/user-event": "^7.1.2",
         "@types/jest": "^24.0.0",
-        "@types/node": "^12.12.43",
+        "@types/node": "^12.12.63",
         "@types/react": "^16.9.43",
         "@types/react-dom": "^16.9.8",
         "css-loader": "^3.6.0",
